@@ -8,6 +8,7 @@ package domain;
 public class ScenicInfo {
     private int scenicId;                   //景点id
     private String scenicName;              //景点名称
+    private String scenicCoverPicture;          //景点封面图片
     private String scenicAddress;           //景点地址
     private String country;                 //国家
     private String province;                //省
@@ -15,6 +16,7 @@ public class ScenicInfo {
     private String county;                  //县/区
     private float lng;                      //经度
     private float lat;                      //维度
+    private String scenicTheme;             //景点主题
     private int grade;                      //景点星级
     private String scenicIntro;             //景点介绍
     private String senicDetail;             //景点详细介绍
@@ -25,13 +27,15 @@ public class ScenicInfo {
     private Boolean scenicState;            //景点开放状态
     private Boolean flag;                   //景点状态(是否删除)
 
+
     public ScenicInfo() {}
 
-    public ScenicInfo(String scenicName, String scenicAddress, String country, String province, String downtown,
-                      String county, float lng, float lat, int grade, String scenicIntro, String senicDetail, String scenicTele,
+    public ScenicInfo(String scenicName, String scenicAddress, String scenicCoverPicture, String country, String province, String downtown,
+                      String county, float lng, float lat, String scenicTheme, int grade, String scenicIntro, String senicDetail, String scenicTele,
                       int scenicSuitbaleMonth, int scenicSuitableTravelDays, int scenicViewNums, Boolean scenicState, Boolean flag) {
         this.scenicName = scenicName;
         this.scenicAddress = scenicAddress;
+        this.scenicCoverPicture = scenicCoverPicture;
         this.country = country;
         this.province = province;
         this.downtown = downtown;
@@ -72,6 +76,15 @@ public class ScenicInfo {
     public void setScenicAddress(String scenicAddress) {
         this.scenicAddress = scenicAddress;
     }
+
+    public String getScenicCoverPicture(String scenicCoverPicture) {
+        return scenicCoverPicture;
+    }
+
+    public void setScenicCoverPicture(String scenicCoverPicture) {
+        this.scenicCoverPicture = scenicCoverPicture;
+    }
+
 
     public String getCountry() {
         return country;
@@ -119,6 +132,14 @@ public class ScenicInfo {
 
     public void setLat(float lat) {
         this.lat = lat;
+    }
+
+    public String getScenicTheme() {
+        return scenicTheme;
+    }
+
+    public void setScenicTheme(String scenicTheme) {
+        this.scenicTheme = scenicTheme;
     }
 
     public int getGrade() {
@@ -199,6 +220,7 @@ public class ScenicInfo {
                 "景点id=" + scenicId +
                 ", 景点名称='" + scenicName + '\'' +
                 ", 景点地址='" + scenicAddress + '\'' +
+                ", 景点封面图片=" + scenicCoverPicture +
                 ", 国家='" + country + '\'' +
                 ", 省份='" + province + '\'' +
                 ", 城市='" + downtown + '\'' +

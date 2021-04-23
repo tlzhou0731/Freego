@@ -16,15 +16,42 @@
     <%--导入jQuery--%>
     <script src="lww/js/jquery-3.3.1.js"></script>
     <script type="text/javascript" src="lww/js/bootstrap.min.js"></script>
-    <%--导入布局js，共享header和footer--%>
-    <script type="text/javascript" src="lww/js/include.js"></script>
 
     <script></script>
 
 </head>
 <body>
     <%--导入头部--%>
-    <div id="header"></div>
+    <div id="header">
+
+        <div class="freego_header clearfix" id="head_nav_warper">
+
+            <div class="head_logo"><a class="freego_logo" title="FreeGo" href="http://localhost:8080/index.jsp"></a></div>
+
+            <ul class="head_nav" id="_j_head_nav" role="tablist">
+                <li id="head_nav_index_li" role="presentation"><a href="" id="head_nav_index_a">首页</a></li>
+                <li id="head_nav_scenic_li" role="presentation"><a href="/ScenicServlet?&methodName=queryScenicIndex" id="head_nav_scenic_a" title="景点">景点</a></li>
+                <li id="head_nav_gonglve_li" role="presentation"><a href="" id="head_nav_gonglve_a" title="旅游攻略">旅游攻略</a></li>
+                <li id="head_nav_hotel_li" role="presentation"><a href="" id="head_nav_hotel_a" title="酒店">订酒店</a></li>
+            </ul>
+
+            <div class="login_status">
+                <!-- 未登录状态  -->
+                <div id="login_out" class="login_out">
+                    <a href="login.jsp">登录</a>
+                    <a href="register.jsp">注册</a>
+                </div>
+                <!-- 登录状态  -->
+                <div id="login_in" class="login_in">
+                    <span id="span_username"></span>
+                    <a href="javascript:location.href='user/exit';">退出</a>
+                    <a id="cancelAccount">注销账号</a>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
 
     <%--轮播图--%>
     <section id="freego_banner">
@@ -46,7 +73,7 @@
                         <div class="travelnote-title">【自驾甘孜】仓央嘉措，无尽雪山和风</div>
                     </a>
                     <a href="" class="show-pic">
-                        <img src="/FreegoImg/li/travelnote/1.jpeg" alt="" class="banner-picture">
+                        <img src="/images/li/signup&login/1.jpeg" alt="" class="banner-picture">
                     </a>
                 </div>
 
@@ -56,7 +83,7 @@
                         <div class="travelnote-title">常州金坛亲子游｜撷一肩春色，跟着小念一起花样春游吧</div>
                     </a>
                     <a href="" class="show-pic">
-                        <img src="/FreegoImg/li/travelnote/2.jpeg" alt="" class="banner-picture">
+                        <img src="/images/li/signup&login/2.jpeg" alt="" class="banner-picture">
                     </a>
                 </div>
 
@@ -66,7 +93,7 @@
                         <div class="travelnote-title">别样东莞｜广东第四城的美食和古迹</div>
                     </a>
                     <a href="" class="show-pic">
-                        <img src="/FreegoImg/li/travelnote/3.jpeg" alt="" class="banner-picture">
+                        <img src="/images/li/signup&login/3.jpeg" alt="" class="banner-picture">
                     </a>
                 </div>
 
@@ -76,7 +103,7 @@
                         <div class="travelnote-title">走吧、让我们一路川西吧！</div>
                     </a>
                     <a href="" class="show-pic">
-                        <img src="/FreegoImg/li/travelnote/4.jpeg" alt="" class="banner-picture">
+                        <img src="/images/li/signup&login/4.jpeg" alt="" class="banner-picture">
                     </a>
                 </div>
 
@@ -698,10 +725,62 @@
     </div>
 
     <%--导入尾部--%>
-    <div id="footer"></div>
+    <div id="footer">
+
+        <div class="why_select">
+
+            <dl style="margin-left: 133px">
+                <dt class="foot-pic">
+                    <img src="./images/li/index/foot_1.jpeg" alt="">
+                </dt>
+                <dd>
+                    <h1>产品齐全</h1>
+                    <h2>产品自主选，随心买</h2>
+                </dd>
+            </dl>
+
+            <dl>
+                <dt class="foot-pic">
+                    <img src="images/li/index/foot_2.jpeg" alt="">
+                </dt>
+                <dd>
+                    <h1>便利快捷</h1>
+                    <h2>24小时不打烊，随时买</h2>
+                </dd>
+            </dl>
+
+            <dl>
+                <dt class="foot-pic">
+                    <img src="images/li/index/foot_3.jpeg" alt="">
+                </dt>
+                <dd>
+                    <h1>安全支付</h1>
+                    <h2>知名支付工具，放心买</h2>
+                </dd>
+            </dl>
+
+            <dl>
+                <dt class="foot-pic">
+                    <img src="images/li/index/foot_4.jpeg" alt="">
+                </dt>
+                <dd style="margin-right: 0px">
+                    <h1>贴心服务</h1>
+                    <h2>客服全年无休，安心买</h2>
+                </dd>
+            </dl>
+
+        </div>
+        <div class="company">
+            <p>山东工商学院 计算机科学与技术学院 软件工程专业 2017级 毕业设计</p>
+        </div>
+    </div>
 
     <script>
+        //轮播图搜索复选框
         document.getElementById("tab_all").style.background="url(../images/li/index/check_box_check.jpeg)";
+        //头部
+        document.getElementById("head_nav_index_li").style.background="#ff9d00";
+        document.getElementById("head_nav_index_a").style.color="#FFFFFF";
     </script>
 
 </body>
