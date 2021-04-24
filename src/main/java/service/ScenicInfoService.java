@@ -15,6 +15,6 @@ import java.util.Map;
 public interface ScenicInfoService {
     public List<String> queryScenicTheme();
 
-    public PageBean<ScenicInfo> queryScenicInfoPage(PageBean<ScenicInfo> pBean, String cid);
+    public PageBean<ScenicInfo> queryScenicInfoPage(String currentPage, String row);
 
 }

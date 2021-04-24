@@ -15,6 +15,6 @@ import java.util.Map;
 public interface ScenicInfoDao {
     List<String> selectScenicTheme() throws Exception;
     public int getTotalCount();
-    List<ScenicInfo> selectScenicInfoPage(PageBean<ScenicInfo> pBean) throws Exception;
+    List<ScenicInfo> selectScenicInfoPage(int start,int row) throws Exception;
 
 }

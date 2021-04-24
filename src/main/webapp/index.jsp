@@ -30,7 +30,7 @@
 
             <ul class="head_nav" id="_j_head_nav" role="tablist">
                 <li id="head_nav_index_li" role="presentation"><a href="" id="head_nav_index_a">首页</a></li>
-                <li id="head_nav_scenic_li" role="presentation"><a href="/ScenicServlet?&methodName=queryScenicIndex" id="head_nav_scenic_a" title="景点">景点</a></li>
+                <li id="head_nav_scenic_li" role="presentation"><a href="/ScenicServlet?&methodName=queryScenicIndex&currentPage=1&rows=10" id="head_nav_scenic_a" title="景点">景点</a></li>
                 <li id="head_nav_gonglve_li" role="presentation"><a href="" id="head_nav_gonglve_a" title="旅游攻略">旅游攻略</a></li>
                 <li id="head_nav_hotel_li" role="presentation"><a href="" id="head_nav_hotel_a" title="酒店">订酒店</a></li>
             </ul>

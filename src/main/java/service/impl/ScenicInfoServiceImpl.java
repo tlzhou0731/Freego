@@ -32,20 +32,28 @@ public class ScenicInfoServiceImpl implements ScenicInfoService {
     }
 
     @Override
-    public PageBean<ScenicInfo> queryScenicInfoPage(PageBean<ScenicInfo> pBean, String cid){
+    public PageBean<ScenicInfo> queryScenicInfoPage(String currentPageStr, String rowsStr){
         try {
-            //查询总条数
+            int currentPage = Integer.parseInt(currentPageStr);
+            int rows = Integer.parseInt(rowsStr);
+            //1创建新的pageBean对象
+            PageBean<ScenicInfo> pageBean=new PageBean<ScenicInfo>();
+            //2.设置当前页面属性和row（row)是页面大小
+            pageBean.setCurrentPage(currentPage);
+            pageBean.setPageSize(rows);
+            //3.调用dao查询totalCount总记录数
             int totalCount=scenicInfoDao.getTotalCount();
-
-            //查询当前页的数据
-            List<ScenicInfo> scenicInfoList=scenicInfoDao.selectScenicInfoPage(pBean);
-
-            PageBean<ScenicInfo> pBean2=new PageBean<ScenicInfo>();
-            pBean2.setTotalCount(totalCount);
-            pBean2.setList(scenicInfoList);
-            pBean2.setCurrentPage(pBean.getCurrentPage());
-            pBean2.setPageSize(pBean.getPageSize());
-            return pBean2;
+            //4start = (currentPage-1)*row;
+            pageBean.setTotalCount(totalCount);
+            //5.调用dao查询list集合
+            int start = (currentPage-1)*rows;
+            List<ScenicInfo> scenicInfoList=scenicInfoDao.selectScenicInfoPage(start,rows);
+            pageBean.setList(scenicInfoList);
+            //6.计算总页码
+            int totalPage = totalCount%rows==0?(totalCount/rows):(totalCount/rows+1);
+            pageBean.setTotalPage(totalPage);
+            //7.返回pageBean
+            return pageBean;
         } catch (Exception e) {
             e.printStackTrace();
         }

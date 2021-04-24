@@ -41,15 +41,15 @@ public class ScenicInfoDaoImpl implements ScenicInfoDao {
     @Override
     public int getTotalCount() {
         String sql = "select COUNT(scenicId) from scenic;";
-        StringBuilder sb = new StringBuilder(sql);
-        return jdbcTemplate.queryForObject(sb.toString(),Integer.class);
+
+        return jdbcTemplate.queryForObject(sql,Integer.class);
     }
 
     @Override
-    public List<ScenicInfo> selectScenicInfoPage(PageBean<ScenicInfo> pBean){
+    public List<ScenicInfo> selectScenicInfoPage(int start,int row){
 
-        String sql="SELECT * FROM scenic LIMIT ?,?";
-        return jdbcTemplate.query(sql, new BeanPropertyRowMapper<ScenicInfo>(ScenicInfo.class),(pBean.getCurrentPage()-1)*pBean.getPageSize(),pBean.getPageSize());
+        String sql="SELECT * FROM scenic WHERE (lng IS NOT NULL and lat is not NULL) LIMIT ?,?";
+        return jdbcTemplate.query(sql, new BeanPropertyRowMapper<ScenicInfo>(ScenicInfo.class), start,row);
     }
 
 

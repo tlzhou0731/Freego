@@ -1,16 +1,22 @@
 <component name="ArtifactManager">
   <artifact type="exploded-war" name="MavenProject:war exploded">
-    <output-path>$PROJECT_DIR$/out/artifacts/MavenProject_war_exploded</output-path>
+    <output-path>$PROJECT_DIR$/target/MavenProject</output-path>
+    <properties id="maven-jee-properties">
+      <options>
+        <exploded>true</exploded>
+        <module>MavenProject</module>
+        <packaging>war</packaging>
+      </options>
+    </properties>
     <root id="root">
       <element id="directory" name="WEB-INF">
         <element id="directory" name="classes">
           <element id="module-output" name="MavenProject" />
         </element>
         <element id="directory" name="lib">
+          <element id="library" level="project" name="Maven: javax.servlet:javax.servlet-api:4.0.1" />
           <element id="library" level="project" name="Maven: mysql:mysql-connector-java:5.1.47" />
           <element id="library" level="project" name="Maven: com.alibaba:druid:1.0.9" />
-          <element id="library" level="module" name="Maven: com.alibaba:jconsole:1.8.0" module-name="MavenProject" />
-          <element id="library" level="module" name="Maven: com.alibaba:tools:1.8.0" module-name="MavenProject" />
           <element id="library" level="project" name="Maven: org.springframework:spring-core:4.1.2.RELEASE" />
           <element id="library" level="project" name="Maven: org.springframework:spring-jdbc:4.1.2.RELEASE" />
           <element id="library" level="project" name="Maven: org.springframework:spring-tx:4.1.2.RELEASE" />
@@ -28,7 +34,11 @@
           <element id="library" level="project" name="Maven: org.apache.commons:commons-pool2:2.3" />
           <element id="library" level="project" name="Maven: joda-time:joda-time:2.9.8" />
           <element id="library" level="project" name="Maven: jstl:jstl:1.2" />
+          <element id="library" level="project" name="Maven: javax.servlet.jsp:jsp-api:2.2" />
         </element>
+      </element>
+      <element id="directory" name="META-INF">
+        <element id="file-copy" path="$PROJECT_DIR$/target/MavenProject/META-INF/MANIFEST.MF" />
       </element>
       <element id="javaee-facet-resources" facet="MavenProject/web/Web" />
     </root>

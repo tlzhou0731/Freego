@@ -85,14 +85,17 @@ public class ScenicServlet extends HttpServlet {
 
     private void queryScenicIndex(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
 
-        System.out.println("在servlet里面");
+        //主题列表
         List<String> scenicThemeList = null;
-
         scenicThemeList = scenicInfoService.queryScenicTheme();
-        System.out.println("Service");
         request.removeAttribute("scenicThemeList");
         request.setAttribute("scenicThemeList",scenicThemeList);
-        System.out.println(scenicThemeList);
+        //页面
+        String currentPage = request.getParameter("currentPage");
+        String rows = request.getParameter("rows");
+        PageBean<ScenicInfo> scenicPageBean = scenicInfoService.queryScenicInfoPage(currentPage,rows);
+        request.setAttribute("scenicPageBean",scenicPageBean);
+
         request.getRequestDispatcher("/ztl/SearchScenic.jsp").forward(request,response);
 
     }
@@ -100,41 +103,20 @@ public class ScenicServlet extends HttpServlet {
 
     private void queryScenicInfoPage(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
 
-        request.setCharacterEncoding("utf-8");
-        PageBean pageBean = new PageBean();
-        //获取总共页面
-        String totalPageStr = request.getParameter("totalPage");
-        // 默认获取第一页的数据
-        if(totalPageStr == null || "".equals(totalPageStr)) {
-            totalPageStr = "0";
-        }
-        int currentPage = Integer.parseInt(totalPageStr);
-        //获取总共数量
-        int totalCount = scenicInfoService
-        // 获取当前页
-        String currentPageStr = request.getParameter("currentPage");
-        // 默认获取第一页的数据
-        if(currentPageStr == null || "".equals(currentPageStr)) {
-            currentPageStr = "0";
-        }
-        int currentPage = Integer.parseInt(currentPageStr);
-        pageBean.setCurrentPage(currentPage);
-        // 获取每页的容量
-        String pageSizeStr = request.getParameter("pageSize");
-        // 默认每页10个
-        if(pageSizeStr == null || "".equals(pageSizeStr)) {
-            pageSizeStr = "10";
-        }
-        int pageSize = Integer.parseInt(pageSizeStr);
-        pageBean.setPageSize(pageSize);
+        String currentPage = request.getParameter("currentPage");
+        String rows = request.getParameter("rows");
+        PageBean<ScenicInfo> scenicPageBean = scenicInfoService.queryScenicInfoPage(currentPage,rows);
+        request.setAttribute("scenicPageBean",scenicPageBean);
+        request.getRequestDispatcher("/college_list.jsp").forward(request,response);
 
-        PageBean<ScenicInfo> pb = scenicInfoService.queryScenicInfoPage(currentPage,rows,condition);
-        System.out.println(pb);
-        request.setAttribute("pageColleges",pb);
-        //3.将PageBean存入request
-        request.setAttribute("pb",pb);
-        request.setAttribute("condition",condition);//将查询条件存入request
-        //4.转发到list.jsp
+    }
+
+    private void pageTest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+
+
+        System.out.println("进入了pageTest");
+        PageBean<ScenicInfo> scenicPageBean = scenicInfoService.queryScenicInfoPage("1","10");
+        request.setAttribute("scenicPageBean",scenicPageBean);
         request.getRequestDispatcher("/college_list.jsp").forward(request,response);
 
     }
@@ -142,7 +124,9 @@ public class ScenicServlet extends HttpServlet {
 
     public static void main(String[] args) {
         ScenicInfoService scenicInfoService = new ScenicInfoServiceImpl(new ScenicInfoDaoImpl());
-        System.out.println(scenicInfoService.queryScenicTheme());
+        PageBean<ScenicInfo> scenicPageBean = scenicInfoService.queryScenicInfoPage("1","10");
+        System.out.println(scenicPageBean);
+
     }
 
 }

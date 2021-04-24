@@ -77,7 +77,7 @@ public class ScenicInfo {
         this.scenicAddress = scenicAddress;
     }
 
-    public String getScenicCoverPicture(String scenicCoverPicture) {
+    public String getScenicCoverPicture() {
         return scenicCoverPicture;
     }
 
