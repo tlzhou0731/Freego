@@ -146,12 +146,12 @@
     </dependency>
 
 <!--周天乐开始-->
-    <!-- jstl -->
-    <dependency>
-      <groupId>jstl</groupId>
-      <artifactId>jstl</artifactId>
-      <version>1.2</version>
-    </dependency>
+<!--    &lt;!&ndash; jstl &ndash;&gt;-->
+<!--    <dependency>-->
+<!--      <groupId>jstl</groupId>-->
+<!--      <artifactId>jstl</artifactId>-->
+<!--      <version>1.2</version>-->
+<!--    </dependency>-->
 
     <!--    &lt;!&ndash; https://mvnrepository.com/artifact/javax.servlet/jstl &ndash;&gt;-->
     <!--    <dependency>-->
@@ -160,12 +160,12 @@
     <!--      <version>1.2</version>-->
     <!--    </dependency>-->
 
-    <!--引入jsp相关开始-->
-    <dependency>
-      <groupId>javax.servlet.jsp</groupId>
-      <artifactId>jsp-api</artifactId>
-      <version>2.2</version>
-    </dependency>
+<!--    &lt;!&ndash;引入jsp相关开始&ndash;&gt;-->
+<!--    <dependency>-->
+<!--      <groupId>javax.servlet.jsp</groupId>-->
+<!--      <artifactId>jsp-api</artifactId>-->
+<!--      <version>2.2</version>-->
+<!--    </dependency>-->
     <!--引入jsp相关结束-->
 
     <!--周天乐结束-->

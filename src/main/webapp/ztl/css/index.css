@@ -31,10 +31,11 @@
 /*搜索框*/
 .index-search-container{
     position: absolute;
-    bottom: 300px;
+    bottom: 350px;
     left: 50%;
-    margin-left: -290px;
-    width: 600px;
+    transform: translateX(-50%);
+    /*margin-left: -290px;*/
+    /*width: 1130px;*/
     z-index: 5;
 }
 .index-search-group{
@@ -67,19 +68,68 @@
     padding-left: 30px;
 }
 .index-search-bar{
-    height: 46px;
+    height: 56px;
+    padding: 10px;
     overflow: hidden;
 }
 .index-search-wrapper{
     float: left;
-    width: 510px;
+    /*width: 1020px;*/
 }
 .index-search-input{
     height: 46px;
     overflow: hidden;
 }
 .index-search-input > input{
-    width: 500px;
+    width: 660px;
+    height: 46px;
+    border: 0 none;
+    padding: 0 25px;
+    margin: 0;
+    line-height: 46px;
+    color: #666;
+    font-size:16px;
+    border-radius: 4px;
+}
+.index-search-select{
+    height: 46px;
+    overflow: hidden;
+}
+.index-search-select > input{
+    width: 250px;
+    height: 46px;
+    border: 0 none;
+    padding: 0 25px;
+    margin: 0;
+    line-height: 46px;
+    color: #666;
+    font-size:16px;
+    border-radius: 4px;
+}
+.index-search-select > select{
+    width: 250px;
+    height: 46px;
+    border: 0 none;
+    padding: 0 25px;
+    margin: 0;
+    line-height: 46px;
+    color: #666;
+    font-size:16px;
+    border-radius: 4px;
+}
+.index-search-select > select > option{
+    width: 250px;
+    height: 46px;
+    border: 0 none;
+    padding: 0 25px;
+    margin: 0;
+    line-height: 46px;
+    color: #666;
+    font-size:16px;
+    border-radius: 4px;
+}
+.form-control selectpicker{
+    width: 250px;
     height: 46px;
     border: 0 none;
     padding: 0 25px;
@@ -101,6 +151,14 @@
     background-image: url(../../images/li/index/icon_search.jpeg);
     border-radius: 5px;
 }
+.index-search-button > button{
+    display: block;
+    height: 46px;
+    /*background-image: url(../../images/li/index/icon_search.jpeg);*/
+    background: orange;
+    color: whitesmoke;
+    border-radius: 5px;
+}
 /*webkit内核*/
 input::-webkit-input-placeholder {
     　　color: #D6D0CA;
@@ -110,11 +168,11 @@ a:hover{
     text-decoration:none
 }
 /*游记tab*/
-.freego-travelnote{
+.freego-scenic{
     width: 1100px;
     margin: auto;
 }
-.travelnote-tab{
+.scenic-tab{
     margin-bottom: 10px;
     margin-top: 10px;
     height: 54px;
@@ -122,7 +180,7 @@ a:hover{
     font-size: 16px;
     border-bottom: 3px solid #e4e4e4;
 }
-.travelnote-tab > .travelnote-hot{
+.scenic-tab > .scenic-hot{
     float: left;
     width: 150px;
     padding-bottom: 6px;
@@ -130,22 +188,44 @@ a:hover{
     z-index: 11;
     text-align: center;
 }
-.travelnote-tab > .travelnote-hot a{
+.scenic-tab > .scenic-hot a{
     color: #ff9d00;
     font-size: 18px;
 }
-.travelnote-tab > .travelnote-new{
+.scenic-tab > .scenic-theme{
     float: left;
     width: 150px;
     padding-bottom: 6px;
     z-index: 11;
     text-align: center;
 }
-.travelnote-tab > .travelnote-new a{
+.scenic-tab > .scenic-theme a{
     color: #000000;
     font-size: 18px;
 }
-.travelnote-tab > .travelnote-publish{
+.scenic-tab > .scenic-addr{
+    float: left;
+    width: 150px;
+    padding-bottom: 6px;
+    z-index: 11;
+    text-align: center;
+}
+.scenic-tab > .scenic-addr a{
+    color: #000000;
+    font-size: 18px;
+}
+.scenic-tab > .scenic-near{
+    float: left;
+    width: 150px;
+    padding-bottom: 6px;
+    z-index: 11;
+    text-align: center;
+}
+.scenic-tab > .scenic-near a{
+    color: #000000;
+    font-size: 18px;
+}
+.scenic-tab > .scenic-publish{
     float: right;
     width: 140px;
     height: 40px;
@@ -155,50 +235,77 @@ a:hover{
     background-color: #ff9d00;
     border-radius: 4px;
 }
-.travelnote-tab > .travelnote-publish > .travelnote-publish-img{
+.scenic-tab > .scenic-publish > .scenic-publish-img{
     float: left;
     padding-top: 2px;
     padding-left: 20px;
 }
-.travelnote-tab > .travelnote-publish > .travelnote-publish-text{
+.scenic-tab > .scenic-publish > .scenic-publish-text{
     width: 120px;
     line-height: 36px;
 
 }
-
-/*游记列表*/
-.travelnote-item{
+.scenic-form{
     padding: 15px 0;
     height: 250px;
 }
-.travelnote-item > .travelnote-left{
+.scenic_form_date{
+    padding: 15px 0;
+    height: 50px;
+    float: left;
+    width: 290px;
+}
+.scenic_form_addr{
+    padding: 15px 0;
+    height: 50px;
+    float: left;
+    width: 290px;
+}
+.scenic_form_theme{
+    padding: 15px 0;
+    height: 50px;
+    float: left;
+    width: 290px;
+}
+.scenic_form_search{
+    padding: 15px 0;
+    height: 50px;
+    float: left;
+    width: 290px;
+}
+/*游记列表*/
+.scenic-item{
+    padding: 15px 0;
+    height: 250px;
+}
+.scenic-item > .scenic-left{
     float: left;
     width: 384px;
     height: 216px;
     position: relative;
     margin-right: 20px;
 }
-.travelnote-item > .travelnote-left img{
+.scenic-item > .scenic-left img{
     width: 100%;
     height: 100%;
     position: absolute;
     object-fit: cover;
 }
-.travelnote-right{
+.scenic-right{
     float: left;
     width: 695px;
     height: 216px;
 }
-.travelnote-right dl{
+.scenic-right dl{
     height: 160px;
 }
-.travelnote-item dt{
+.scenic-item dt{
     height: 26px;
     line-height: 26px;
     margin-bottom: 15px;
     font-size: 22px;
 }
-.travelnote-item dt a{
+.scenic-item dt a{
     width: 420px;
     height: 20px;
     color: #333;
@@ -207,50 +314,50 @@ a:hover{
     text-overflow: ellipsis;
     font-weight: 400;
 }
-.travelnote-item dd{
+.scenic-item dd{
     line-height: 20px;
     font-size: 15px;
     overflow: hidden;
 }
-.travelnote-item dd a{
+.scenic-item dd a{
     color: #666;
 }
-.travelnote-extra{
+.scenic-extra{
     height: 56px;
     overflow: hidden;
     line-height: 56px;
 }
-.travelnote-extra > .travelnote-location{
+.scenic-extra > .scenic-location{
     float: left;
     margin-right: 40px;
 }
-.travelnote-extra > .travelnote-location > .travelnote-location-pic{
+.scenic-extra > .scenic-location > .scenic-location-pic{
     float: left;
     margin: 16px 10px 0 0;
     width: 27px;
     height: 23px;
     overflow: hidden;
 }
-.travelnote-extra > .travelnote-location > .travelnote-location-text{
+.scenic-extra > .scenic-location > .scenic-location-text{
     float: left;
     font-size: 14px;
     color: #585858;
 }
-.travelnote-extra > .travelnote-location a{
+.scenic-extra > .scenic-location a{
     color: #585858;
 }
-.travelnote-extra > .travelnote-user{
+.scenic-extra > .scenic-user{
     float: left;
     margin-right: 40px;
 }
-.travelnote-extra > .travelnote-user > .travelnote-user-head{
+.scenic-extra > .scenic-user > .scenic-user-head{
     float: left;
     width: 30px;
     height: 30px;
     position: relative;
     margin-right: 10px;
 }
-.travelnote-extra > .travelnote-user > .travelnote-user-head img{
+.scenic-extra > .scenic-user > .scenic-user-head img{
     width: 100%;
     height: 100%;
     border-radius: 50%;
@@ -258,31 +365,31 @@ a:hover{
     object-fit: cover;
     margin-top: 12px;
 }
-.travelnote-extra > .travelnote-user > .travelnote-user-nickname{
+.scenic-extra > .scenic-user > .scenic-user-nickname{
     float: left;
     color: #585858;
 }
-.travelnote-extra > .travelnote-view-collection img{
+.scenic-extra > .scenic-view-collection img{
     float: left;
     /*上右下左*/
     margin: 15px 10px 0 0;
     width: 25px;
     height: 25px;
 }
-.travelnote-extra > .travelnote-view-collection div{
+.scenic-extra > .scenic-view-collection div{
     float: left;
     font-size: 14px;
     color: #585858;
 }
-.travelnote-extra > .travelnote-like{
+.scenic-extra > .scenic-like{
     float: right;
 }
-.travelnote-extra > .travelnote-like > div{
+.scenic-extra > .scenic-like > div{
     float: left;
     margin-right: 15px;
     font-size: 14px;
 }
-.travelnote-extra > .travelnote-like > img{
+.scenic-extra > .scenic-like > img{
     float: right;
     width: 40px;
     height: 40px;

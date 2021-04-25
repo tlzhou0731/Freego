@@ -23,7 +23,6 @@
 <body>
     <%--导入头部--%>
     <div id="header">
-
         <div class="freego_header clearfix" id="head_nav_warper">
 
             <div class="head_logo"><a class="freego_logo" title="FreeGo" href="http://localhost:8080/index.jsp"></a></div>

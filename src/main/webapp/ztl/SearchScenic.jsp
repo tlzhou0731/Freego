@@ -1,7 +1,7 @@
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page import="java.util.List" %>
 <%@ page import="domain.PageBean" %>
 <%@ page import="domain.ScenicInfo" %>
+<%@page isELIgnored="false"%>
 <%--
   Created by IntelliJ IDEA.
   Author: Macro
@@ -58,7 +58,7 @@
 
         <ul class="head_nav" id="_j_head_nav" role="tablist">
             <li id="head_nav_index_li" role="presentation"><a href="" id="head_nav_index_a">首页</a></li>
-            <li id="head_nav_scenic_li" role="presentation"><a href="/ScenicServlet?&methodName=queryScenicIndex" id="head_nav_scenic_a" title="景点">景点</a></li>
+            <li id="head_nav_scenic_li" role="presentation"><a href="/ScenicServlet?&methodName=queryScenicIndex&currentPage=1&rows=10"  id="head_nav_scenic_a" title="景点">景点</a></li>
             <li id="head_nav_gonglve_li" role="presentation"><a href="" id="head_nav_gonglve_a" title="旅游攻略">旅游攻略</a></li>
             <li id="head_nav_hotel_li" role="presentation"><a href="" id="head_nav_hotel_a" title="酒店">订酒店</a></li>
         </ul>
@@ -109,8 +109,8 @@
 
             <div id="banner_1" class="item active">
                 <a href="" class="show-title">
-                    <div class="travelnote-date">2021.4.19</div>
-                    <div class="travelnote-title">【自驾甘孜】仓央嘉措，无尽雪山和风</div>
+                    <div class="scenic-date">2021.4.19</div>
+                    <div class="scenic-title">【自驾甘孜】仓央嘉措，无尽雪山和风</div>
                 </a>
                 <a href="" class="show-pic">
                     <img src="../images/li/signup&login/1.jpeg" alt="" class="banner-picture">
@@ -120,7 +120,7 @@
             <div id="banner_2" class="item">
                 <a href="" class="show-title">
                     <div class="show-date">2021.4.19</div>
-                    <div class="travelnote-title">常州金坛亲子游｜撷一肩春色，跟着小念一起花样春游吧</div>
+                    <div class="scenic-title">常州金坛亲子游｜撷一肩春色，跟着小念一起花样春游吧</div>
                 </a>
                 <a href="" class="show-pic">
                     <img src="../images/li/signup&login/2.jpeg" alt="" class="banner-picture">
@@ -130,7 +130,7 @@
             <div id="banner_3" class="item">
                 <a href="" class="show-title">
                     <div class="show-date">2021.4.19</div>
-                    <div class="travelnote-title">别样东莞｜广东第四城的美食和古迹</div>
+                    <div class="scenic-title">别样东莞｜广东第四城的美食和古迹</div>
                 </a>
                 <a href="" class="show-pic">
                     <img src="../images/li/signup&login/3.jpeg" alt="" class="banner-picture">
@@ -140,7 +140,7 @@
             <div id="banner_4" class="item">
                 <a href="" class="show-title">
                     <div class="show-date">2021.4.19</div>
-                    <div class="travelnote-title">走吧、让我们一路川西吧！</div>
+                    <div class="scenic-title">走吧、让我们一路川西吧！</div>
                 </a>
                 <a href="" class="show-pic">
                     <img src="..//images/li/signup&login/4.jpeg" alt="" class="banner-picture">
@@ -162,180 +162,162 @@
     <%--搜索框--%>
     <div class="index-search-container" id="index_search">
         <div class="index-search-group">
-            <div class="index-search-tab" id="index_search_tab">
-                <%--单选框--%>
-                <ul class="clearfix">
-                    <li class="tab-select">
-                        <div class="tab-check" id="tab_all"></div>
-                        <div class="tab-text">全部</div>
-                    </li>
-                    <li class="tab-select">
-                        <div class="tab-check" id="tab_travelnote"></div>
-                        <div class="tab-text">游记</div>
-                    </li>
-                    <li class="tab-select">
-                        <div class="tab-check" id="tab_scenic"></div>
-                        <div class="tab-text">景点</div>
-                    </li>
-                    <li class="tab-select">
-                        <div class="tab-check" id="tab_hotel"></div>
-                        <div class="tab-text">酒店</div>
-                    </li>
-                </ul>
-            </div>
-            <div class="index-search-bar" id="index_search_bar">
-                <div class="index-search-wrapper">
-                    <div class="index-search-input">
-                        <input name="q" type="text" placeholder="搜游记/景点/酒店" id="index_search_input_all" autocomplete="off">
+            <div class="index-search-bar" id="index_search_bar2">
+                <form action="/ScenicServlet?&methodName=queryScenicBySearch&currentPage=1&rows" method="post">
+                    <div class="index-search-wrapper">
+                        <div class="index-search-input">
+                            <input name="q" type="text" placeholder="输入搜索内容" id="scenic_search_text" autocomplete="off">
+                        </div>
                     </div>
-                </div>
-                <div class="index-search-button" id="index_search_btn_all">
-                    <a role="button" href="javascript;"></a>
-                </div>
+                    <div class="index-search-button" id="scenic_search_btn">
+                        <button id="btn_scenic_search" type="submit" class="btn btn-default">搜索</button>
+                    </div>
+                </form>
             </div>
+
         </div>
     </div>
 
 </section>
 
 <%--游记部分--%>
-<div class="freego-travelnote">
+<div class="freego-scenic">
+    <%--选项表单--%>
+    <div class="scenic-form" style="width: 100%">
+        <form class="navbar-form navbar-left" action="/ScenicServlet?&methodName=findScenicInfo" method="post">
+            <div class="scenic_form_date">
+                <select id="dateChoose" name="dateChoose" class="form-control selectpicker"
+                        data-width="80%" data-live-search="true"
+                        multiple data-max-options="5" onchange="getDates(this)" title="选择出行日期">
+                    <option value="1">1月</option>
+                    <option value="2">2月</option>
+                    <option value="3">3月</option>
+                    <option value="4">4月</option>
+                    <option value="5">5月</option>
+                    <option value="6">6月</option>
+                    <option value="7">7月</option>
+                    <option value="8">8月</option>
+                    <option value="9">9月</option>
+                    <option value="10">10月</option>
+                    <option value="11">11月</option>
+                    <option value="12">12月</option>
+                </select>
+            </div>
+            <div class="scenic_form_addr">
+                <select id="'addChoose" name="addChoose" class="form-control selectpicker"
+                        data-width="80%" data-live-search="true"
+                        multiple data-max-options="5" onchange="getAdds(this)" title="选择地点">
+                    <optgroup label="广东">
+                        <option value="1">广州</option>
+                        <option value="2">深圳</option>
+                        <option value="3">珠海</option>
+                    </optgroup>
+                    <optgroup label="广西">
+                        <option value="1">南宁</option>
+                        <option value="2">柳州</option>
+                        <option value="3">桂林</option>
+                    </optgroup>
+                    <optgroup label="山东">
+                        <option value="1">烟台</option>
+                        <option value="2">青岛</option>
+                        <option value="3">济南</option>
+                    </optgroup>
+                </select>
+            </div>
+            <div class="scenic_form_theme">
+                <select id="'themeChoose" name="themeChoose" class="form-control selectpicker"
+                        data-width="80%" data-live-search="true"
+                        multiple data-max-options="5"  onchange="getThemes(this)" title="选择主题">
+                    <%if(scenicThemeList != null){
+                        for (int i = 0;i < scenicThemeList.size();i++){%>
+                    <option value=<%=scenicThemeList.get(i)%>><%=scenicThemeList.get(i)%></option>
+                    <%}}else{%>
+                    <option value="空">空</option>
+                    <%}%>
+                </select>
+            </div>
 
-    <div class="index-travelnote">
+            <div class="scenic_form_search">
+                <input id="searchText" name="searchText" type="text" class="form-control" placeholder="${pageContext.request.contextPath}">
+                <button id="btn-show" type="button" class="btn btn-default" onclick="showChoose()">显示</button>
+                <button id="btn-search" type="submit" class="btn btn-default">搜索</button>
+            </div>
+
+        </form>
+    </div>
+    <br>
+        <input name="searchText" type="text" placeholder="${pageContext.request.contextPath}">
+
+    <div class="index-scenic">
         <%--游记tab--%>
-        <div class="travelnote-tab">
-            <div class="travelnote-hot" id="travelnoe_hot">
+        <div class="scenic-tab">
+            <div class="scenic-hot" id="scenic_hot">
                 <a href="javascript:void(0);" rel="nofollow">热门景点</a>
             </div>
-            <div class="travelnote-new" id="travelnoe_new">
+            <div class="scenic-theme" id="scenic_theme">
+                <a href="javascript:void(0);" rel="nofollow">热门主题</a>
+            </div>
+            <div class="scenic-addr" id="scenic_addr">
+                <a href="javascript:void(0);" rel="nofollow">热门地点</a>
+            </div>
+            <div class="scenic-near" id="scenic_near">
                 <a href="javascript:void(0);" rel="nofollow">附近景点</a>
             </div>
         </div>
-        <%--选项表单--%>
-        <div style="width: 100%">
-            <form class="navbar-form navbar-left" action="/ScenicServlet?&methodName=findScenicInfo" method="post">
-                <h1>进入form表单</h1>
-                <div>
-                    <div>
-                        时间
-                    </div>
-                    <select id="dateChoose" name="dateChoose" class="form-control selectpicker"
-                            data-width="80%" data-live-search="true"
-                            multiple data-max-options="5" onchange="getDates(this)" >
-                        <option value="1">1月</option>
-                        <option value="2">2月</option>
-                        <option value="3">3月</option>
-                        <option value="4">4月</option>
-                        <option value="5">5月</option>
-                        <option value="6">6月</option>
-                        <option value="7">7月</option>
-                        <option value="8">8月</option>
-                        <option value="9">9月</option>
-                        <option value="10">10月</option>
-                        <option value="11">11月</option>
-                        <option value="12">12月</option>
-                    </select>
-                    <div>
-                        地点
-                    </div>
-                    <select id="'addChoose" name="addChoose" class="form-control selectpicker"
-                            data-width="80%" data-live-search="true"
-                            multiple data-max-options="5" onchange="getAdds(this)" >
-
-                        <optgroup label="广东">
-                            <option value="1">广州</option>
-                            <option value="2">深圳</option>
-                            <option value="3">珠海</option>
-                        </optgroup>
-                        <optgroup label="广西">
-                            <option value="1">南宁</option>
-                            <option value="2">柳州</option>
-                            <option value="3">桂林</option>
-                        </optgroup>
-                        <optgroup label="山东">
-                            <option value="1">烟台</option>
-                            <option value="2">青岛</option>
-                            <option value="3">济南</option>
-                        </optgroup>
-                    </select>
-
-                    <div>
-                        主题
-                    </div>
-                    <select id="'themeChoose" name="themeChoose" class="form-control selectpicker"
-                            data-width="80%" data-live-search="true"
-                            multiple data-max-options="5"  onchange="getThemes(this)" >
-                        <%if(scenicThemeList != null){
-                            for (int i = 0;i < scenicThemeList.size();i++){%>
-                        <option value=<%=scenicThemeList.get(i)%>><%=scenicThemeList.get(i)%></option>
-                        <%}}else{%>
-                        <option value="空">空</option>
-                        <%}%>
-                    </select>
-                </div>
-
-                <div class="form-group">
-                    <input id="searchText" name="searchText" type="text" class="form-control" placeholder="">
-                </div>
-                <button id="btn-show" type="button" class="btn btn-default" onclick="showChoose()">显示</button>
-                <button id="btn-search" type="submit" class="btn btn-default">搜索</button>
-            </form>
-        </div>
 
         <%--景点列表--%>
-        <div class="page-block-travelnote" id="pgae_block_travelnote">
-            <div class="travelnote-list">
+        <div class="page-block-scenic" id="pgae_block_scenic">
+            <div class="scenic-list">
                 <%if(scenicInfoList != null){
                     for (int i = 0;i < scenicInfoList.size();i++){%>
-                        <div class="travelnote-item clearfix">
-                            <div class="travelnote-left">
-                                <a href="" target="_blank">
-                                    <%if (scenicInfoList.get(i).getScenicCoverPicture()==null){%>
-                                        <img src="/FreegoImg/scenic_default.jpg" alt="" class="travelnote-picture">
-                                    <%}else{%>
-                                        <img src=<%=scenicInfoList.get(i).getScenicCoverPicture()%> alt="" class="travelnote-picture">
-                                    <%}%>
-                                </a>
+                <div class="scenic-item clearfix">
+                    <div class="scenic-left">
+                        <a href="" target="_blank">
+                            <%if (scenicInfoList.get(i).getScenicCoverPicture()==null){%>
+                            <img src="/FreegoImg/scenic_default.jpg" alt="" class="scenic-picture">
+                            <%}else{%>
+                            <img src=<%=scenicInfoList.get(i).getScenicCoverPicture()%> alt="" class="scenic-picture">
+                            <%}%>
+                        </a>
+                    </div>
+                    <div class="scenic-right">
+                        <dl>
+                            <dt>
+                                <a href="" target="_blank"><%=scenicInfoList.get(i).getScenicName()%></a>
+                            </dt>
+                            <dd>
+                                <a href="" target="_blank"><%=scenicInfoList.get(i).getScenicIntro()%></a>
+                            </dd>
+                        </dl>
+
+                        <div class="scenic-extra">
+                            <%--定位--%>
+                            <div class="scenic-location">
+                                <img class="scenic-location-pic" src="../images/li/index/icon_search.jpeg">
+                                <div class="scenic-location-text"><%=scenicInfoList.get(i).getScenicAddress()%>></div>
                             </div>
-                            <div class="travelnote-right">
-
-                                <dl>
-                                    <dt>
-                                        <a href="" target="_blank"><%=scenicInfoList.get(i).getScenicName()%></a>
-                                    </dt>
-                                    <dd>
-                                        <a href="" target="_blank"><%=scenicInfoList.get(i).getScenicIntro()%></a>
-                                    </dd>
-                                </dl>
-
-                                <div class="travelnote-extra">
-                                    <%--定位--%>
-                                    <div class="travelnote-location">
-                                        <img class="travelnote-location-pic" src="./images/li/travelnote/location.jpeg">
-                                        <div class="travelnote-location-text">青岛</div>
-                                    </div>
-                                    <%--用户--%>
-                                    <div class="travelnote-user">
-                                        <div class="travelnote-user-head">
-                                            <img class="travelnote-user-head-pic" src="/FreegoImg/li/user/head/head1.jpeg">
-                                        </div>
-                                        <a class="travelnote-user-nickname" href="" target="_blank" rel="nofollow">DiDi_酱</a>
-                                    </div>
-                                    <%--浏览量/收藏量--%>
-                                    <div class="travelnote-view-collection">
-                                        <img src="./images/li/travelnote/eye.jpeg">
-                                        <div class="travelnote-view">1207/</div>
-                                        <div class="travlenote-collection">6</div>
-                                    </div>
-                                    <%--点赞量--%>
-                                    <div class="travelnote-like">
-                                        <div class="travelnote-user-likes">34</div>
-                                        <img class="travelnote-user-likes-pic" src="./images/li/travelnote/like.jpeg">
-                                    </div>
-                                </div>
-
+<%--                            &lt;%&ndash;用户&ndash;%&gt;--%>
+<%--                            <div class="scenic-user">--%>
+<%--                                <div class="scenic-user-head">--%>
+<%--                                    <img class="scenic-user-head-pic" src="../images/li/index/icon_search.jpeg">--%>
+<%--                                </div>--%>
+<%--                                <a class="scenic-user-nickname" href="" target="_blank" rel="nofollow">DiDi_酱</a>--%>
+<%--                            </div>--%>
+                            <%--浏览量/收藏量--%>
+                            <div class="scenic-view-collection">
+                                <img src="./images/li/travelnote/eye.jpeg">
+                                <div class="scenic-view">1207/</div>
+                                <div class="travlenote-collection">6</div>
+                            </div>
+                            <%--点赞量--%>
+                            <div class="scenic-like">
+                                <div class="scenic-user-likes">34</div>
+                                <img class="scenic-user-likes-pic" src="../images/li/index/icon_search.jpeg">
                             </div>
                         </div>
+
+                    </div>
+                </div>
                 <%}}else{%>
                 <option value="空">空</option>
                 <%}%>
@@ -343,7 +325,7 @@
         </div>
     </div>
 
-<%--  分页--%>
+    <%--  分页--%>
     <nav aria-label="Page navigation">
         <ul class="pagination">
             <li>
@@ -353,24 +335,24 @@
             </li>
             <%if(scenicInfoList != null){
                 for (int i = 1;i <= scenicInfoPageBean.getTotalPage();i++){%>
-                    <%if (i==1){%>
-                        <li><a href="/ScenicServlet?&methodName=queryScenicIndex&currentPage=<%=i%>&rows=10"><%=i%></a></li>
-                    <%}else if(i==2&&i<scenicInfoPageBean.getCurrentPage()-3){%>
-                        <li><a href="#">...</a></li>
-                    <%} else if(((i>=scenicInfoPageBean.getCurrentPage()-3)&&(i<scenicInfoPageBean.getCurrentPage()))
-                            ||((i<=scenicInfoPageBean.getCurrentPage()+3)&&(i>scenicInfoPageBean.getCurrentPage()))){%>
-                        <li><a href="/ScenicServlet?&methodName=queryScenicIndex&currentPage=<%=i%>&rows=10"><%=i%></a></li>
-                    <%}else if(i==scenicInfoPageBean.getTotalPage()-1){%>
-                        <li><a href="#">...</a></li>
-                    <%}else if(i==scenicInfoPageBean.getTotalPage()){%>
-                        <li><a href="/ScenicServlet?&methodName=queryScenicIndex&currentPage=<%=i%>&rows=10"><%=i%></a></li>
-                    <%}%>
+            <%if (i==1){%>
+            <li><a href="/ScenicServlet?&methodName=queryScenicIndex&currentPage=<%=i%>&rows=10"><%=i%></a></li>
+            <%}else if(i==2&&i<scenicInfoPageBean.getCurrentPage()-3){%>
+            <li><a href="#">...</a></li>
+            <%} else if(((i>=scenicInfoPageBean.getCurrentPage()-3)&&(i<scenicInfoPageBean.getCurrentPage()))
+                    ||((i<=scenicInfoPageBean.getCurrentPage()+3)&&(i>scenicInfoPageBean.getCurrentPage()))){%>
+            <li><a href="/ScenicServlet?&methodName=queryScenicIndex&currentPage=<%=i%>&rows=10"><%=i%></a></li>
+            <%}else if(i==scenicInfoPageBean.getTotalPage()-1){%>
+            <li><a href="#">...</a></li>
+            <%}else if(i==scenicInfoPageBean.getTotalPage()){%>
+            <li><a href="/ScenicServlet?&methodName=queryScenicIndex&currentPage=<%=i%>&rows=10"><%=i%></a></li>
+            <%}%>
             <%}}else{%>
-                <li>
-                    <a href="#">
-                        0
-                    </a>
-                </li>
+            <li>
+                <a href="#">
+                    0
+                </a>
+            </li>
             <%}%>
 
             <li>
@@ -441,7 +423,7 @@
 
 <script>
     //轮播图搜索复选框
-    document.getElementById("tab_all").style.background="url(../../images/li/index/check_box_check.jpeg)";
+    // document.getElementById("tab_all").style.background="url(../../images/li/index/check_box_check.jpeg)";
     //头部
     document.getElementById("head_nav_index_li").style.background="#ff9d00";
     document.getElementById("head_nav_index_a").style.color="#FFFFFF";
