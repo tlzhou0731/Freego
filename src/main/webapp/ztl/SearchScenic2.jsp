@@ -1,6 +1,7 @@
 <%@ page import="java.util.List" %>
 <%@ page import="domain.PageBean" %>
 <%@ page import="domain.ScenicInfo" %>
+<%@page isELIgnored="false"%>
 <%--
   Created by IntelliJ IDEA.
   Author: Macro
@@ -161,17 +162,17 @@
     <%--搜索框--%>
     <div class="index-search-container" id="index_search">
         <div class="index-search-group">
-            <div class="index-search-bar" id="index_search_bar">
-                <div class="index-search-wrapper">
-                    <div class="index-search-input">
-                        <input name="q" type="text" placeholder="选择地点" id="index_search_scenic_addr" autocomplete="off">
-                        <input name="q" type="text" placeholder="选择主题" id="index_search_scenic_theme" autocomplete="off">
-                        <input name="q" type="text" placeholder="选择出行时间" id="index_search_scenic_date" autocomplete="off">
-                        <input name="q" type="text" placeholder="输入搜索内容" id="index_search_scenic_all" autocomplete="off">                    </div>
-                </div>
-                <div class="index-search-button" id="index_search_btn_all">
-                    <a role="button" href="javascript;"></a>
-                </div>
+            <div class="index-search-bar" id="index_search_bar2">
+                <form action="/ScenicServlet?&methodName=queryScenicBySearch&currentPage=1&rows" method="post">
+                    <div class="index-search-wrapper">
+                        <div class="index-search-input">
+                            <input name="q" type="text" placeholder="输入搜索内容" id="scenic_search_text" autocomplete="off">
+                        </div>
+                    </div>
+                    <div class="index-search-button" id="scenic_search_btn">
+                        <button id="btn_scenic_search" type="submit" class="btn btn-default">搜索</button>
+                    </div>
+                </form>
             </div>
 
         </div>
@@ -184,14 +185,10 @@
     <%--选项表单--%>
     <div class="scenic-form" style="width: 100%">
         <form class="navbar-form navbar-left" action="/ScenicServlet?&methodName=findScenicInfo" method="post">
-            <h1>进入form表单</h1>
-            <div>
-                <div>
-                    时间
-                </div>
+            <div class="scenic_form_date">
                 <select id="dateChoose" name="dateChoose" class="form-control selectpicker"
-                        data-width="80%" data-live-search="true"
-                        multiple data-max-options="5" onchange="getDates(this)" >
+                        data-width="95%" data-live-search="true"
+                        multiple data-max-options="5" onchange="getDates(this)" title="选择出行日期">
                     <option value="1">1月</option>
                     <option value="2">2月</option>
                     <option value="3">3月</option>
@@ -206,14 +203,10 @@
                     <option value="12">12月</option>
                 </select>
             </div>
-            <div>
-                <div>
-                    地点
-                </div>
+            <div class="scenic_form_addr">
                 <select id="'addChoose" name="addChoose" class="form-control selectpicker"
-                        data-width="80%" data-live-search="true"
-                        multiple data-max-options="5" onchange="getAdds(this)" >
-
+                        data-width="95%" data-live-search="true"
+                        multiple data-max-options="5" onchange="getAdds(this)" title="选择地点">
                     <optgroup label="广东">
                         <option value="1">广州</option>
                         <option value="2">深圳</option>
@@ -231,13 +224,10 @@
                     </optgroup>
                 </select>
             </div>
-            <div>
-                <div>
-                    主题
-                </div>
+            <div class="scenic_form_theme">
                 <select id="'themeChoose" name="themeChoose" class="form-control selectpicker"
-                        data-width="80%" data-live-search="true"
-                        multiple data-max-options="5"  onchange="getThemes(this)" >
+                        data-width="95%" data-live-search="true"
+                        multiple data-max-options="5"  onchange="getThemes(this)" title="选择主题">
                     <%if(scenicThemeList != null){
                         for (int i = 0;i < scenicThemeList.size();i++){%>
                     <option value=<%=scenicThemeList.get(i)%>><%=scenicThemeList.get(i)%></option>
@@ -247,15 +237,15 @@
                 </select>
             </div>
 
-            <div class="form-group">
-                <input id="searchText" name="searchText" type="text" class="form-control" placeholder="">
+            <div class="scenic_form_search">
+                <input id="searchText" name="searchText" style="width: 80%" type="text" class="form-control" placeholder="${pageContext.request.contextPath}">
+                <%--                <button id="btn-show" type="button" class="btn btn-default" onclick="showChoose()">显示</button>--%>
+                <button id="btn-search" type="submit" class="btn btn-default">搜索</button>
             </div>
-            <button id="btn-show" type="button" class="btn btn-default" onclick="showChoose()">显示</button>
-            <button id="btn-search" type="submit" class="btn btn-default">搜索</button>
+
         </form>
     </div>
     <br>
-
     <div class="index-scenic">
         <%--游记tab--%>
         <div class="scenic-tab">
@@ -302,15 +292,15 @@
                             <%--定位--%>
                             <div class="scenic-location">
                                 <img class="scenic-location-pic" src="../images/li/index/icon_search.jpeg">
-                                <div class="scenic-location-text">青岛</div>
+                                <div class="scenic-location-text"><%=scenicInfoList.get(i).getScenicAddress()%>></div>
                             </div>
-                            <%--用户--%>
-                            <div class="scenic-user">
-                                <div class="scenic-user-head">
-                                    <img class="scenic-user-head-pic" src="../images/li/index/icon_search.jpeg">
-                                </div>
-                                <a class="scenic-user-nickname" href="" target="_blank" rel="nofollow">DiDi_酱</a>
-                            </div>
+                            <%--                            &lt;%&ndash;用户&ndash;%&gt;--%>
+                            <%--                            <div class="scenic-user">--%>
+                            <%--                                <div class="scenic-user-head">--%>
+                            <%--                                    <img class="scenic-user-head-pic" src="../images/li/index/icon_search.jpeg">--%>
+                            <%--                                </div>--%>
+                            <%--                                <a class="scenic-user-nickname" href="" target="_blank" rel="nofollow">DiDi_酱</a>--%>
+                            <%--                            </div>--%>
                             <%--浏览量/收藏量--%>
                             <div class="scenic-view-collection">
                                 <img src="./images/li/travelnote/eye.jpeg">

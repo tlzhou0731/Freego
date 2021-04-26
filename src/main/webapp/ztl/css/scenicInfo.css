@@ -1,0 +1,357 @@
+/*景点信息界面*/
+.scenic-info-row{
+    padding: 30px 0;
+}
+.scenic-info-row-top{
+    padding: 0;
+}
+.container {
+    overflow: hidden;
+}
+.scenic-info-wrapper, .scenic-info-mod {
+    width: 1000px;
+    margin: auto;
+}
+.scenic-info-row-top .extra {
+    float: right;
+    /*padding-top: 10px;*/
+    text-align: right;
+}
+.scenic-info-row-top .action {
+    /*margin-top: 10px;*/
+}
+.scenic-info-row-top .btn-collect{
+    display: inline-block;
+    height: 30px;
+    margin-left: 20px;
+    color: #333;
+    vertical-align: top;
+    line-height: 30px;
+    font-size: 14px;
+}
+.scenic-info-row-top .icon {
+    float: left;
+    margin-right: 10px;
+    width: 30px;
+    height: 30px;
+    background: orange no-repeat -60px -140px;
+    overflow: hidden;
+}
+.scenic-info-row-top .title{
+    margin: 20px;
+}
+.scenic-info-row-top h1{
+    display: inline;
+    margin-right: 10px;
+    font-weight: normal;
+    font-size: 30px;
+    color: #333;
+}
+/*图片部分*/
+.scenic-info-r-nav{
+    margin: 0;
+    line-height: 59px;
+    font-size: 16px;
+    color: #333;
+    height: 60px;
+}
+.scenic-info-r-nav ul{
+    position: relative;
+    z-index: 2;
+    border-top: 1px solid #ededed;
+}
+.scenic-info-r-nav li {
+    float: left;
+    /* display: inline; */
+}
+.scenic-info-r-nav li a {
+    display: inline-block;
+    padding: 0 20px;
+    color: #333;
+}
+.scenic-info-r-nav li.on a {
+    color: #ff9d00;
+    border-bottom: 2px solid #ff9d00;
+}
+.scenic-info-r-nav .nav-right {
+    float: right;
+}
+.scenic-info-r-nav .btn-comment {
+    display: inline-block;
+    line-height: 35px;
+    background-color: #ff9d00;
+    padding: 0 30px;
+    border-radius: 3px;
+    color: #fff;
+    font-size: 14px;
+    *vertical-align: middle;
+}
+.scenic-info-row-bg {
+    background-color: #fafafa;
+    border-bottom: 1px solid #eee;
+    border-top: 1px solid #eee;
+}
+.scenic-info-row-picture .bd{
+    height: 370px;
+    position: relative;
+    overflow: hidden;
+}
+
+.scenic-info-row-picture .pic-big{
+    float: left;
+    width: 690px;
+    margin-right: 4px;
+    overflow: hidden;
+}
+.scenic-info-row-picture .pic-small{
+    float: left;
+    width: 305px;
+    height: 183px;
+    margin-bottom: 4px;
+    overflow: hidden;
+}
+.scenic-info-row-picture .bd span {
+    position: absolute;
+    height: 20px;
+    background-color: #000;
+    background-color: rgba(0,0,0,.7);
+    color: #fff;
+    font-size: 14px;
+    line-height: 20px;
+    padding: 0 12px;
+    left: 20px;
+    bottom: 15px;
+    border-radius: 10px;
+}
+/*简介*/
+.scenic-info-mod {
+    padding: 30px 0;
+}
+.summary {
+    padding-bottom: 25px;
+    border-bottom: 1px solid #e5e5e5;
+    margin-bottom: 25px;
+    font-size: 16px;
+    color: #333;
+    line-height: 24px;
+}
+.scenic-info-mod-detail .baseinfo {
+    margin: 10px 0 25px;
+    font-size: 14px;
+    line-height: 24px;
+}
+.scenic-info-mod-detail .baseinfo li {
+    float: left;
+    width: 280px;
+    padding: 3px 30px 3px 0;
+}
+.scenic-info-mod-detail .baseinfo .label {
+    color: #333;
+}
+.scenic-info-mod-detail .baseinfo li+li {
+    border-left: 1px solid #eee;
+    padding: 3px 30px;
+}
+.scenic-info-mod-detail dl {
+    margin: 20px 0;
+    font-size: 14px;
+    line-height: 24px;
+}
+.scenic-info-mod-detail dt {
+    margin: 0;
+    color: #333;
+    margin-bottom: 5px;
+}
+.scenic-info-mod-detail dd {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+/*评论*/
+.scenic-comment-mhd {
+    font-size: 20px;
+    color: #333;
+    margin: -30px -3000px 30px;
+    padding: 40px 3000px 0;
+    border-top: 1px solid #eee;
+    font-weight: normal;
+}
+.scenic-comment-nav {
+    padding-bottom: 20px;
+    border-bottom: 1px solid #eee;
+}
+.scenic-comment-nav li {
+    float: left;
+    margin: 5px 0;
+    line-height: 24px;
+    font-size: 14px;
+}
+.scenic-comment-nav .on a {
+    background-color: #fca729;
+    color: #fff;
+}
+.scenic-comment-nav li+li .divide {
+    float: left;
+    margin: 5px 5px;
+    width: 1px;
+    height: 15px;
+    background-color: #eee;
+}
+.scenic-comment-nav a {
+    color: #333;
+    display: inline-block;
+    padding: 0 15px;
+    border-radius: 2px;
+}
+.scenic-comment-nav .num {
+    font-size: 12px;
+    color: #999;
+}
+.scenic-comment-list {
+    padding: 0 30px;
+    border-bottom: 1px solid #eee;
+}
+.scenic-comment-item {
+    padding: 25px 0 20px 70px;
+    border-bottom: 1px dashed #dedede;
+}
+.scenic-comment-item .user {
+    float: left;
+    margin-left: -70px;
+    display: inline;
+    text-align: center;
+}
+.scenic-comment-item .avatar {
+    display: block;
+    margin-bottom: 5px;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    overflow: hidden;
+}
+.scenic-comment-item .level {
+    color: #ea3c1a;
+}
+.scenic-comment-item .name {
+    font-size: 14px;
+}
+.scenic-comment-item:last-child {
+    border-bottom: 0;
+}
+.s-star {
+    display: block;
+    width: 67px;
+    height: 13px;
+    /*星星图片*/
+    background: url(/images/ztl/scenic/scenic_show_3.jpg) no-repeat -60px -90px;
+    overflow: hidden;
+}
+.scenic-comment-item .s-star {
+    display: inline-block;
+    margin: 0 5px;
+    vertical-align: -1px;
+    *vertical-align: middle;
+}
+.s-star4 {
+    background-position: -74px -90px;
+}
+.scenic-comment-txt {
+    margin: 8px 0 10px;
+    font-size: 14px;
+    line-height: 22px;
+}
+.scenic-comment-img {
+    margin-bottom: 10px;
+    overflow: hidden;
+    *zoom: 1;
+}
+.scenic-comment-img a {
+    float: left;
+    margin-right: 10px;
+}
+.scenic-comment-item .info {
+    margin-top: 5px;
+    line-height: 20px;
+}
+.scenic-comment-item .btn-comment {
+    float: right;
+    line-height: 22px;
+}
+.scenic-comment-item .time {
+    color: #999;
+    margin-right: 20px;
+}
+.scenic-comment-review {
+    margin-top: 5px;
+    clear: both;
+    border-top: 1px solid #eaeaea;
+    line-height: 20px;
+}
+.scenic-comment-review li {
+    border-bottom: 1px dotted #e7e7e7;
+    padding: 5px 10px 5px 35px;
+}
+.scenic-comment-review li img {
+    float: left;
+    margin: 1px 0 0 -24px;
+}
+.hide {
+    display: none;
+}
+.scenic-comment-pagination {
+    padding-right: 0;
+}
+.scenic-comment-pagination {
+    padding: 20px 5px;
+    line-height: 24px;
+    text-align: right;
+    font-size: 12px;
+    color: #999;
+}
+.scenic-comment-pagination .count {
+    padding-right: 12px;
+}
+.scenic-comment-pagination .pg-current {
+    padding: 0 7px;
+}
+.scenic-comment-pagination .pi {
+    display: inline-block;
+    margin-right: 1px;
+    margin-left: 1px;
+    padding: 0 7px;
+    border: 0 none;
+    background: 0;
+    border-radius: 4px;
+    color: #666;
+    vertical-align: middle;
+}
+.scenic-comment-pagination .pg-first, .scenic-comment-pagination .pg-prev, .scenic-comment-pagination .pg-next, .scenic-comment-pagination .pg-last, .scenic-comment-pagination .pg-current {
+    display: inline-block;
+    margin-right: 5px;
+    background-color: #ff9d00;
+    padding: 0 5px;
+    border-radius: 4px;
+    color: #fff;
+    vertical-align: middle;
+}
+.scenic-comment-pagination .more {
+    margin-top: 20px;
+    text-align: center;
+}
+.scenic-info-mod-comment .more {
+    margin-top: 20px;
+    text-align: center;
+}
+.scenic-info-mod-comment .more a {
+    display: inline-block;
+    width: 160px;
+    height: 50px;
+    background-color: #fff;
+    border: 1px solid #fc9c27;
+    line-height: 50px;
+    color: #ff9d00;
+    font-size: 14px;
+    border-radius: 4px;
+    text-align: center;
+}

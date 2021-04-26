@@ -91,8 +91,6 @@
     List<ScenicInfo> scenicInfoList = scenicInfoPageBean.getList();
 
 %>
-<%--引入头部--%>
-
 <%--轮播图--%>
 <section id="scenic_banner">
 
@@ -187,7 +185,7 @@
         <form class="navbar-form navbar-left" action="/ScenicServlet?&methodName=findScenicInfo" method="post">
             <div class="scenic_form_date">
                 <select id="dateChoose" name="dateChoose" class="form-control selectpicker"
-                        data-width="80%" data-live-search="true"
+                        data-width="95%" data-live-search="true"
                         multiple data-max-options="5" onchange="getDates(this)" title="选择出行日期">
                     <option value="1">1月</option>
                     <option value="2">2月</option>
@@ -205,7 +203,7 @@
             </div>
             <div class="scenic_form_addr">
                 <select id="'addChoose" name="addChoose" class="form-control selectpicker"
-                        data-width="80%" data-live-search="true"
+                        data-width="95%" data-live-search="true"
                         multiple data-max-options="5" onchange="getAdds(this)" title="选择地点">
                     <optgroup label="广东">
                         <option value="1">广州</option>
@@ -226,7 +224,7 @@
             </div>
             <div class="scenic_form_theme">
                 <select id="'themeChoose" name="themeChoose" class="form-control selectpicker"
-                        data-width="80%" data-live-search="true"
+                        data-width="95%" data-live-search="true"
                         multiple data-max-options="5"  onchange="getThemes(this)" title="选择主题">
                     <%if(scenicThemeList != null){
                         for (int i = 0;i < scenicThemeList.size();i++){%>
@@ -238,16 +236,13 @@
             </div>
 
             <div class="scenic_form_search">
-                <input id="searchText" name="searchText" type="text" class="form-control" placeholder="${pageContext.request.contextPath}">
-                <button id="btn-show" type="button" class="btn btn-default" onclick="showChoose()">显示</button>
+                <input id="searchText" name="searchText" style="width: 80%" type="text" class="form-control" placeholder="${pageContext.request.contextPath}">
+<%--                <button id="btn-show" type="button" class="btn btn-default" onclick="showChoose()">显示</button>--%>
                 <button id="btn-search" type="submit" class="btn btn-default">搜索</button>
             </div>
 
         </form>
     </div>
-    <br>
-        <input name="searchText" type="text" placeholder="${pageContext.request.contextPath}">
-
     <div class="index-scenic">
         <%--游记tab--%>
         <div class="scenic-tab">
@@ -369,56 +364,59 @@
 
 </div>
 
+</body>
 <%--导入尾部--%>
-<div id="footer">
+<footer>
+    <div id="footer">
 
-    <div class="why_select">
+        <div class="why_select">
 
-        <dl style="margin-left: 133px">
-            <dt class="foot-pic">
-                <img src="../images/li/index/foot_1.jpeg" alt="">
-            </dt>
-            <dd>
-                <h1>产品齐全</h1>
-                <h2>产品自主选，随心买</h2>
-            </dd>
-        </dl>
+            <dl style="margin-left: 133px">
+                <dt class="foot-pic">
+                    <img src="../images/li/index/foot_1.jpeg" alt="">
+                </dt>
+                <dd>
+                    <h1>产品齐全</h1>
+                    <h2>产品自主选，随心买</h2>
+                </dd>
+            </dl>
 
-        <dl>
-            <dt class="foot-pic">
-                <img src="../images/li/index/foot_2.jpeg" alt="">
-            </dt>
-            <dd>
-                <h1>便利快捷</h1>
-                <h2>24小时不打烊，随时买</h2>
-            </dd>
-        </dl>
+            <dl>
+                <dt class="foot-pic">
+                    <img src="../images/li/index/foot_2.jpeg" alt="">
+                </dt>
+                <dd>
+                    <h1>便利快捷</h1>
+                    <h2>24小时不打烊，随时买</h2>
+                </dd>
+            </dl>
 
-        <dl>
-            <dt class="foot-pic">
-                <img src="../images/li/index/foot_3.jpeg" alt="">
-            </dt>
-            <dd>
-                <h1>安全支付</h1>
-                <h2>知名支付工具，放心买</h2>
-            </dd>
-        </dl>
+            <dl>
+                <dt class="foot-pic">
+                    <img src="../images/li/index/foot_3.jpeg" alt="">
+                </dt>
+                <dd>
+                    <h1>安全支付</h1>
+                    <h2>知名支付工具，放心买</h2>
+                </dd>
+            </dl>
 
-        <dl>
-            <dt class="foot-pic">
-                <img src="../images/li/index/foot_4.jpeg" alt="">
-            </dt>
-            <dd style="margin-right: 0px">
-                <h1>贴心服务</h1>
-                <h2>客服全年无休，安心买</h2>
-            </dd>
-        </dl>
+            <dl>
+                <dt class="foot-pic">
+                    <img src="../images/li/index/foot_4.jpeg" alt="">
+                </dt>
+                <dd style="margin-right: 0px">
+                    <h1>贴心服务</h1>
+                    <h2>客服全年无休，安心买</h2>
+                </dd>
+            </dl>
 
+        </div>
+        <div class="company">
+            <p>山东工商学院 计算机科学与技术学院 软件工程专业 2017级 毕业设计</p>
+        </div>
     </div>
-    <div class="company">
-        <p>山东工商学院 计算机科学与技术学院 软件工程专业 2017级 毕业设计</p>
-    </div>
-</div>
+</footer>
 
 
 <script>
@@ -502,6 +500,5 @@
     }
 
 </script>
-</body>
 
 </html>
