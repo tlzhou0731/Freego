@@ -8,6 +8,7 @@ package domain;
 public class ScenicCommentInfo {
     private int scenicCommentId;            //评论id
     private int parentId;                   //父id
+    private int parentCommentId;            //父评论id
     private int userId;                     //用户id
     private int scenicId;                   //景点id
     private int scenicGrade;                //所有评分
@@ -17,8 +18,10 @@ public class ScenicCommentInfo {
     public ScenicCommentInfo() {
     }
 
-    public ScenicCommentInfo(int parentId, int userId, int scenicId, int scenicGrade, String commentText, Boolean scenicCommentState) {
+    public ScenicCommentInfo(int scenicCommentId, int parentId, int parentCommentId, int userId, int scenicId, int scenicGrade, String commentText, Boolean scenicCommentState) {
+        this.scenicCommentId = scenicCommentId;
         this.parentId = parentId;
+        this.parentCommentId = parentCommentId;
         this.userId = userId;
         this.scenicId = scenicId;
         this.scenicGrade = scenicGrade;
@@ -40,6 +43,14 @@ public class ScenicCommentInfo {
 
     public void setParentId(int parentId) {
         this.parentId = parentId;
+    }
+
+    public int getParentCommentId() {
+        return parentCommentId;
+    }
+
+    public void setParentCommentId(int parentCommentId) {
+        this.parentCommentId = parentCommentId;
     }
 
     public int getUserId() {

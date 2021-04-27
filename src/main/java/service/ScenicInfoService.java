@@ -1,6 +1,7 @@
 package service;
 
 import domain.PageBean;
+import domain.ScenicCommentInfo;
 import domain.ScenicInfo;
 
 import java.util.List;
@@ -16,5 +17,13 @@ public interface ScenicInfoService {
     public List<String> queryScenicTheme();
 
     public PageBean<ScenicInfo> queryScenicInfoPage(String currentPage, String row);
+
+    public PageBean<ScenicCommentInfo> queryScenicComment(String scenicId, String currentPage, String rows);
+
+    public List<ScenicCommentInfo> queryScenicCommentChild(String scenicId, String currentPage, String rows);
+
+    public Map<Integer,String> queryScenicCommentUserName(String scenicId, String currentPage, String rows);
+
+    public ScenicInfo findScenicInfoByScenicId(String scenicIdStr);
 
 }

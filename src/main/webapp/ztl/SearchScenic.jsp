@@ -278,10 +278,10 @@
                     <div class="scenic-right">
                         <dl>
                             <dt>
-                                <a href="" target="_blank"><%=scenicInfoList.get(i).getScenicName()%></a>
+                                <a href="/ScenicServlet?methodName=findScenicInfoByScenicId&scenicId=<%=scenicInfoList.get(i).getScenicId()%>&currentPage=1&rows=10" target="_blank"><%=scenicInfoList.get(i).getScenicName()%></a>
                             </dt>
                             <dd>
-                                <a href="" target="_blank"><%=scenicInfoList.get(i).getScenicIntro()%></a>
+                                <a href="/ScenicServlet?methodName=findScenicInfoByScenicId&scenicId=<%=scenicInfoList.get(i).getScenicId()%>&currentPage=1&rows=10" target="_blank"><%=scenicInfoList.get(i).getScenicIntro()%></a>
                             </dd>
                         </dl>
 

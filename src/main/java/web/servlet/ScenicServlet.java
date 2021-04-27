@@ -3,6 +3,7 @@ package web.servlet;
 import dao.impl.ScenicInfoDaoImpl;
 import dao.impl.UserInfoDaoImpl;
 import domain.PageBean;
+import domain.ScenicCommentInfo;
 import domain.ScenicInfo;
 import domain.UserInfo;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
@@ -41,11 +42,12 @@ public class ScenicServlet extends HttpServlet {
         if("queryScenicIndex".equals(methodName)){
             queryScenicIndex(request,response);
         }
-        if("findScenicInfo".equals(methodName)){
-            test(request,response);
+        if("findScenicInfoByScenicId".equals(methodName)){
+            findScenicInfoByScenicId(request,response);
+            queryScenicCommentPage(request,response);
+            request.getRequestDispatcher("/ztl/ScenicInfo.jsp").forward(request,response);
         }
-
-
+//        if("findScenicInfo")
 
     }
 
@@ -100,7 +102,6 @@ public class ScenicServlet extends HttpServlet {
 
     }
 
-
     private void queryScenicInfoPage(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
 
         String currentPage = request.getParameter("currentPage");
@@ -111,6 +112,33 @@ public class ScenicServlet extends HttpServlet {
 
     }
 
+    private void queryScenicCommentPage(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+        //页面
+        String currentPage = request.getParameter("currentPage");
+        String rows = request.getParameter("rows");
+        String scenicId = request.getParameter("scenicId");
+        //查出这一页的景点评论
+        PageBean<ScenicCommentInfo> scenicCommentPageBean = scenicInfoService.queryScenicComment(scenicId, currentPage, rows);
+        //查出这一页评论的所有子评论
+        List<ScenicCommentInfo> scenicCommentChild = scenicInfoService.queryScenicCommentChild(scenicId, currentPage, rows);
+        //查出这一页所有评论的用户的头像
+        Map<Integer,String> userName = scenicInfoService.queryScenicCommentUserName(scenicId,currentPage,rows);
+
+        request.setAttribute("scenicCommentPageBean",scenicCommentPageBean);
+        request.setAttribute("scenicCommentChild",scenicCommentChild);
+
+    }
+
+    private void findScenicInfoByScenicId(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+//        String userIdStr = request.getParameter("userId");
+        String scenicId = request.getParameter("scenicId");
+        ScenicInfo scenicInfo;
+        scenicInfo = scenicInfoService.findScenicInfoByScenicId(scenicId);
+        //景点信息
+        request.setAttribute("scenicInfo",scenicInfo);
+    }
+
+
     private void pageTest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
 
 
@@ -120,6 +148,7 @@ public class ScenicServlet extends HttpServlet {
         request.getRequestDispatcher("/college_list.jsp").forward(request,response);
 
     }
+
 
 
     public static void main(String[] args) {

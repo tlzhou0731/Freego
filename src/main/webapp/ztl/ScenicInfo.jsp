@@ -1,6 +1,8 @@
 <%@ page import="java.util.List" %>
 <%@ page import="domain.PageBean" %>
 <%@ page import="domain.ScenicInfo" %>
+<%@ page import="domain.ScenicCommentInfo" %>
+<%@ page import="java.util.ArrayList" %>
 <%@page isELIgnored="false"%>
 <%--
   Created by IntelliJ IDEA.
@@ -87,16 +89,11 @@
 <body>
 <%--接受的数据--%>
 <%
-    List<String> scenicThemeList = null;
-    scenicThemeList = (List<String>)request.getAttribute("scenicThemeList");
-    PageBean<ScenicInfo> scenicInfoPageBean = (PageBean<ScenicInfo>)request.getAttribute("scenicPageBean");
-    List<ScenicInfo> scenicInfoList;
-    if(scenicInfoPageBean!=null){
-        scenicInfoList = scenicInfoPageBean.getList();
-    }else{
-        scenicInfoList = null;
-    }
-
+    ScenicInfo scenicInfo = null;
+    scenicInfo = (ScenicInfo)request.getAttribute("scenicInfo");
+    List<ScenicCommentInfo> scenicCommentChild = (List<ScenicCommentInfo>)request.getAttribute("scenicCommentChild");
+    PageBean<ScenicCommentInfo> scenicCommentPageBean = (PageBean<ScenicCommentInfo>)request.getAttribute("scenicCommentPageBean");
+    List<ScenicCommentInfo> scenicCommentInfoList = scenicCommentPageBean.getList();
 %>
 
 <%--景点头部信息--%>
@@ -114,7 +111,7 @@
         </div>
         <!-- POI名称 S-->
         <div class="title">
-            <h1 style="">滇池</h1>
+            <h1 style=""><%=scenicInfo.getScenicName()%></h1>
         </div>
         <!-- POI名称 E-->
 
@@ -163,39 +160,39 @@
     <!-- 简介 S -->
     <div class="scenic-info-mod scenic-info-mod-detail">
         <div class="summary">
-            ·滇池风光秀丽，为中国国家级旅游度假区，是云南最大的淡水湖。<br>
-            ·紧邻大观公园，与西山森林公园、云南民族村隔水相望。<br>
-            ·可沿东岸在湖边漫步，或乘船游览，冬季的时候可投喂红嘴鸥。<br>
-            ·还可顺路到云南民族村游玩一番，感受云南省多民族的风情。
+            <%=scenicInfo.getSenicDetail()%><br>
         </div>
 
         <ul class="baseinfo clearfix">
             <li class="tel">
                 <div class="label">电话</div>
-                <div class="content">0871-64310175;0871-64311056</div>
+                <div class="content"><%=scenicInfo.getScenicTele()%></div>
             </li>
             <li class="item-time">
                 <div class="label">用时参考</div>
-                <div class="content">1-3小时</div>
+                <div class="content"><%=scenicInfo.getScenicSuitableTravelDays()%>小时</div>
             </li>
         </ul>
 
         <dl>
-            <dt>交通</dt>
-            <dd>乘坐24、44、73路公交车至海埂公园下车，另外云南民族村有缆车往返于海埂公园与西山。</dd>
+            <dt>适合人数</dt>
+            <dd><%=scenicInfo.getScenicViewNums()%></dd>
         </dl>
-        <dl>
-            <dt>门票</dt>
-            <dd>
-                <div> <br>
-                    tips:<br>
-                    具体详情请咨询景区</div>
+<%--        <dl>--%>
+<%--            <dt>门票</dt>--%>
+<%--            <dd>--%>
+<%--                <div>--%>
+<%--                    <br>--%>
+<%--                    tips:<br>--%>
+<%--                    具体详情请咨询景区--%>
+<%--                </div>--%>
 
-            </dd>
-        </dl>
+<%--            </dd>--%>
+<%--        </dl>--%>
         <dl>
             <dt>开放时间</dt>
-            <dd>全天<br>
+            <dd>
+                全天<br>
                 <br>
             </dd>
         </dl>
@@ -208,9 +205,9 @@
         <div id="pagelet_scenic" class="pagelet-scenic-comment">
             <div class="scenic-info-mod scenic-info-mod-comment">
                 <div class="scenic-comment-mhd scenic-comment-mhd-large">
-                    蜂蜂点评
+                    Free点评
                     <span>
-                        （共有<em>3310</em>条真实评价）
+                        （共有<em><%=scenicCommentPageBean.getList().size()+scenicCommentChild.size()%></em>条真实评价）
                     </span>
                 </div>
                 <div class="scenic-comment-nav">
@@ -282,17 +279,83 @@
                 <div class="_scenic_comment_list">
                     <div class="scenic-comment-list">
                         <ul>
+                            <%if(scenicCommentPageBean != null){
+                                //这一页有多少个景点
+                                for (int i = 0;i < scenicCommentInfoList.size();i++){%>
+                                    <li class="scenic-comment-item scenic-review-list-item clearfix">
+                                        <div class="user">
+                                            <a class="avatar" href="/u/78339278.html" target="_blank">
+                                                <img src="https://b1-q.mafengwo.net/s13/M00/7C/CA/wKgEaVxmfzqAFz0AAACeb-zb4Lo40.jpeg?imageMogr2%2Fthumbnail%2F%2148x48r%2Fgravity%2FCenter%2Fcrop%2F%2148x48%2Fquality%2F90" width="48" height="48">
+                                            </a>
+                                        </div>
+                                        <a class="name" href="" target="_blank">
+                                            <%=String.valueOf(scenicCommentInfoList.get(i).getUserId())%>
+                                        </a>
+
+                                        <span class="s-star s-star5"></span>
+                                        <p class="scenic-comment-txt">
+                                            <%=scenicCommentInfoList.get(i).getCommentText()%>
+                                        </p>
+
+                                        <div class="scenic-comment-img">
+                                            <a href="/photo/poi/19779_408964428.html" target="_blank"><img src="https://n1-q.mafengwo.net/s13/M00/E4/5E/wKgEaVx95faAfn0CAC0gZWhAtxk40.jpeg?imageMogr2%2Fthumbnail%2F%21200x120r%2Fgravity%2FCenter%2Fcrop%2F%21200x120%2Fquality%2F100" width="200" height="120"></a>
+                                            <a href="/photo/poi/19779_408964432.html" target="_blank"><img src="https://n1-q.mafengwo.net/s13/M00/E4/5F/wKgEaVx95faAC4ikAB_MhIwjMIw45.jpeg?imageMogr2%2Fthumbnail%2F%21200x120r%2Fgravity%2FCenter%2Fcrop%2F%21200x120%2Fquality%2F100" width="200" height="120"></a>
+                                            <a href="/photo/poi/19779_408964436.html" target="_blank"><img src="https://p1-q.mafengwo.net/s13/M00/E4/5F/wKgEaVx95feAMCLzACKd5j5g5Ik21.jpeg?imageMogr2%2Fthumbnail%2F%21200x120r%2Fgravity%2FCenter%2Fcrop%2F%21200x120%2Fquality%2F100" width="200" height="120"></a>
+                                            <a href="/photo/poi/19779_408964440.html" target="_blank"><img src="https://p1-q.mafengwo.net/s13/M00/E4/60/wKgEaVx95fiAd9CsADWlhSJa-B812.jpeg?imageMogr2%2Fthumbnail%2F%21200x120r%2Fgravity%2FCenter%2Fcrop%2F%21200x120%2Fquality%2F100" width="200" height="120"></a>
+                                        </div>
+
+                                        <div class="info clearfix">
+                                            <a class="btn-comment _j_comment" title="添加评论">评论</a>
+                                            <span class="time">2019-03-05 10:59:10</span>
+                                        </div>
+
+                                        <div class="scenic-comment-review add-reply">
+                                            <ul class="more_reply_box comment_list">
+                                                <%  int countj = 0;
+                                                    List<Integer> commentChildNum = new ArrayList<Integer>();
+                                                    System.out.println("AFTER COUNTJ");
+                                                    for (int j = 0;j < scenicCommentChild.size();j++){
+                                                        if(scenicCommentChild.get(j).getParentCommentId()==scenicCommentInfoList.get(i).getScenicCommentId()){
+                                                            commentChildNum.add(j);
+                                                            countj++;
+                                                            System.out.println("COUNTJ="+j);
+                                                        }
+                                                    }
+                                                    if(countj!=0){%>
+                                                <%  for(int j=0;j<countj;j++){%>
+                                                        <li >
+                                                            <a href="" target="_blank">
+                                                                <img src="https://n1-q.mafengwo.net/s9/M00/05/17/wKgBs1bBzguAa3jrAACEXkZu-eQ06.jpeg?imageMogr2%2Fthumbnail%2F%2116x16r%2Fgravity%2FCenter%2Fcrop%2F%2116x16%2Fquality%2F90" width="16" height="16">
+                                                                <%=String.valueOf(scenicCommentChild.get(commentChildNum.get(j)).getUserId())%>
+                                                            </a>
+                                                            <%if(scenicCommentChild.get(commentChildNum.get(j)).getParentId()!=scenicCommentChild.get(commentChildNum.get(j)).getParentCommentId()){%>
+                                                            ：回复<%=String.valueOf(scenicCommentChild.get(commentChildNum.get(j)).getUserId())%>：
+                                                            <%}%>
+                                                            <%=scenicCommentChild.get(commentChildNum.get(j)).getCommentText()%>
+                                                            <a class="_j_reply re_reply" data-id="<%=scenicCommentChild.get(commentChildNum.get(j)).getScenicCommentId()%>>" data-uid="scenicCommentChild.get(commentChildNum.get(j)).getUserId()" data-username="'林家辉" title="添加回复">回复</a>
+                                                            <br><span class="time">2019-03-06 10:14:32</span>
+                                                        </li>
+                                                <%}}%>
+                                            </ul>
+
+                                            <div class="add-comment hide reply-form">
+                                                <textarea class="comment_reply" data-comment_id="162437860" data-comment_username="太阳🌞之光" data-poi_id="19779" data-poi_name="滇池" data-parent_id="" data-parent_uid="" data-parent_username="" style="overflow: hidden; color: rgb(204, 204, 204);"></textarea>
+                                                <a class="btn btn_submit_reply">回复</a>
+                                            </div>
+                                        </div>
+                                    </li>
+                            <%}}%>
                             <li class="scenic-comment-item scenic-review-list-item clearfix">
                                 <div class="user">
                                     <a class="avatar" href="" target="_blank">
-                                        <img src="" width="48" height="48">
+                                        <img src="/images/ztl/scenic/scenic_show_1.jpg" width="48" height="48">
                                     </a>
-                                    <span class="level">
-                                        LV.32
-                                    </span>
+<%--                                    <span class="level">--%>
+<%--                                        LV.32--%>
+<%--                                    </span>--%>
                                 </div>
                                 <a class="name" href="" target="_blank">
-                                    无言
+                                    aaaaaaa
                                 </a>
 
                                 <span class="s-star s-star4"></span>
@@ -966,20 +1029,43 @@
                     </div>
 
                     <div align="right" class="scenic-comment-pagination">
-                        <span class="count">共<span>5</span>页 / <span>3310</span>条</span>
+                        <span class="count">共<span><%=scenicCommentPageBean.getTotalPage()%></span>页 / <span><%=scenicCommentPageBean.getTotalCount()%></span>条</span>
+                        <a class="pi pg-prev" href="" title="前一页"><<</a>
 
-                        <span class="pg-current">1</span>
-                        <a class="pi" title="第2页" href="">2</a>
-                        <a class="pi" title="第3页" href="">3</a>
-                        <a class="pi" title="第4页" href="">4</a>
-                        <a class="pi" title="第5页" href="">5</a>
+                        <%if(scenicCommentInfoList != null){
+                            for (int i = 1;i <= scenicCommentPageBean.getTotalPage();i++){%>
+                                <%if (i==scenicCommentPageBean.getCurrentPage()){%>
+                                    <span class="pg-current"><%=i%></span>
+                                <%}else if(i==1){%>
+                                    <a class="pi" href="#">1</a>
+                                <%}else if(i==2&&i<scenicCommentPageBean.getCurrentPage()-3){%>
+                                    <a class="pi" href="#">...</a>
+                                <%}else if(((i>=scenicCommentPageBean.getCurrentPage()-3)&&(i<scenicCommentPageBean.getCurrentPage()))
+                                        ||((i<=scenicCommentPageBean.getCurrentPage()+3)&&(i>scenicCommentPageBean.getCurrentPage()))){%>
+                                    <a class="pi" href="/ScenicServlet?&methodName=queryScenicIndex&currentPage=<%=i%>&rows=10"><%=i%></a>
+                                <%}else if(i==scenicCommentPageBean.getTotalPage()-1){%>
+                                    <a  class="pi" href="#">...</a>
+                                <%}else if(i==scenicCommentPageBean.getTotalPage()){%>
+                                    <a class="pi" href="/ScenicServlet?&methodName=queryScenicIndex&currentPage=<%=i%>&rows=10"><%=i%></a>
+                                <%}%>
+                            <%}
+                        }else{%>
+                            <span class="pg-current">0</span>
+                        <%}%>
+                        <a class="pi pg-next" href="" title="后一页">>></a>
 
-                        <a class="pi pg-next" href="" title="后一页">后一页</a>
-                        <a class="pi pg-last" href="" title="末页">末页</a>
+<%--                        <span class="pg-current">1</span>--%>
+<%--                        <a class="pi" href="">2</a>--%>
+<%--                        <a class="pi" href="">3</a>--%>
+<%--                        <a class="pi" href="">4</a>--%>
+<%--                        <a class="pi" href="">5</a>--%>
+
+<%--                        <a class="pi pg-next" href="" title="后一页">后一页</a>--%>
                     </div>
 
 
                 </div>
+
             <div class="more">
                 <a href="" target="_blank">查看相关游记</a>
             </div>

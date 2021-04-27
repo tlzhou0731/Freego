@@ -3,6 +3,7 @@ package dao.impl;
 import dao.ScenicInfoDao;
 
 import domain.PageBean;
+import domain.ScenicCommentInfo;
 import domain.ScenicInfo;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -39,7 +40,7 @@ public class ScenicInfoDaoImpl implements ScenicInfoDao {
     }
 
     @Override
-    public int getTotalCount() {
+    public int getScenicTotalCount() {
         String sql = "select COUNT(scenicId) from scenic;";
 
         return jdbcTemplate.queryForObject(sql,Integer.class);
@@ -50,6 +51,47 @@ public class ScenicInfoDaoImpl implements ScenicInfoDao {
 
         String sql="SELECT * FROM scenic WHERE (lng IS NOT NULL and lat is not NULL) LIMIT ?,?";
         return jdbcTemplate.query(sql, new BeanPropertyRowMapper<ScenicInfo>(ScenicInfo.class), start,row);
+    }
+
+    public int getScenicCommentTotalCount(int scenicId) {
+        String sql = "select COUNT(scenicId) from sceniccomment where scenicId = ? and parentId = -1;";
+
+        return jdbcTemplate.queryForObject(sql,Integer.class,scenicId);
+    }
+
+    @Override
+    public List<ScenicCommentInfo> selectScenicCommentPage(int scenicId, int start, int row) throws Exception {
+        String sql="SELECT * FROM sceniccomment WHERE (scenicId = ? and parentId = -1) LIMIT ?,?";
+        List<ScenicCommentInfo> scenicCommentInfoList = jdbcTemplate.query(sql, new BeanPropertyRowMapper<ScenicCommentInfo>(ScenicCommentInfo.class),scenicId, start,row);
+        System.out.println(scenicCommentInfoList);
+        return scenicCommentInfoList;
+    }
+
+    @Override
+    public List<ScenicCommentInfo> selectScenicCommentChild(int scenicId, int start, int row) throws Exception {
+//        String sql="SELECT * FROM sceniccomment WHERE (parentId in (SELECT scenicCommentId FROM sceniccomment WHERE (scenicId = ? and parentId = -1) LIMIT ?,?))";
+        String sql;
+        sql = "SELECT * FROM sceniccomment WHERE parentCommentId in (SELECT comm.scenicCommentId FROM (select * from sceniccomment WHERE (scenicId = ? and parentId = -1) LIMIT ?,?)as comm);";
+        List<ScenicCommentInfo> scenicCommentInfoList = jdbcTemplate.query(sql, new BeanPropertyRowMapper<ScenicCommentInfo>(ScenicCommentInfo.class),scenicId, start,row);
+        System.out.println("***********************************************************");
+        System.out.println(scenicCommentInfoList);
+        return scenicCommentInfoList;
+    }
+
+    @Override
+    public Map<Integer,String> selectScenicCommentUserName(int scenicId, int start, int row) throws Exception {
+//        String sql="SELECT userId,userNickName from user where (userId IN (SELECT DISTINCT userId FROM sceniccomment WHERE (scenicId = ? and parentId = -1) LIMIT ?,?))";
+//        //return jdbcTemplate.query(sql, new BeanPropertyRowMapper<ScenicCommentInfo>(ScenicCommentInfo.class),scenicId, start,row);
+//        return jdbcTemplate.queryForList(sql,Map<Integer,String>.class,scenicId,start,row);
+        return null;
+    }
+
+    @Override
+    public ScenicInfo selectScenicInfoByScenicId(int scenicId) throws Exception {
+        String sql = "select * from scenic where scenicId = ?";
+        ScenicInfo scenicInfo = null;
+        scenicInfo= jdbcTemplate.queryForObject(sql,new BeanPropertyRowMapper<ScenicInfo>(ScenicInfo.class),scenicId);
+        return scenicInfo;
     }
 
 
