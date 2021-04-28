@@ -139,7 +139,7 @@ public class ScenicInfoServiceImpl implements ScenicInfoService {
         }
         return null;
     }
-    //收藏景点
+    //收藏景点的行为
     @Override
     public int collectScenic(String userIdStr, String scenicIdStr) {
         int collectResult = 0;
@@ -160,7 +160,7 @@ public class ScenicInfoServiceImpl implements ScenicInfoService {
         }
         return 0;
     }
-
+    //取消收藏景点的这个行为
     @Override
     public int disCollectScenic(String userIdStr, String scenicIdStr) {
         int disCollectResult = 0;
@@ -181,5 +181,44 @@ public class ScenicInfoServiceImpl implements ScenicInfoService {
         }
         return 0;
     }
+    //评论景点这个行为
+    public int commentScenic(String parentIdStr
+            ,String parentCommentIdStr
+            ,String userIdStr
+            ,String scenicIdStr
+            ,String scenicGradeStr
+            ,String commentText
+            ,String scenicCommentStateStr
+            ,List<String> scenicCommentPictureList){
+        int addCommentResult=0,addCommentPictureResult=0,dealPreferResult=0;
+        int parentId = Integer.parseInt(parentIdStr);
+        int parentCommentId = Integer.parseInt(parentCommentIdStr);
+        int userId = Integer.parseInt(userIdStr);
+        int scenicId = Integer.parseInt(scenicIdStr);
+        int scenicGrade = Integer.parseInt(scenicGradeStr);
+        int scenicCommentState = Integer.parseInt(scenicCommentStateStr);
+        //添加评论
+        try {
+            ScenicCommentInfo scenicCommentInfo = new ScenicCommentInfo(0,parentId,parentCommentId,userId,scenicId,scenicGrade,commentText,scenicCommentState==1);
+            addCommentResult = scenicInfoDao.addScenicComment(scenicCommentInfo);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        //添加评论的图片
+        try {
+            addCommentResult = scenicInfoDao.addScenicCommentPicture(userId,addCommentResult,scenicCommentPictureList);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        //更新
+        try {
+            dealPreferResult = scenicInfoDao.increaseUserPreferScenic(userId,scenicId,(float)0.4);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return 0;
+    }
+
 
 }

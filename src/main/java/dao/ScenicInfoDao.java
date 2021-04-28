@@ -23,9 +23,17 @@ public interface ScenicInfoDao {
     Map<Integer,String> selectScenicCommentUserName(int scenicId, int start,int row) throws Exception;
     ScenicInfo selectScenicInfoByScenicId(int scenicId) throws Exception;
 
-    int collectScenic(int userId, int scenicId)throws Exception;
+    //关于景点的偏好的修改
     int increaseUserPreferScenic(int userId, int scenicId, float weight)throws Exception;
-    int disCollectScenic(int userId, int scenicId)throws Exception;
     int decreaseUserPreferScenic(int userId, int scenicId, float weight)throws Exception;
+    //收藏景点
+    int collectScenic(int userId, int scenicId)throws Exception;
+    //取消收藏景点
+    int disCollectScenic(int userId, int scenicId)throws Exception;
+    //添加评论
+    int addScenicComment(ScenicCommentInfo scenicCommentInfo)throws Exception;
+    //添加评论的图片
+    int addScenicCommentPicture(int userId,int scenicCommentId, List<String> picturePathList)throws Exception;
+
 
 }

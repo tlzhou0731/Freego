@@ -95,7 +95,22 @@ public class ScenicInfoDaoImpl implements ScenicInfoDao {
         scenicInfo= jdbcTemplate.queryForObject(sql,new BeanPropertyRowMapper<ScenicInfo>(ScenicInfo.class),scenicId);
         return scenicInfo;
     }
-
+    //景点改变的用户偏好(加)
+    @Override
+    public int increaseUserPreferScenic(int userId, int scenicId, float weight) throws Exception {
+        String sql;
+        sql = "UPDATE userprefer SET preferWeight = preferWeight+? where( userId = ? and tagId IN (SELECT tagId FROM taglink where type = '景点' and linkId = ?));";
+        int result = jdbcTemplate.update(sql,weight,userId,scenicId);
+        return result;
+    }
+    //景点改变的用户偏好(减)
+    @Override
+    public int decreaseUserPreferScenic(int userId, int scenicId, float weight) throws Exception {
+        String sql;
+        sql = "UPDATE userprefer SET preferWeight = preferWeight-? where( userId = ? and tagId IN (SELECT tagId FROM taglink where type = '景点' and linkId = ?));";
+        int result = jdbcTemplate.update(sql,weight,userId,scenicId);
+        return result;
+    }
     //收藏景点
     @Override
     public int collectScenic(int userId, int scenicId) throws Exception {
@@ -103,14 +118,6 @@ public class ScenicInfoDaoImpl implements ScenicInfoDao {
         sql = "INSERT INTO sceniccollect VALUES(?,?);";
         int result=0;
         result = jdbcTemplate.update(sql,scenicId,userId);
-        return result;
-    }
-    //景点改变的用户偏好(加)
-    @Override
-    public int increaseUserPreferScenic(int userId, int scenicId, float weight) throws Exception {
-        String sql;
-        sql = "UPDATE userprefer SET preferWeight = preferWeight+? where( userId = ? and tagId IN (SELECT tagId FROM taglink where type = '景点' and linkId = ?));";
-        int result = jdbcTemplate.update(sql,weight,userId,scenicId);
         return result;
     }
     //取消景点收藏
@@ -124,12 +131,42 @@ public class ScenicInfoDaoImpl implements ScenicInfoDao {
     }
 
     @Override
-    public int decreaseUserPreferScenic(int userId, int scenicId, float weight) throws Exception {
+    public int addScenicComment(ScenicCommentInfo scenicCommentInfo) throws Exception {
         String sql;
-        sql = "UPDATE userprefer SET preferWeight = preferWeight-? where( userId = ? and tagId IN (SELECT tagId FROM taglink where type = '景点' and linkId = ?));";
-        int result = jdbcTemplate.update(sql,weight,userId,scenicId);
-        return result;
+        int addResult = 0;
+        sql = "INSERT INTO sceniccomment VALUES(?,?,?,?,?,?,?,?);";
+        addResult = jdbcTemplate.update(sql
+                ,scenicCommentInfo.getScenicCommentId()
+                ,scenicCommentInfo.getParentId()
+                ,scenicCommentInfo.getParentCommentId()
+                ,scenicCommentInfo.getUserId()
+                ,scenicCommentInfo.getScenicId()
+                ,scenicCommentInfo.getScenicGrade()
+                ,scenicCommentInfo.getCommentText()
+                ,scenicCommentInfo.getScenicCommentState());
+        sql = "SELECT LAST_INSERT_ID();";
+        addResult = jdbcTemplate.queryForObject(sql,Integer.class);
+        return addResult;
     }
 
+    @Override
+    public int addScenicCommentPicture(int userId, int scenicCommentId, List<String> picturePathList) {
+        String sql;
+        int addResult = 0;
+        for(int i = 0;i<picturePathList.size();i++){
+            sql = "INSERT INTO sceniccommentpicture VALUES(?,?,?);";
+            addResult = jdbcTemplate.update(sql,scenicCommentId,picturePathList.get(i),i);
+        }
+        return addResult;
+    }
+
+    public static void main(String[] args) {
+        JdbcTemplate jdbcTemplate2 = new JdbcTemplate(JDBCUtils.getDataSource());
+        String sql = "INSERT INTO sceniccomment VALUES(?,?,?,?,?,?,?,?);";
+        jdbcTemplate2.update(sql,0,1005,1002,1025,608,4,"AAAAAAAAAAA",0);
+        sql = "SELECT LAST_INSERT_ID();";
+        int addResult = jdbcTemplate2.queryForObject(sql,Integer.class);
+        System.out.println(addResult);
+    }
 
 }

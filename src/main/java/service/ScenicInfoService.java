@@ -30,4 +30,13 @@ public interface ScenicInfoService {
 
     public int disCollectScenic(String userIdStr, String scenicIdStr);
 
+    public int commentScenic(String parentIdStr
+            ,String parentCommentIdStr
+            ,String userIdStr
+            ,String scenicIdStr
+            ,String scenicGradeStr
+            ,String commentText
+            ,String scenicCommentStateStr
+            ,List<String> scenicCommentPictureList);
+
 }
