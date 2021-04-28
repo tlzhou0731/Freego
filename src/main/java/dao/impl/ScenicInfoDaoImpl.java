@@ -25,6 +25,8 @@ import java.util.Set;
 
 public class ScenicInfoDaoImpl implements ScenicInfoDao {
     JdbcTemplate jdbcTemplate = new JdbcTemplate(JDBCUtils.getDataSource());
+
+    //查找所有景点的标签
     @Override
     public List<String> selectScenicTheme() {
 //        JdbcTemplate jdbcTemplate = new JdbcTemplate(JDBCUtils.getDataSource());
@@ -38,27 +40,27 @@ public class ScenicInfoDaoImpl implements ScenicInfoDao {
             }
         },null);
     }
-
+    //查找景点并分页中的总页数
     @Override
     public int getScenicTotalCount() {
         String sql = "select COUNT(scenicId) from scenic;";
 
         return jdbcTemplate.queryForObject(sql,Integer.class);
     }
-
+    //查找景点，并分页展示
     @Override
     public List<ScenicInfo> selectScenicInfoPage(int start,int row){
 
         String sql="SELECT * FROM scenic WHERE (lng IS NOT NULL and lat is not NULL) LIMIT ?,?";
         return jdbcTemplate.query(sql, new BeanPropertyRowMapper<ScenicInfo>(ScenicInfo.class), start,row);
     }
-
+    //查找这个景点的所有祖宗评论的页数
     public int getScenicCommentTotalCount(int scenicId) {
         String sql = "select COUNT(scenicId) from sceniccomment where scenicId = ? and parentId = -1;";
 
         return jdbcTemplate.queryForObject(sql,Integer.class,scenicId);
     }
-
+    //查找这个景点的所有祖宗评论按照分页
     @Override
     public List<ScenicCommentInfo> selectScenicCommentPage(int scenicId, int start, int row) throws Exception {
         String sql="SELECT * FROM sceniccomment WHERE (scenicId = ? and parentId = -1) LIMIT ?,?";
@@ -66,7 +68,7 @@ public class ScenicInfoDaoImpl implements ScenicInfoDao {
         System.out.println(scenicCommentInfoList);
         return scenicCommentInfoList;
     }
-
+    //查找这个景点的所有子孙评论
     @Override
     public List<ScenicCommentInfo> selectScenicCommentChild(int scenicId, int start, int row) throws Exception {
 //        String sql="SELECT * FROM sceniccomment WHERE (parentId in (SELECT scenicCommentId FROM sceniccomment WHERE (scenicId = ? and parentId = -1) LIMIT ?,?))";
@@ -77,7 +79,7 @@ public class ScenicInfoDaoImpl implements ScenicInfoDao {
         System.out.println(scenicCommentInfoList);
         return scenicCommentInfoList;
     }
-
+    //查找这个景点的所有评论的用户的id和头像
     @Override
     public Map<Integer,String> selectScenicCommentUserName(int scenicId, int start, int row) throws Exception {
 //        String sql="SELECT userId,userNickName from user where (userId IN (SELECT DISTINCT userId FROM sceniccomment WHERE (scenicId = ? and parentId = -1) LIMIT ?,?))";
@@ -85,13 +87,48 @@ public class ScenicInfoDaoImpl implements ScenicInfoDao {
 //        return jdbcTemplate.queryForList(sql,Map<Integer,String>.class,scenicId,start,row);
         return null;
     }
-
+    //根据景点的id查找景点的信息
     @Override
     public ScenicInfo selectScenicInfoByScenicId(int scenicId) throws Exception {
         String sql = "select * from scenic where scenicId = ?";
         ScenicInfo scenicInfo = null;
         scenicInfo= jdbcTemplate.queryForObject(sql,new BeanPropertyRowMapper<ScenicInfo>(ScenicInfo.class),scenicId);
         return scenicInfo;
+    }
+
+    //收藏景点
+    @Override
+    public int collectScenic(int userId, int scenicId) throws Exception {
+        String sql;
+        sql = "INSERT INTO sceniccollect VALUES(?,?);";
+        int result=0;
+        result = jdbcTemplate.update(sql,scenicId,userId);
+        return result;
+    }
+    //景点改变的用户偏好(加)
+    @Override
+    public int increaseUserPreferScenic(int userId, int scenicId, float weight) throws Exception {
+        String sql;
+        sql = "UPDATE userprefer SET preferWeight = preferWeight+? where( userId = ? and tagId IN (SELECT tagId FROM taglink where type = '景点' and linkId = ?));";
+        int result = jdbcTemplate.update(sql,weight,userId,scenicId);
+        return result;
+    }
+    //取消景点收藏
+    @Override
+    public int disCollectScenic(int userId, int scenicId) throws Exception {
+        String sql;
+        sql = "DELETE FROM sceniccollect WHERE (scenicId = ? and userId = ?);";
+        int result=0;
+        result = jdbcTemplate.update(sql,scenicId,userId);
+        return result;
+    }
+
+    @Override
+    public int decreaseUserPreferScenic(int userId, int scenicId, float weight) throws Exception {
+        String sql;
+        sql = "UPDATE userprefer SET preferWeight = preferWeight-? where( userId = ? and tagId IN (SELECT tagId FROM taglink where type = '景点' and linkId = ?));";
+        int result = jdbcTemplate.update(sql,weight,userId,scenicId);
+        return result;
     }
 
 

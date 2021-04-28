@@ -23,4 +23,9 @@ public interface ScenicInfoDao {
     Map<Integer,String> selectScenicCommentUserName(int scenicId, int start,int row) throws Exception;
     ScenicInfo selectScenicInfoByScenicId(int scenicId) throws Exception;
 
+    int collectScenic(int userId, int scenicId)throws Exception;
+    int increaseUserPreferScenic(int userId, int scenicId, float weight)throws Exception;
+    int disCollectScenic(int userId, int scenicId)throws Exception;
+    int decreaseUserPreferScenic(int userId, int scenicId, float weight)throws Exception;
+
 }

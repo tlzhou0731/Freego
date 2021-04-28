@@ -26,4 +26,8 @@ public interface ScenicInfoService {
 
     public ScenicInfo findScenicInfoByScenicId(String scenicIdStr);
 
+    public int collectScenic(String userIdStr, String scenicIdStr);
+
+    public int disCollectScenic(String userIdStr, String scenicIdStr);
+
 }

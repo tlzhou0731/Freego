@@ -22,6 +22,8 @@ public class ScenicInfoServiceImpl implements ScenicInfoService {
     public ScenicInfoServiceImpl(ScenicInfoDao scenicInfoDao){
         this.scenicInfoDao = scenicInfoDao;
     }
+
+    //查询景点的标签
     @Override
     public List<String> queryScenicTheme() {
         try {
@@ -31,7 +33,7 @@ public class ScenicInfoServiceImpl implements ScenicInfoService {
         }
         return null;
     }
-
+    //按照分页查询景点信息
     @Override
     public PageBean<ScenicInfo> queryScenicInfoPage(String currentPageStr, String rowsStr){
         try {
@@ -60,7 +62,7 @@ public class ScenicInfoServiceImpl implements ScenicInfoService {
         }
         return null;
     }
-
+    //按照分页查询当前景点的所有祖宗评论
     @Override
     public PageBean<ScenicCommentInfo> queryScenicComment(String scenicIdStr, String currentPageStr, String rowsStr) {
         try {
@@ -90,7 +92,7 @@ public class ScenicInfoServiceImpl implements ScenicInfoService {
         }
         return null;
     }
-
+    //查询当前景点的所有孩子评论
     @Override
     public List<ScenicCommentInfo> queryScenicCommentChild(String scenicIdStr, String currentPageStr, String rowsStr) {
         try {
@@ -107,7 +109,7 @@ public class ScenicInfoServiceImpl implements ScenicInfoService {
         }
         return null;
     }
-
+    //查询当前景点的所有评论用户的用户id和对应头像
     @Override
     public Map<Integer,String> queryScenicCommentUserName(String scenicIdStr, String currentPageStr, String rowsStr) {
         try {
@@ -124,7 +126,7 @@ public class ScenicInfoServiceImpl implements ScenicInfoService {
         }
         return null;
     }
-
+    //按照景点id查询景点信息
     @Override
     public ScenicInfo findScenicInfoByScenicId(String scenicIdStr) {
         try {
@@ -136,6 +138,48 @@ public class ScenicInfoServiceImpl implements ScenicInfoService {
             e.printStackTrace();
         }
         return null;
+    }
+    //收藏景点
+    @Override
+    public int collectScenic(String userIdStr, String scenicIdStr) {
+        int collectResult = 0;
+        int preferResult = 0;
+        int userId = Integer.parseInt(userIdStr);
+        int scenicId = Integer.parseInt(scenicIdStr);
+        try {
+            collectResult = scenicInfoDao.collectScenic(userId,scenicId);
+            return collectResult;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        try {
+            preferResult = scenicInfoDao.increaseUserPreferScenic(userId,scenicId,(float)0.5);
+            return preferResult;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
+
+    @Override
+    public int disCollectScenic(String userIdStr, String scenicIdStr) {
+        int disCollectResult = 0;
+        int preferResult = 0;
+        int userId = Integer.parseInt(userIdStr);
+        int scenicId = Integer.parseInt(scenicIdStr);
+        try {
+            disCollectResult = scenicInfoDao.disCollectScenic(userId,scenicId);
+            return disCollectResult;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        try {
+            preferResult = scenicInfoDao.decreaseUserPreferScenic(userId,scenicId,(float)0.5);
+            return preferResult;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return 0;
     }
 
 }

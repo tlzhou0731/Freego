@@ -602,7 +602,7 @@ a:hover{
 }
 .scenic-info-r-nav li {
     float: left;
-    /* display: inline; */
+     display: inline;
 }
 .scenic-info-r-nav li a {
     display: inline-block;
