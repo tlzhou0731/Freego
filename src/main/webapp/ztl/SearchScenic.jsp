@@ -1,6 +1,7 @@
 <%@ page import="java.util.List" %>
 <%@ page import="domain.PageBean" %>
 <%@ page import="domain.ScenicInfo" %>
+<%@ page import="java.util.Map" %>
 <%@page isELIgnored="false"%>
 <%--
   Created by IntelliJ IDEA.
@@ -47,6 +48,24 @@
     <script src="../ztl/js/bootstrap.min.js"></script>
     <link rel="stylesheet" type="text/css" href="../ztl/css/index.css">
 
+
+    <script src="https://hm.baidu.com/hm.js?8288b2ed37e5bc9b4c9f7008798d2de0"></script>
+    <script type="text/javascript">
+        window.Env = {"shortcut_mdds":[{"id":"","name":"\u4e2d\u56fd","mdds":[{"id":10819,"name":"\u53f0\u5317"},{"id":10189,"name":"\u9999\u6e2f"},{"id":10065,"name":"\u5317\u4eac"},{"id":10156,"name":"\u676d\u5dde"},{"id":10099,"name":"\u4e0a\u6d77"},{"id":10035,"name":"\u6210\u90fd"},{"id":21434,"name":"\u57a6\u4e01"},{"id":15325,"name":"\u82b1\u83b2"},{"id":10208,"name":"\u91cd\u5e86"},{"id":10132,"name":"\u53a6\u95e8"},{"id":10487,"name":"\u5927\u7406"},{"id":10030,"name":"\u4e09\u4e9a"}]},{"id":"","name":"\u4e9a\u6d32","mdds":[{"id":10222,"name":"\u4e1c\u4eac"},{"id":10765,"name":"\u5927\u962a"},{"id":11042,"name":"\u4eac\u90fd"},{"id":11045,"name":"\u66fc\u8c37"},{"id":15284,"name":"\u6e05\u8fc8"},{"id":11047,"name":"\u666e\u5409\u5c9b"},{"id":10130,"name":"\u9996\u5c14"},{"id":10754,"name":"\u65b0\u52a0\u5761"},{"id":16980,"name":"\u7532\u7c73"},{"id":11046,"name":"\u82ad\u63d0\u96c5"},{"id":11049,"name":"\u5409\u9686\u5761"},{"id":14210,"name":"\u82cf\u6885\u5c9b"}]},{"id":"","name":"\u6b27\u6d32","mdds":[{"id":10573,"name":"\u5df4\u9ece"},{"id":11124,"name":"\u4f26\u6566"},{"id":10063,"name":"\u7f57\u9a6c"},{"id":11087,"name":"\u4f5b\u7f57\u4f26\u8428"},{"id":10102,"name":"\u5df4\u585e\u7f57\u90a3"},{"id":11100,"name":"\u963f\u59c6\u65af\u7279\u4e39"},{"id":11081,"name":"\u6155\u5c3c\u9ed1"},{"id":10755,"name":"\u67cf\u6797"},{"id":11159,"name":"\u65af\u5fb7\u54e5\u5c14\u6469"},{"id":16095,"name":"\u5723\u6258\u91cc\u5c3c"},{"id":10761,"name":"\u5e03\u62c9\u683c"},{"id":11091,"name":"\u7ef4\u4e5f\u7eb3"}]},{"id":"","name":"\u5317\u7f8e","mdds":[{"id":10579,"name":"\u7ebd\u7ea6"},{"id":10926,"name":"\u6d1b\u6749\u77f6"},{"id":10923,"name":"\u62c9\u65af\u7ef4\u52a0\u65af"},{"id":10742,"name":"\u65e7\u91d1\u5c71"},{"id":10077,"name":"\u585e\u73ed\u5c9b"},{"id":10959,"name":"\u9ec4\u77f3\u56fd\u5bb6\u516c\u56ed"}]},{"id":"","name":"\u5927\u6d0b\u6d32","mdds":[{"id":10855,"name":"\u6089\u5c3c"},{"id":10856,"name":"\u58a8\u5c14\u672c"},{"id":30164,"name":"\u5927\u6d0b\u8def"},{"id":17339,"name":"\u9ec4\u91d1\u6d77\u5cb8"},{"id":10885,"name":"\u7687\u540e\u9547"},{"id":15920,"name":"\u57fa\u7763\u57ce"}]}],"hotel_activity_type":0,"WWW_HOST":"www.mafengwo.cn","IMG_HOST":"images.mafengwo.net","W_HTTP":"https:\/\/w.mafengwo.cn","P_HOST":"passport.mafengwo.cn","P_HTTP":"https:\/\/passport.mafengwo.cn","PAGELET_HTTP":"https:\/\/pagelet.mafengwo.cn","JS_HOST":"js.mafengwo.net","TONGJI_HOST":"tongji.mafengwo.cn","UID":86068029,"CSTK":"cebcac1c47d37b2c7a02d89302b977a8_d5f7ccb6dbe036d12e63a3eae46ffb80","GOOGLE_MAP_KEY":"AIzaSyD-Su0x_rPy1xehlMBcMyTqWkU49Bk53nQ","MOBILE_BINDED":true};
+    </script>
+
+    <link href="${pageContext.request.contextPath}/ztl/css/freego-searchScenic.css" rel="stylesheet" type="text/css">
+    <link href="${pageContext.request.contextPath}/ztl/css/freego-searchScenic2.css" rel="stylesheet" type="text/css">
+<%--    <link href="https://css.mafengwo.net/css/cv/css+base:css+jquery.suggest:css+plugins:css+plugins+jquery.jgrowl:css+other+popup:css+mfw-header.2015^YlVS^1578479974.css" rel="stylesheet" type="text/css">--%>
+<%--    <link href="https://css.mafengwo.net/css/cv/css+hotel+hotel_index:css+jquery-ui-1.11.0.min:css+hotel+datepicker-range:css+hotel+number_guests_picker^YlVX^1552035728.css" rel="stylesheet" type="text/css">--%>
+
+    <script language="javascript" src="${pageContext.request.contextPath}/ztl/js/freego-searchScenic.js" type="text/javascript" crossorigin="anonymous"></script>
+    <script async="" src="${pageContext.request.contextPath}/ztl/js/freego-searchScenic2.js" crossorigin="anonymous"></script>
+    <script async="" src="${pageContext.request.contextPath}/ztl/js/freego-searchScenic3.js" crossorigin="anonymous"></script>
+
+
+
+
 </head>
 
 <%--导入头部--%>
@@ -89,6 +108,11 @@
     scenicThemeList = (List<String>)request.getAttribute("scenicThemeList");
     PageBean<ScenicInfo> scenicInfoPageBean = (PageBean<ScenicInfo>)request.getAttribute("scenicPageBean");
     List<ScenicInfo> scenicInfoList = scenicInfoPageBean.getList();
+    List<String> downtownInlandList = (List<String>)request.getAttribute("downtownInlandList");
+    List<String> downtownAbroadList = (List<String>)request.getAttribute("downtownAbroadList");
+
+    Map<Integer,String> totalTag = (Map<Integer,String>)request.getAttribute("totalTag");
+    Map<Integer,List<ScenicInfo>> recommendTagScenic = (Map<Integer,List<ScenicInfo>>)request.getAttribute("recommendTagScenic");
 
 %>
 <%--轮播图--%>
@@ -205,20 +229,15 @@
                 <select id="'addChoose" name="addChoose" class="form-control selectpicker"
                         data-width="95%" data-live-search="true"
                         multiple data-max-options="5" onchange="getAdds(this)" title="选择地点">
-                    <optgroup label="广东">
-                        <option value="1">广州</option>
-                        <option value="2">深圳</option>
-                        <option value="3">珠海</option>
+                    <optgroup label="国内">
+                        <%for(int i=0;i<downtownInlandList.size();i++){%>
+                            <option value="<%=downtownInlandList.get(i)%>"><%=downtownInlandList.get(i)%></option>
+                        <%}%>
                     </optgroup>
-                    <optgroup label="广西">
-                        <option value="1">南宁</option>
-                        <option value="2">柳州</option>
-                        <option value="3">桂林</option>
-                    </optgroup>
-                    <optgroup label="山东">
-                        <option value="1">烟台</option>
-                        <option value="2">青岛</option>
-                        <option value="3">济南</option>
+                    <optgroup label="国外">
+                        <%for(int i=0;i<downtownAbroadList.size();i++){%>
+                        <option value="<%=downtownAbroadList.get(i)%>"><%=downtownAbroadList.get(i)%></option>
+                        <%}%>
                     </optgroup>
                 </select>
             </div>
@@ -226,11 +245,13 @@
                 <select id="'themeChoose" name="themeChoose" class="form-control selectpicker"
                         data-width="95%" data-live-search="true"
                         multiple data-max-options="5"  onchange="getThemes(this)" title="选择主题">
-                    <%if(scenicThemeList != null){
-                        for (int i = 0;i < scenicThemeList.size();i++){%>
-                    <option value=<%=scenicThemeList.get(i)%>><%=scenicThemeList.get(i)%></option>
-                    <%}}else{%>
-                    <option value="空">空</option>
+
+                    <%if(totalTag != null){%>
+                        <%for(Integer key:totalTag.keySet()){%>
+                            <option value=<%=totalTag.get(key)%>><%=totalTag.get(key)%></option>
+                        <%}%>
+                    <%}else{%>
+                        <option value="空">空</option>
                     <%}%>
                 </select>
             </div>
@@ -243,6 +264,118 @@
 
         </form>
     </div>
+
+    <style type="text/css">
+        ._j_tab_content img {
+            opacity: 0;
+            -webkit-transition: opacity ease-in 1s;
+            -moz-transition: opacity ease-in 1s;
+            transition: opacity ease-in 1s;
+        }
+        ._j_tab_content .img-show {
+            opacity: 1;
+        }
+
+        .hotel-new-icon {
+            position: absolute;
+            display: block;
+            width: 238px;
+            height: 210px;
+            bottom: -1px;
+            left: 5px;
+            z-index: -1;
+            background-image: url('http://css.mafengwo.net/images/hotel/new-customer-icon.gif');
+            background-size: 100% 100%;
+        }
+
+        .hotel-new-icon:hover {
+            z-index: 0;
+            background-image: url('http://css.mafengwo.net/images/hotel/new-customer-hover-icon.png');
+        }
+
+        .hotel-new-icon .close {
+            position: absolute;
+            display: block;
+            width: 25px;
+            height: 25px;
+            right: 0;
+            bottom: 83px;
+            border-radius: 50%;
+        }
+
+        .toolbar-item-top, .toolbar-item-feedback, .toolbar-item-code {
+            padding-left: 40px;
+        }
+
+    </style>
+
+    <%-- 推荐主题 S --%>
+    <div class="h-theme" id="_j_features">
+        <div class="h-title" style="margin-top: 50px;">猜你喜欢</div>
+        <div class="tab-theme">
+            <div class="themeList clearfix _j_tab_trigger">
+                <%int tagCount = 0;%>
+                <%for(Integer key:recommendTagScenic.keySet()){%>
+                    <%if(tagCount == 0){%>
+                        <a href="javascript:;" data-id="<%=tagCount%>" class="on"><%=totalTag.get(key)%></a>
+                    <%}else{%>
+                        <a href="javascript:;" data-id="<%=tagCount%>" class=""><%=totalTag.get(key)%></a>
+                    <%}%>
+                    <%tagCount++;%>
+                <%}%>
+            </div>
+            <div class="_j_tab_content">
+                <%tagCount = 0;%>
+                <%for(Integer key:recommendTagScenic.keySet()){%>
+                    <%if(tagCount == 0){%>
+                        <ul class="clearfix" style="" data-id="<%=tagCount%>">
+                            <%for(int j = 0;j<recommendTagScenic.get(key).size();j++){%>
+                            <li>
+                                <div class="fc-item" style="transform: matrix3d(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1);">
+                                    <a href="/hotel/10099/#feature=19896" target="_blank" data-type="feature" data-name="<%=recommendTagScenic.get(key).get(j).getScenicName()%>">
+                                        <div class="pic">
+                                            <img width="318" height="240" style="width:318px;height:240px;" src="https://p1-q.mafengwo.net/s10/M00/5E/7B/wKgBZ1mC9HaAK_QIAAh1pr4J_V417.jpeg?imageMogr2%2Fthumbnail%2F%21636x480r%2Fgravity%2FCenter%2Fcrop%2F%21636x480%2Fquality%2F90" class="img-show">
+                                        </div>
+                                        <div class="bag-opa"></div>
+                                        <span class="shadow" style="background-image: linear-gradient(45deg, rgba(0, 0, 0, 0.4), transparent 40%);"></span>
+                                        <div class="info">
+                                            <h2><%=recommendTagScenic.get(key).get(j).getScenicName()%></h2>
+                                            <p class="caption"><%=recommendTagScenic.get(key).get(j).getDowntown()%></p>
+                                        </div>
+                                    </a>
+                                </div>
+                            </li>
+                            <%}%>
+                        </ul>
+                    <%}else{%>
+                        <ul class="clearfix" style="display: none;" data-id="<%=tagCount%>">
+                    <%for(int j = 0;j<recommendTagScenic.get(key).size();j++){%>
+                    <li>
+                        <div class="fc-item" style="transform: matrix3d(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1);">
+                            <a href="/hotel/10099/#feature=19896" target="_blank" data-type="feature" data-name="<%=recommendTagScenic.get(key).get(j).getScenicName()%>">
+                                <div class="pic">
+                                    <img width="318" height="240" style="width:318px;height:240px;" src="https://p1-q.mafengwo.net/s10/M00/5E/7B/wKgBZ1mC9HaAK_QIAAh1pr4J_V417.jpeg?imageMogr2%2Fthumbnail%2F%21636x480r%2Fgravity%2FCenter%2Fcrop%2F%21636x480%2Fquality%2F90" class="img-show">
+                                </div>
+                                <div class="bag-opa"></div>
+                                <span class="shadow" style="background-image: linear-gradient(45deg, rgba(0, 0, 0, 0.4), transparent 40%);"></span>
+                                <div class="info">
+                                    <h2><%=recommendTagScenic.get(key).get(j).getScenicName()%></h2>
+                                    <p class="caption"><%=recommendTagScenic.get(key).get(j).getDowntown()%></p>
+                                </div>
+                            </a>
+                        </div>
+                    </li>
+                    <%}%>
+                </ul>
+                    <%}%>
+                    <%tagCount++;%>
+                <%}%>
+
+            </div>
+        </div>
+    </div>
+
+
     <div class="index-scenic">
         <%--游记tab--%>
         <div class="scenic-tab">
@@ -289,7 +422,7 @@
                             <%--定位--%>
                             <div class="scenic-location">
                                 <img class="scenic-location-pic" src="../images/li/index/icon_search.jpeg">
-                                <div class="scenic-location-text"><%=scenicInfoList.get(i).getScenicAddress()%>></div>
+                                <div class="scenic-location-text"><%=scenicInfoList.get(i).getScenicAddress()%></div>
                             </div>
 <%--                            &lt;%&ndash;用户&ndash;%&gt;--%>
 <%--                            <div class="scenic-user">--%>

@@ -2,9 +2,7 @@ package dao.impl;
 
 import dao.ScenicInfoDao;
 
-import domain.PageBean;
-import domain.ScenicCommentInfo;
-import domain.ScenicInfo;
+import domain.*;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
@@ -31,7 +29,6 @@ public class ScenicInfoDaoImpl implements ScenicInfoDao {
     public List<String> selectScenicTheme() {
 //        JdbcTemplate jdbcTemplate = new JdbcTemplate(JDBCUtils.getDataSource());
         String sql = "select scenicTheme,COUNT(*) from scenic GROUP by scenicTheme HAVING COUNT(*)>20 ORDER BY COUNT(*) DESC LIMIT 20;";
-        System.out.println("GETINDAOIMPL");
 
         return jdbcTemplate.query(sql, new RowMapper<String>(){
             public String mapRow(ResultSet rs, int rowNum)
@@ -39,6 +36,13 @@ public class ScenicInfoDaoImpl implements ScenicInfoDao {
                 return rs.getString(1);
             }
         },null);
+    }
+    //查找所有景点的标签
+    @Override
+    public List<TagInfo> selectScenicTag() {
+//        JdbcTemplate jdbcTemplate = new JdbcTemplate(JDBCUtils.getDataSource());
+        String sql = "select * from tag ";
+        return jdbcTemplate.query(sql, new BeanPropertyRowMapper<TagInfo>(TagInfo.class));
     }
     //查找景点并分页中的总页数
     @Override
@@ -50,9 +54,9 @@ public class ScenicInfoDaoImpl implements ScenicInfoDao {
     //查找景点，并分页展示
     @Override
     public List<ScenicInfo> selectScenicInfoPage(int start,int row){
-
         String sql="SELECT * FROM scenic WHERE (lng IS NOT NULL and lat is not NULL) LIMIT ?,?";
         return jdbcTemplate.query(sql, new BeanPropertyRowMapper<ScenicInfo>(ScenicInfo.class), start,row);
+
     }
     //查找这个景点的所有祖宗评论的页数
     public int getScenicCommentTotalCount(int scenicId) {
@@ -95,6 +99,16 @@ public class ScenicInfoDaoImpl implements ScenicInfoDao {
         scenicInfo= jdbcTemplate.queryForObject(sql,new BeanPropertyRowMapper<ScenicInfo>(ScenicInfo.class),scenicId);
         return scenicInfo;
     }
+
+    @Override
+    public List<ScenicInfo> selectScenicNearByScenicId(int scenicId) throws Exception {
+        String sql;
+        sql = "SELECT s2.* FROM scenic as s1,scenic as s2 where s1.scenicId = ? ORDER BY ((s1.lng-s2.lng)*(s1.lng-s2.lng)+(s1.lat-s2.lat)*(s1.lat-s2.lat)) ASC LIMIT 1,10;";
+        List<ScenicInfo> scenicInfoList;
+        scenicInfoList = jdbcTemplate.query(sql,new BeanPropertyRowMapper<ScenicInfo>(ScenicInfo.class),scenicId);
+        return scenicInfoList;
+    }
+
     //景点改变的用户偏好(加)
     @Override
     public int increaseUserPreferScenic(int userId, int scenicId, float weight) throws Exception {
@@ -160,13 +174,101 @@ public class ScenicInfoDaoImpl implements ScenicInfoDao {
         return addResult;
     }
 
+    @Override
+    public List<String> selectDowntownInland() throws Exception {
+        String sql;
+        sql = "select DISTINCT downtown from scenic where country='中国' ORDER BY downtown ASC;";
+        List<String> downtownList = jdbcTemplate.query(sql, new RowMapper<String>(){
+            public String mapRow(ResultSet rs, int rowNum)
+                    throws SQLException {
+                return rs.getString(1);
+            }
+        },null);
+        return downtownList;
+    }
+
+    @Override
+    public List<String> selectDowntownAbroad() throws Exception {
+        String sql;
+        sql = "select DISTINCT downtown from scenic where country<>'中国' ORDER BY downtown ASC;";
+        List<String> downtownList = jdbcTemplate.query(sql, new RowMapper<String>(){
+            public String mapRow(ResultSet rs, int rowNum)
+                    throws SQLException {
+                return rs.getString(1);
+            }
+        },null);
+        return downtownList;
+    }
+
+    @Override
+    public List<UserPreferInfo> selectUserPreferById(int userId) throws Exception {
+        String sql;
+        sql = "SELECT * from userprefer where userId = ?;";
+        List<UserPreferInfo> userPreferInfoList;
+        userPreferInfoList = jdbcTemplate.query(sql,new BeanPropertyRowMapper<UserPreferInfo>(UserPreferInfo.class),userId);
+        return userPreferInfoList;
+    }
+
+    @Override
+    public List<UserPreferInfo> selectOtherUserPreferById(int userId) throws Exception {
+        String sql;
+        sql = "SELECT * from userprefer where userId <> ?;";
+        List<UserPreferInfo> userPreferInfoList;
+        userPreferInfoList = jdbcTemplate.query(sql,new BeanPropertyRowMapper<UserPreferInfo>(UserPreferInfo.class),userId);
+        return userPreferInfoList;
+    }
+
+    @Override
+    public int selectTagTotalCount() throws Exception {
+        String sql;
+        sql = "SELECT COUNT(DISTINCT tagId) FROM userprefer;";
+        int tagTotalCount;
+        tagTotalCount = jdbcTemplate.queryForObject(sql,Integer.class);
+        return tagTotalCount;
+    }
+
+    @Override
+    public float selectUserTagWeight(int userId, int tagId) throws Exception {
+        String sql;
+        sql = "SELECT preferWeight FROM userprefer WHERE userId = ? and tagId = ?;";
+        float userTagWeight;
+        userTagWeight = jdbcTemplate.queryForObject(sql,Float.class,userId,tagId);
+        return userTagWeight;
+    }
+
+    @Override
+    public List<ScenicInfo> selectSimilarScenicByTag(List<Integer> similarUserId, int similarTagId) throws Exception {
+        String sql;
+        sql = "SELECT * FROM scenic WHERE\n" +
+                "(scenicId IN (select scecoll.scenicId from(select * from sceniccollect where userId IN (?) GROUP BY scenicId ORDER BY COUNT(userId) DESC LIMIT 30) as scecoll)\n" +
+                "AND scenicId IN (SELECT linkId from taglink where tagId = ?)) LIMIT 6;";
+        int similarUserCount;
+        similarUserCount = similarUserId.size();
+
+        String similarUserIdList = String.valueOf(similarUserId.get(0));
+        for(int i = 1 ; i < similarUserCount ; i++){
+            similarUserIdList = similarUserIdList + "," + similarUserId.get(i);
+        }
+        List<ScenicInfo> scenicInfoList;
+        scenicInfoList = jdbcTemplate.query(sql,new BeanPropertyRowMapper<ScenicInfo>(ScenicInfo.class),similarUserIdList,similarTagId);
+        return scenicInfoList;
+    }
+
+
     public static void main(String[] args) {
         JdbcTemplate jdbcTemplate2 = new JdbcTemplate(JDBCUtils.getDataSource());
-        String sql = "INSERT INTO sceniccomment VALUES(?,?,?,?,?,?,?,?);";
-        jdbcTemplate2.update(sql,0,1005,1002,1025,608,4,"AAAAAAAAAAA",0);
-        sql = "SELECT LAST_INSERT_ID();";
-        int addResult = jdbcTemplate2.queryForObject(sql,Integer.class);
-        System.out.println(addResult);
+//        String sql = "INSERT INTO sceniccomment VALUES(?,?,?,?,?,?,?,?);";
+//        jdbcTemplate2.update(sql,0,1005,1002,1025,608,4,"AAAAAAAAAAA",0);
+//        sql = "SELECT LAST_INSERT_ID();";
+//        int addResult = jdbcTemplate2.queryForObject(sql,Integer.class);
+//        System.out.println(addResult);
+
+        String sql;
+        sql = "SELECT preferWeight FROM userprefer WHERE userId = ? and tagId = ?;";
+        float userTagWeight;
+        userTagWeight = jdbcTemplate2.queryForObject(sql,Float.class,1011,7);
+        System.out.println(userTagWeight);
+//        return userTagWeight;
     }
 
 }

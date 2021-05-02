@@ -46,6 +46,8 @@
     <!-- (Optional) Latest compiled and minified JavaScript translation files -->
     <script src="../ztl/js/i18n/defaults-zh_CN.js"></script>
 
+    <script type="text/javascript" src="//api.map.baidu.com/api?v=2.0&ak=MKmjSL6aurGZbHsmH7QZbHmU60ahLKsW"></script>
+
     <script src="../ztl/js/bootstrap.min.js"></script>
     <link rel="stylesheet" type="text/css" href="../ztl/css/index.css">
 <%--    <link rel="stylesheet" type="text/css" href="../ztl/css/scenicInfo.css">--%>
@@ -94,6 +96,7 @@
     List<ScenicCommentInfo> scenicCommentChild = (List<ScenicCommentInfo>)request.getAttribute("scenicCommentChild");
     PageBean<ScenicCommentInfo> scenicCommentPageBean = (PageBean<ScenicCommentInfo>)request.getAttribute("scenicCommentPageBean");
     List<ScenicCommentInfo> scenicCommentInfoList = scenicCommentPageBean.getList();
+    List<ScenicInfo> nearScenicList = (List<ScenicInfo>)request.getAttribute("nearScenicList");
 %>
 
 <%--景点头部信息--%>
@@ -156,6 +159,7 @@
             </a>
         </div>
     </div>
+    <!-- 图片 E -->
 
     <!-- 简介 S -->
     <div class="scenic-info-mod scenic-info-mod-detail">
@@ -175,20 +179,18 @@
         </ul>
 
         <dl>
+            <dt>门票</dt>
+            <dd>
+                <div>
+                    tips:<br>
+                    具体详情请咨询景区
+                </div>
+            </dd>
+        </dl>
+        <dl>
             <dt>适合人数</dt>
             <dd><%=scenicInfo.getScenicViewNums()%></dd>
         </dl>
-<%--        <dl>--%>
-<%--            <dt>门票</dt>--%>
-<%--            <dd>--%>
-<%--                <div>--%>
-<%--                    <br>--%>
-<%--                    tips:<br>--%>
-<%--                    具体详情请咨询景区--%>
-<%--                </div>--%>
-
-<%--            </dd>--%>
-<%--        </dl>--%>
         <dl>
             <dt>开放时间</dt>
             <dd>
@@ -196,6 +198,43 @@
                 <br>
             </dd>
         </dl>
+        <div class="scenic-map-mod scenic-map-mod-location">
+            <div class="scenic-map-mhd" style="overflow: hidden;">
+                景点位置
+                <p class="sub">
+                    四川省成都市青羊区金河路口宽窄巷子
+                </p>
+            </div>
+            <div class="scenic-map-mbd clearfix">
+                <div id="pagelet-block-9ab4f398fdf9b0887afe7cae7416b086" class="pagelet-block" data-api=":poi:pagelet:poiLocationApi" data-params="{&quot;poi_id&quot;:&quot;87950&quot;}" data-async="1" data-controller="/js/poi/ControllerPoiLocation">
+                    <div class="maps map-container" id="map-box" style="overflow: hidden; position: relative; z-index: 0; background-color: rgb(243, 241, 236); color: rgb(0, 0, 0); text-align: left;">
+                        <div style="overflow: visible; position: absolute; z-index: 0; left: 0px; top: 111px;">
+                            <div id="allmap" class="BMap_mask" style="position: absolute; left: 0px; top: -111px; z-index: 9; overflow: hidden; user-select: none; width: 500px; height: 270px;">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="m-poi" data-cs-p="位置-附近景点">
+                        <div class="mtitle">附近景点</div>
+                        <ul class="mlist">
+                            <li data-id="5416" data-name="成都人民公园" data-type="3" data-lat="30.657045" data-lng="104.057567">
+                                    <span class="dist">
+                                        800米
+                                    </span>
+                                <a href="/poi/5416.html" target="_blank">
+                                    成都人民公园
+                                </a>
+                            </li>
+                            <li data-id="5002" data-name="文化公园-青羊宫" data-type="3" data-lat="30.660034" data-lng="104.041137">
+                                    <span class="dist">
+                                        1.3公里
+                                    </span>
+                                <a href="/poi/5002.html" target="_blank">文化公园-青羊宫</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
 
     </div>
     <!-- 简介 E -->
@@ -546,99 +585,195 @@
     <!-- 门票 E -->
     <!-- 评论界面 S -->
 
-<%--    <div id="_j_layer_0" class="layer _j_layer" style="position: fixed; width: 100%; height: 100%; top: 0px; left: 0px; z-index: 1000; display: block;">--%>
-<%--        <div class="layer_mask _j_mask" style="position: fixed; width: 100%; height: 100%; top: 0px; left: 0px; background: rgb(0, 0, 0); opacity: 0.7; z-index: -1;">--%>
-
+<%--    <div id="_j_layer_0" class="layer _scenci_layer" style="position: fixed; width: 100%; height: 100%; top: 0px; left: 0px; z-index: 1000; display: block;">--%>
+<%--        <div class="layer_scenic_mask _scenic_mask" style="position: fixed; width: 100%; height: 100%; top: 0px; left: 0px; background: rgb(0, 0, 0); opacity: 0.7; z-index: -1;">--%>
 <%--        </div>--%>
-<%--        <div class="layer_content _j_content" style="position: fixed; width: 100%; height: 100%; top: 0px; left: 0px; z-index: 0; overflow: hidden;"><div class="popup-box layer_dialog _j_dialog pop_no_margin pop-reviews" style="position: absolute; opacity: 1; background: rgb(255, 255, 255); z-index: 1; left: 326.5px; top: 106.222px;">--%>
-<%--            <div class="dialog_title" style="display:none">--%>
-<%--                <div class="_j_title title">--%>
-
+<%--        <div class="layer_scenic_content _scenic_content" style="position: fixed; width: 100%; height: 100%; top: 0px; left: 0px; z-index: 0; overflow: hidden;">--%>
+<%--            <div class="popup-scenic-box layer_dialog _scenic_dialog pop_no_margin pop-scenic-comment" style="position: absolute; opacity: 1; background: rgb(255, 255, 255); z-index: 1; left: 326.5px; top: 106.222px;">--%>
+<%--                <div class="scenicComment_dialog_title" style="display:none">--%>
+<%--                    <div class="_scenic_title title">--%>
+<%--                    </div>--%>
 <%--                </div>--%>
-<%--            </div>--%>
-<%--            <div class="dialog_body _j_content">--%>
-<%--                <div class="_j_weng_form_cnt">--%>
-<%--        <style type="text/css">--%>
-<%--            .pop-upload-weng {--%>
-<%--                width: 300px;--%>
-<%--            }--%>
+<%--                <div class="scenic_comment_dialog_body _scenic_content">--%>
+<%--                    <div class="_scenic_weng_form_cnt">--%>
+<%--                        <style type="text/css">--%>
+<%--                            .pop-upload-weng {--%>
+<%--                                width: 300px;--%>
+<%--                            }--%>
 
-<%--            .pop-upload-weng ._j_piccomment {--%>
-<%--                display: none;--%>
-<%--            }--%>
-<%--        </style>--%>
-<%--        <div class="mfw-reviews">--%>
-<%--            <div id="_j_wengform_cnt_20210428155602_821">--%>
-<%--                <h2>--%>
-<%--                    <strong>洪崖洞民俗风貌区</strong>--%>
-<%--                    <em>*</em>为必填选项--%>
-<%--                </h2>--%>
-<%--                <form action="" method="post" class="_j_commentdialogform">--%>
-<%--                    <input type="hidden" name="wengid" value="">--%>
-<%--                    <input type="hidden" name="poiid" value="6653">--%>
-<%--                    <input type="hidden" name="poitype" value="3">--%>
-<%--                    <input type="hidden" name="publish_source" value="publish.weng.pc_poi_detail.comment">--%>
-<%--                    <div class="review-item item-star">--%>
-<%--                        <div class="label">--%>
-<%--                            <em>*</em>总体评价--%>
-<%--                        </div>--%>
-<%--                        <div class="review-star _j_rankblock" data-star="" data-name="rank_star">--%>
-<%--                            <input type="hidden" name="rank_star" value="" essential="1" data-inputname="总体评价">--%>
-<%--                            <span class="_j_starcount star"></span>--%>
-<%--                            <div class="click-star _j_starlist">--%>
-<%--                                <a role="button" title="不建议" rel="nofollow"></a>--%>
-<%--                                <a role="button" title="有待改善" rel="nofollow"></a>--%>
-<%--                                <a role="button" title="还可以" rel="nofollow"></a>--%>
-<%--                                <a role="button" title="值得一去" rel="nofollow"></a>--%>
-<%--                                <a role="button" title="强烈推荐" rel="nofollow"></a>--%>
+<%--                            .pop-upload-weng ._scenic_piccomment {--%>
+<%--                                display: none;--%>
+<%--                            }--%>
+<%--                        </style>--%>
+<%--                        <div class="frego-scenic-comments">--%>
+<%--                            <div id="_scenic_freego_cnt_">--%>
+<%--                                <h2>--%>
+<%--                                    <strong>洪崖洞民俗风貌区</strong>--%>
+<%--                                    <em>*</em>为必填选项--%>
+<%--                                </h2>--%>
+<%--                                <form action="" method="post" class="_scenic_comment_form">--%>
+<%--                                    <input type="hidden" name="wengid" value="">--%>
+<%--                                    <input type="hidden" name="poiid" value="6653">--%>
+<%--                                    <input type="hidden" name="poitype" value="3">--%>
+<%--                                    <input type="hidden" name="publish_source" value="publish.weng.pc_poi_detail.comment">--%>
+<%--                                    <div class="scenic-comment-intact-item item-star">--%>
+<%--                                        <div class="label">--%>
+<%--                                            <em>*</em>总体评价--%>
+<%--                                        </div>--%>
+<%--                                        <div class="scenic-comment-star _scenic_rankblock" data-star="" data-name="rank_star">--%>
+<%--                                            <input type="hidden" name="rank_star" value="" essential="1" data-inputname="总体评价">--%>
+<%--                                            <span class="_scenic_starcount star"></span>--%>
+<%--                                            <div class="click-star _scenic_starlist">--%>
+<%--                                                <a role="button" title="不建议" rel="nofollow"></a>--%>
+<%--                                                <a role="button" title="有待改善" rel="nofollow"></a>--%>
+<%--                                                <a role="button" title="还可以" rel="nofollow"></a>--%>
+<%--                                                <a role="button" title="值得一去" rel="nofollow"></a>--%>
+<%--                                                <a role="button" title="强烈推荐" rel="nofollow"></a>--%>
+<%--                                            </div>--%>
+<%--                                        </div>--%>
+<%--                                        <span class="txt-tips _scenic_startip">点击星星打分</span>--%>
+<%--                                    </div>--%>
+<%--                                    <div class="secnic-comment-group">--%>
+<%--                                    </div>--%>
+<%--                                    <div class="scenic-comment-intact-item item-comment">--%>
+<%--                                        <div class="label"><em>*</em>内容</div>--%>
+<%--                                        <div class="content">--%>
+<%--                                            <textarea class="_scenic_commentarea" name="content" essential="1" data-inputname="内容" placeholder="100字+3图，有机会评为优质点评！" data-minlen="1" data-maxlen="10000">--%>
+
+<%--                                            </textarea>--%>
+<%--                                            <p class="_scenic_commentcounttip">内容不超过10000字</p>--%>
+<%--                                        </div>--%>
+<%--                                    </div>--%>
+<%--                                    <div class="scenic-comment-intact-item item-photo">--%>
+<%--                                        <div class="label">--%>
+<%--                                            上传照片--%>
+<%--                                        </div>--%>
+<%--                                        <div class="content">--%>
+<%--                                            <dl class="upload-box _scenic_piclist">--%>
+<%--                                                <dd data-wengid="" class="_scenic_picitem_btn" id="_scenic_pluplader_btn_container_1" style="position: relative;">--%>
+<%--                                                    <a class="add-place"><i></i></a>--%>
+<%--                                                    <div id="aaaa" class="moxie-shim moxie-shim-html5" style="position: absolute; top: 0px; left: 0px; width: 120px; height: 120px; overflow: hidden; z-index: -1;">--%>
+<%--                                                        <input id="aaa" type="file" style="font-size: 999px; opacity: 0; position: absolute; top: 0px; left: 0px; width: 100%; height: 100%;" multiple="" accept="image/jpeg,image/gif,image/png,.JPEG">--%>
+<%--                                                    </div>--%>
+<%--                                                </dd>--%>
+<%--                                                <dd class="_scenic_picitem" data-imglink="mfwStorage18/M00/5C/6E/CoUBYGCKSuyAHyJsAAAUbFWdv_k214.png" data-picid="0">--%>
+<%--                                                    <div class="place">--%>
+<%--                                                        <div class="img"><img class="_scenic_edit_src" src="https://b1-q.mafengwo.net/s18/M00/5C/6E/CoUBYGCKSuyAHyJsAAAUbFWdv_k214.png?imageMogr2%2Fthumbnail%2F%21290x195r%2Fgravity%2FCenter%2Fcrop%2F%21290x195%2Fquality%2F90" style="width:120px;height:120px">--%>
+<%--                                                        </div>--%>
+<%--                                                        <div class="title"><h4 class="_scenic_edit_title"></h4></div>--%>
+<%--                                                        <div class="scenic-mask-operate"><a class="btn-remove _scenic_remove_dd"></a></div>--%>
+<%--                                                    </div>--%>
+<%--                                                </dd>--%>
+<%--                                                <dd class="_scenic_picitem" data-imglink="mfwStorage18/M00/5C/6E/CoUBYGCKSuyAHyJsAAAUbFWdv_k214.png" data-picid="0">--%>
+<%--                                                    <div class="place">--%>
+<%--                                                        <div class="img"><img class="_scenic_edit_src" src="https://b1-q.mafengwo.net/s18/M00/5C/6E/CoUBYGCKSuyAHyJsAAAUbFWdv_k214.png?imageMogr2%2Fthumbnail%2F%21290x195r%2Fgravity%2FCenter%2Fcrop%2F%21290x195%2Fquality%2F90" style="width:120px;height:120px">--%>
+<%--                                                        </div>--%>
+<%--                                                        <div class="title"><h4 class="_scenic_edit_title"></h4></div>--%>
+<%--                                                        <div class="scenic-mask-operate"><a class="btn-remove _scenic_remove_dd"></a></div>--%>
+<%--                                                    </div>--%>
+<%--                                                </dd>--%>
+<%--                                            </dl>--%>
+<%--                                            <p style="clear:both;">图片不超过20张</p>--%>
+<%--                                        </div>--%>
+<%--                                    </div>--%>
+<%--                                    <div class="review-item item-action">--%>
+<%--                                        <a class="btn-large _scenic_submit" role="button" title="提交">提交</a>--%>
+<%--                                    </div>--%>
+<%--                                </form>--%>
 <%--                            </div>--%>
 <%--                        </div>--%>
-<%--                        <span class="txt-tips _j_startip">点击星星打分</span>--%>
 <%--                    </div>--%>
-<%--                    <div class="review-group">--%>
-<%--                    </div>--%>
-<%--                    <div class="review-item item-comment">--%>
-<%--                        <div class="label"><em>*</em>内容</div>--%>
-<%--                        <div class="content">--%>
-<%--                            <textarea class="_j_commentarea" name="content" essential="1" data-inputname="内容" placeholder="100字+3图，有机会评为优质点评！" data-minlen="1" data-maxlen="10000">--%>
-
-<%--                            </textarea>--%>
-<%--                            <p class="_j_commentcounttip">内容不超过10000字</p>--%>
-<%--                        </div>--%>
-<%--                    </div>--%>
-<%--                    <div class="review-item item-photo">--%>
-<%--                        <div class="label">--%>
-<%--                            上传照片--%>
-<%--                        </div>--%>
-<%--                        <div class="content">--%>
-<%--                            <dl class="upload-box _j_piclist">--%>
-<%--                                <dd data-wengid="" class="_j_picitem_btn" id="_j_pluplader_btn_container_4" style="position: relative;">--%>
-<%--                                    <a class="add-place"><i></i></a>--%>
-<%--                                    <div id="html5_1f4bnkk1b11ceo4812vfsskb1i_container" class="moxie-shim moxie-shim-html5" style="position: absolute; top: 0px; left: 0px; width: 120px; height: 120px; overflow: hidden; z-index: -1;">--%>
-<%--                                        <input id="html5_1f4bnkk1b11ceo4812vfsskb1i" type="file" style="font-size: 999px; opacity: 0; position: absolute; top: 0px; left: 0px; width: 100%; height: 100%;" multiple="" accept="image/jpeg,image/gif,image/png,.JPEG">--%>
-<%--                                    </div>--%>
-<%--                                </dd>--%>
-<%--                            </dl>--%>
-<%--                            <p style="clear:both;">图片不超过20张</p>--%>
-<%--                        </div>--%>
-<%--                    </div>--%>
-<%--                    <div class="review-item item-action">--%>
-<%--                        <a class="btn-large _j_submit" role="button" title="提交">提交</a>--%>
-<%--                    </div>--%>
-<%--                </form>--%>
+<%--                </div>--%>
+<%--                <a id="popup_close" class="close-btn _scenic_close"><i></i></a>--%>
 <%--            </div>--%>
 <%--        </div>--%>
 <%--    </div>--%>
-<%--    </div>--%>
-<%--        <a id="popup_close" class="close-btn _j_close"><i></i></a>--%>
-<%--    </div>--%>
-<%--    </div>--%>
+
+<%--    <div id="_j_layer_1" class="layer _scenci_layer" style="position: fixed; width: 100%; height: 100%; top: 0px; left: 0px; z-index: 2000; display: none;">--%>
+<%--        <div class="layer_scenic_mask _scenic_mask" style="position: fixed; width: 100%; height: 100%; top: 0px; left: 0px; background: rgb(0, 0, 0); opacity: 0; z-index: -1;">--%>
+
+<%--        </div>--%>
+<%--        <div class="layer_scenic_content _scenic_content" style="position: fixed; width: 100%; height: 100%; top: 0px; left: 0px; z-index: 0; overflow: hidden;">--%>
+
+<%--        </div>--%>
 <%--    </div>--%>
 
-    <!-- 评论界面 E -->
+<%--    <div id="_j_layer_2" class="layer _scenci_layer" style="position: fixed; width: 100%; height: 100%; top: 0px; left: 0px; z-index: 10001; display: none;">--%>
+<%--        <div class="layer_scenic_mask _scenic_mask" style="position: fixed; width: 100%; height: 100%; top: 0px; left: 0px; background: rgb(0, 0, 0); opacity: 0.7; z-index: -1;">--%>
 
-</div>
+<%--        </div>--%>
+<%--        <div class="layer_scenic_content _scenic_content" style="position: fixed; width: 100%; height: 100%; top: 0px; left: 0px; z-index: 0; overflow: hidden;">--%>
+<%--            <div id="popup_container" class="popup-box new-popbox pop_no_margin" style="position: absolute; opacity: 0; background: rgb(255, 255, 255); z-index: 0; width: 420px; left: 581.5px; top: 224px; display: none;">--%>
+<%--                <a class="close-btn _scenic_close">--%>
+<%--                    <i></i>--%>
+<%--                </a>--%>
+<%--                <div class="pop-ico" id="_scenic_alertpopicon">--%>
+<%--                    <i class="i1"></i>--%>
+<%--                </div><div class="pop-ctn">--%>
+<%--                <p class="hd _scenic_content">图片正在上传中，请稍后...</p>--%>
+<%--                <p class="bd _scenic_detail"></p>--%>
+<%--            </div>--%>
+<%--                <div class="pop-btns"><a role="button" tabindex="0" class="popbtn popbtn-submit _scenic_close">确定</a>--%>
+<%--                </div>--%>
+<%--            </div>--%>
+<%--        </div>--%>
+<%--    </div>--%>
+<%--    <!-- 评论界面 E -->--%>
+<%--    百度地图单地图--%>
+<%--<script type="text/javascript">--%>
+<%--    // 百度地图API功能--%>
+<%--    var map = new BMap.Map("allmap");    // 创建Map实例--%>
+<%--    var lng = <%=scenicInfo.getLng()%>;--%>
+<%--    var lat = <%=scenicInfo.getLat()%>--%>
+<%--    map.centerAndZoom(new BMap.Point(lng, lat), 11);  // 初始化地图,设置中心点坐标和地图级别--%>
+<%--    //添加地图类型控件--%>
+<%--    map.addControl(new BMap.MapTypeControl({--%>
+<%--        mapTypes:[--%>
+<%--            BMAP_NORMAL_MAP,--%>
+<%--            BMAP_HYBRID_MAP--%>
+<%--        ]}));--%>
+<%--    map.setCurrentCity("北京");          // 设置地图显示的城市 此项是必须设置的--%>
+<%--    map.enableScrollWheelZoom(true);     //开启鼠标滚轮缩放--%>
+<%--</script>--%>
 
+<script src="//api.map.baidu.com/api?type=webgl&v=1.0&ak=MKmjSL6aurGZbHsmH7QZbHmU60ahLKsW"></script>
+<%--<script type="text/javascript">--%>
+<%--    // 百度地图API功能--%>
+<%--    var map = new BMapGL.Map('allmap');--%>
+<%--    map.centerAndZoom(new BMapGL.Point(116.404, 39.928), 15);--%>
+<%--    map.enableScrollWheelZoom(true);--%>
+<%--    // 创建点标记--%>
+<%--    var marker1 = new BMapGL.Marker(new BMapGL.Point(116.404, 39.925));--%>
+<%--    var marker2 = new BMapGL.Marker(new BMapGL.Point(116.404, 39.915));--%>
+<%--    var marker3 = new BMapGL.Marker(new BMapGL.Point(116.395, 39.935));--%>
+<%--    var marker4 = new BMapGL.Marker(new BMapGL.Point(116.415, 39.931));--%>
+<%--    // 在地图上添加点标记--%>
+<%--    map.addOverlay(marker1);--%>
+<%--    map.addOverlay(marker2);--%>
+<%--    map.addOverlay(marker3);--%>
+<%--    map.addOverlay(marker4);--%>
+
+<%--</script>--%>
+<script type="text/javascript">
+    var map = new BMapGL.Map('allmap');
+    var point = new BMapGL.Point(<%=scenicInfo.getLng()%>, <%=scenicInfo.getLat()%>);
+    map.centerAndZoom(point, 15);
+    // 创建点标记
+    marker = new BMapGL.Marker(point);
+    map.addOverlay(marker);
+    // 创建信息窗口
+    opt = {
+        width: 200,
+        height: 100,
+        title: 'asdkjfadkaldjkflsdkfjlksj'
+    };
+    infoWindow = new BMapGL.InfoWindow('bjbjbjbjbjbjjbbjbjbjbjbjbjbjbjbj', opt);
+    // 点标记添加点击事件
+    marker.addEventListener('click', function () {
+        map.openInfoWindow(infoWindow, point); // 开启信息窗口
+    });
+
+</script>
 
 <%--导入尾部--%>
 <%--<footer>--%>

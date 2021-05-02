@@ -1,5 +1,6 @@
 package web.servlet;
 
+import com.sun.deploy.net.HttpRequest;
 import dao.impl.ScenicInfoDaoImpl;
 import dao.impl.UserInfoDaoImpl;
 import domain.PageBean;
@@ -41,10 +42,13 @@ public class ScenicServlet extends HttpServlet {
 
         if("queryScenicIndex".equals(methodName)){
             queryScenicIndex(request,response);
+            queryRecommendScenicAndTag(request,response);
+            request.getRequestDispatcher("/ztl/SearchScenic.jsp").forward(request,response);
         }
         if("findScenicInfoByScenicId".equals(methodName)){
             findScenicInfoByScenicId(request,response);
             queryScenicCommentPage(request,response);
+            queryScenicNearByScenicId(request,response);
             request.getRequestDispatcher("/ztl/ScenicInfo.jsp").forward(request,response);
         }
 //        if("findScenicInfo")
@@ -97,9 +101,11 @@ public class ScenicServlet extends HttpServlet {
         String rows = request.getParameter("rows");
         PageBean<ScenicInfo> scenicPageBean = scenicInfoService.queryScenicInfoPage(currentPage,rows);
         request.setAttribute("scenicPageBean",scenicPageBean);
-
-        request.getRequestDispatcher("/ztl/SearchScenic.jsp").forward(request,response);
-
+        //地点列表
+        List<String> downtownInlandList = scenicInfoService.queryDowntownInland();
+        List<String> downtownAbroadList = scenicInfoService.queryDowntownAbroad();
+        request.setAttribute("downtownInlandList",downtownInlandList);
+        request.setAttribute("downtownAbroadList",downtownAbroadList);
     }
 
     private void queryScenicInfoPage(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
@@ -137,7 +143,22 @@ public class ScenicServlet extends HttpServlet {
         //景点信息
         request.setAttribute("scenicInfo",scenicInfo);
     }
+    private void queryScenicNearByScenicId(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+//        String userIdStr = request.getParameter("userId");
+        String scenicId = request.getParameter("scenicId");
+        List<ScenicInfo> scenicInfoList;
+        scenicInfoList = scenicInfoService.queryScenicNearByScenicId(scenicId);
+        //景点信息
+        request.setAttribute("nearScenicList",scenicInfoList);
+    }
 
+    private void queryRecommendScenicAndTag(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+        String userIdStr = request.getParameter("userId");
+        Map<Integer,List<ScenicInfo>> recommendTagScenic = scenicInfoService.querySimilarScenic(userIdStr);
+        Map<Integer,String> totalTag = scenicInfoService.queryScenicTag();
+        request.setAttribute("totalTag",totalTag);
+        request.setAttribute("recommendTagScenic",recommendTagScenic);
+    }
 
     private void pageTest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
 

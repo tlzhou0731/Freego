@@ -602,7 +602,7 @@ a:hover{
 }
 .scenic-info-r-nav li {
     float: left;
-    /* display: inline; */
+    display: inline;
 }
 .scenic-info-r-nav li a {
     display: inline-block;
@@ -896,7 +896,8 @@ a:hover{
     font-size: 14px;
     border-radius: 4px;
     text-align: center;
-}
 
+}
+/*更新评论界面的css*/
 
 

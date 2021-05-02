@@ -16,7 +16,11 @@ import java.util.Map;
 public interface ScenicInfoService {
     public List<String> queryScenicTheme();
 
+    public Map<Integer,String> queryScenicTag();
+
     public PageBean<ScenicInfo> queryScenicInfoPage(String currentPage, String row);
+
+    public List<ScenicInfo> queryScenicNearByScenicId(String scenicIdStr);
 
     public PageBean<ScenicCommentInfo> queryScenicComment(String scenicId, String currentPage, String rows);
 
@@ -38,5 +42,11 @@ public interface ScenicInfoService {
             ,String commentText
             ,String scenicCommentStateStr
             ,List<String> scenicCommentPictureList);
+
+    public List<String> queryDowntownInland();
+    public List<String> queryDowntownAbroad();
+    public List<Integer> querySimilarUser(String userIdStr);
+    public List<Integer> querySimilarTag(String userIdStr);
+    public Map<Integer,List<ScenicInfo>> querySimilarScenic(String userIdStr);
 
 }
