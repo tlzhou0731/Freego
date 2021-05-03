@@ -40,21 +40,25 @@ public class ScenicServlet extends HttpServlet {
         String methodName = request.getParameter("methodName");
         System.out.println(methodName);
 
+        //进景点主界面
         if("queryScenicIndex".equals(methodName)){
             queryScenicIndex(request,response);
             queryRecommendScenicAndTag(request,response);
             request.getRequestDispatcher("/ztl/ScenicMain.jsp").forward(request,response);
         }
+        //进景点搜索界面
+        if("queryScenicBySearch".equals(methodName)){
+            queryScenicBySearch(request,response);
+            request.getRequestDispatcher("/ztl/SearchScenic.jsp").forward(request,response);
+        }
+        //进入景点信息界面
         if("findScenicInfoByScenicId".equals(methodName)){
             findScenicInfoByScenicId(request,response);
             queryScenicCommentPage(request,response);
             queryScenicNearByScenicId(request,response);
             request.getRequestDispatcher("/ztl/ScenicInfo.jsp").forward(request,response);
         }
-        if("queryScenicBySearch".equals(methodName)){
-            queryScenicBySearch(request,response);
-            request.getRequestDispatcher("/ztl/SearchScenic.jsp").forward(request,response);
-        }
+
 
     }
 
@@ -151,6 +155,8 @@ public class ScenicServlet extends HttpServlet {
         String scenicId = request.getParameter("scenicId");
         List<ScenicInfo> scenicInfoList;
         scenicInfoList = scenicInfoService.queryScenicNearByScenicId(scenicId);
+        System.out.println("NEAR SCENICINFO");
+        System.out.println(scenicInfoList);
         //景点信息
         request.setAttribute("nearScenicList",scenicInfoList);
     }
@@ -164,6 +170,8 @@ public class ScenicServlet extends HttpServlet {
     }
 
     private void queryScenicBySearch(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String currentPageStr = request.getParameter("currentPage");
+        String rows = request.getParameter("rows");
         String[] travelMonth,travelAddr,travelTag;
         travelMonth = request.getParameterValues("dateChoose");
         travelAddr = request.getParameterValues("addrChoose");
@@ -171,31 +179,44 @@ public class ScenicServlet extends HttpServlet {
         List<Integer> travelMonthList = new ArrayList<Integer>();
         List<String> travelAddrList = new ArrayList<String>();
         List<Integer> travelTagList = new ArrayList<Integer>();
-        for(int i = 0;i<travelMonth.length;i++){
-            travelMonthList.add(Integer.parseInt(travelMonth[i]));
+        if(travelMonth!=null){
+            for(int i = 0;i<travelMonth.length;i++){
+                travelMonthList.add(Integer.parseInt(travelMonth[i]));
+            }
+        }else{
+            travelMonthList = null;
         }
-        for(int i = 0;i<travelAddr.length;i++){
-            travelAddrList.add(travelAddr[i]);
+        if(travelAddr!=null){
+            for(int i = 0;i<travelAddr.length;i++){
+                travelAddrList.add(travelAddr[i]);
+            }
+        }else{
+            travelAddrList=null;
         }
-        for(int i = 0;i<travelTag.length;i++){
-            travelTagList.add(Integer.parseInt(travelTag[i]));
+        if(travelTag!=null){
+            for(int i = 0;i<travelTag.length;i++){
+                travelTagList.add(Integer.parseInt(travelTag[i]));
+            }
+        }else{
+            travelTagList = null;
         }
-        System.out.println(travelMonthList);
-        System.out.println(travelAddrList);
-        System.out.println(travelTagList);
+
+        PageBean<ScenicInfo> searchScenicPageBean = scenicInfoService.queryScenicBySearch(travelMonthList,travelAddrList,travelTagList,currentPageStr,rows);
+        request.setAttribute("searchScenicPageBean",searchScenicPageBean);
+        request.setAttribute("travelMonthList",travelMonthList);
+        request.setAttribute("travelAddrList",travelAddrList);
+        request.setAttribute("travelTagList",travelTagList);
+        Map<Integer,String> totalTag = scenicInfoService.queryScenicTag();
+        request.setAttribute("totalTag",totalTag);
+        List<String> downtownInlandList = scenicInfoService.queryDowntownInland();
+        List<String> downtownAbroadList = scenicInfoService.queryDowntownAbroad();
+        request.setAttribute("downtownInlandList",downtownInlandList);
+        request.setAttribute("downtownAbroadList",downtownAbroadList);
 
     }
 
 
-    private void pageTest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
 
-
-        System.out.println("进入了pageTest");
-        PageBean<ScenicInfo> scenicPageBean = scenicInfoService.queryScenicInfoPage("1","10");
-        request.setAttribute("scenicPageBean",scenicPageBean);
-        request.getRequestDispatcher("/college_list.jsp").forward(request,response);
-
-    }
 
 
 

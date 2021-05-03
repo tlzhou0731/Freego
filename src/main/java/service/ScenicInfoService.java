@@ -49,4 +49,6 @@ public interface ScenicInfoService {
     public List<Integer> querySimilarTag(String userIdStr);
     public Map<Integer,List<ScenicInfo>> querySimilarScenic(String userIdStr);
 
+    public PageBean<ScenicInfo> queryScenicBySearch(List<Integer> monthList,List<String> addrList,List<Integer> tagList, String currentPageStr, String rowsStr);
+
 }

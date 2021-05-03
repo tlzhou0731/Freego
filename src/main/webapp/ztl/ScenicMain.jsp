@@ -206,7 +206,7 @@
 <div class="freego-scenic">
     <%--选项表单--%>
     <div class="scenic-form" style="width: 100%">
-        <form class="navbar-form navbar-left" action="/ScenicServlet?methodName=queryScenicBySearch" method="post">
+        <form class="navbar-form navbar-left" action="/ScenicServlet?methodName=queryScenicBySearch&currentPage=1&rows=5" method="post">
             <div class="scenic_form_date">
                 <select id="dateChoose" name="dateChoose" class="form-control selectpicker"
                         data-width="95%" data-live-search="true"
@@ -258,9 +258,8 @@
             </div>
 
             <div class="scenic_form_search">
-                <input id="searchText" name="searchText" style="width: 80%" type="text" class="form-control" placeholder="${pageContext.request.contextPath}">
+<%--                <input id="searchText" name="searchText" style="width: 80%" type="text" class="form-control" placeholder="${pageContext.request.contextPath}">--%>
                 <button id="btn-search" type="submit" class="btn btn-default">搜索</button>
-                <button id="btn-show" type="button" onclick="showChoose()">搜索</button>
             </div>
 
         </form>
@@ -383,12 +382,6 @@
             <div class="scenic-hot" id="scenic_hot">
                 <a href="javascript:void(0);" rel="nofollow">热门景点</a>
             </div>
-            <div class="scenic-theme" id="scenic_theme">
-                <a href="javascript:void(0);" rel="nofollow">热门主题</a>
-            </div>
-            <div class="scenic-addr" id="scenic_addr">
-                <a href="javascript:void(0);" rel="nofollow">热门地点</a>
-            </div>
             <div class="scenic-near" id="scenic_near">
                 <a href="javascript:void(0);" rel="nofollow">附近景点</a>
             </div>
@@ -412,10 +405,10 @@
                     <div class="scenic-right">
                         <dl>
                             <dt>
-                                <a href="/ScenicServlet?methodName=findScenicInfoByScenicId&scenicId=<%=scenicInfoList.get(i).getScenicId()%>&currentPage=1&rows=10" target="_blank"><%=scenicInfoList.get(i).getScenicName()%></a>
+                                <a href="/ScenicServlet?methodName=findScenicInfoByScenicId&scenicId=<%=scenicInfoList.get(i).getScenicId()%>&currentPage=1&rows=2" target="_blank"><%=scenicInfoList.get(i).getScenicName()%></a>
                             </dt>
                             <dd>
-                                <a href="/ScenicServlet?methodName=findScenicInfoByScenicId&scenicId=<%=scenicInfoList.get(i).getScenicId()%>&currentPage=1&rows=10" target="_blank"><%=scenicInfoList.get(i).getScenicIntro()%></a>
+                                <a href="/ScenicServlet?methodName=findScenicInfoByScenicId&scenicId=<%=scenicInfoList.get(i).getScenicId()%>&currentPage=1&rows=2" target="_blank"><%=scenicInfoList.get(i).getScenicIntro()%></a>
                             </dd>
                         </dl>
 

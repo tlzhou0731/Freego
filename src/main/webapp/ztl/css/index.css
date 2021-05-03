@@ -183,7 +183,7 @@ a:hover{
 }
 .scenic-tab > .scenic-hot{
     float: left;
-    width: 150px;
+    width: 500px;
     padding-bottom: 6px;
     border-bottom: 3px solid #ff9d00;
     z-index: 11;
@@ -217,7 +217,7 @@ a:hover{
 }
 .scenic-tab > .scenic-near{
     float: left;
-    width: 150px;
+    width: 500px;
     padding-bottom: 6px;
     z-index: 11;
     text-align: center;
@@ -254,25 +254,25 @@ a:hover{
     padding: 15px 0;
     height: 50px;
     float: left;
-    width: 210px;
+    width: 300px;
 }
 .scenic_form_addr{
     padding: 15px 0;
     height: 50px;
     float: left;
-    width: 210px;
+    width: 300px;
 }
 .scenic_form_tag{
     padding: 15px 0;
     height: 50px;
     float: left;
-    width: 210px;
+    width: 300px;
 }
 .scenic_form_search{
     padding: 15px 0;
     height: 50px;
     float: left;
-    width: 290px;
+    width: 60px;
 }
 /*游记列表*/
 .scenic-item{

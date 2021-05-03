@@ -6,6 +6,8 @@ import domain.*;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
+import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import utils.JDBCUtils;
 
 import java.sql.ResultSet;
@@ -23,7 +25,7 @@ import java.util.Set;
 
 public class ScenicInfoDaoImpl implements ScenicInfoDao {
     JdbcTemplate jdbcTemplate = new JdbcTemplate(JDBCUtils.getDataSource());
-
+    NamedParameterJdbcTemplate namedParameterJdbcTemplate = new NamedParameterJdbcTemplate(JDBCUtils.getDataSource());
     //查找所有景点的标签
     @Override
     public List<String> selectScenicTheme() {
@@ -236,21 +238,81 @@ public class ScenicInfoDaoImpl implements ScenicInfoDao {
         return userTagWeight;
     }
 
+//    @Override
+//    public List<ScenicInfo> selectSimilarScenicByTag(List<Integer> similarUserId, int similarTagId) throws Exception {
+//        String sql;
+//        sql = "SELECT * FROM scenic WHERE\n" +
+//                "(scenicId IN (select scecoll.scenicId from(select * from sceniccollect where userId IN (?) GROUP BY scenicId ORDER BY COUNT(userId) DESC LIMIT 30) as scecoll)\n" +
+//                "AND scenicId IN (SELECT linkId from taglink where tagId = ?)) LIMIT 6;";
+//        int similarUserCount;
+//        similarUserCount = similarUserId.size();
+//
+//        String similarUserIdList = String.valueOf(similarUserId.get(0));
+//        for(int i = 1 ; i < similarUserCount ; i++){
+//            similarUserIdList = similarUserIdList + "," + similarUserId.get(i);
+//        }
+//        List<ScenicInfo> scenicInfoList;
+//        scenicInfoList = jdbcTemplate.query(sql,new BeanPropertyRowMapper<ScenicInfo>(ScenicInfo.class),similarUserIdList,similarTagId);
+//        return scenicInfoList;
+//    }
+
+
+
     @Override
     public List<ScenicInfo> selectSimilarScenicByTag(List<Integer> similarUserId, int similarTagId) throws Exception {
         String sql;
         sql = "SELECT * FROM scenic WHERE\n" +
-                "(scenicId IN (select scecoll.scenicId from(select * from sceniccollect where userId IN (?) GROUP BY scenicId ORDER BY COUNT(userId) DESC LIMIT 30) as scecoll)\n" +
-                "AND scenicId IN (SELECT linkId from taglink where tagId = ?)) LIMIT 6;";
-        int similarUserCount;
-        similarUserCount = similarUserId.size();
-
-        String similarUserIdList = String.valueOf(similarUserId.get(0));
-        for(int i = 1 ; i < similarUserCount ; i++){
-            similarUserIdList = similarUserIdList + "," + similarUserId.get(i);
-        }
+                "(scenicId IN (select scecoll.scenicId from(select * from sceniccollect where userId IN (:userIds) GROUP BY scenicId ORDER BY COUNT(userId) DESC LIMIT 30) as scecoll)\n" +
+                "AND scenicId IN (SELECT linkId from taglink where tagId = :similarTagId)) LIMIT 6;";
+        MapSqlParameterSource parameterSource = new MapSqlParameterSource();
+        parameterSource.addValue("userIds",similarUserId);
+        parameterSource.addValue("similarTagId",similarTagId);
         List<ScenicInfo> scenicInfoList;
-        scenicInfoList = jdbcTemplate.query(sql,new BeanPropertyRowMapper<ScenicInfo>(ScenicInfo.class),similarUserIdList,similarTagId);
+        scenicInfoList = namedParameterJdbcTemplate.query(sql,parameterSource,new BeanPropertyRowMapper<ScenicInfo>(ScenicInfo.class));
+        return scenicInfoList;
+    }
+
+
+
+
+    @Override
+    public int queryScenicCountBySearchText(List<Integer> monthList, List<String> addrList, List<Integer> tagList) throws Exception {
+        String sql;
+        sql = "select COUNT(scenicId) from scenic WHERE (\n" +
+                "(scenicSuitbaleMonth in (:monthList)) OR\n" +
+                "(downtown in (:addrList)) OR\n" +
+                "(scenicId in (select linkId FROM taglink where tagId in (:tagList))));";
+        MapSqlParameterSource parameterSource = new MapSqlParameterSource();
+        parameterSource.addValue("monthList",monthList);
+        parameterSource.addValue("addrList",addrList);
+        parameterSource.addValue("tagList",tagList);
+
+        int totalCount = 0;
+        totalCount = namedParameterJdbcTemplate.queryForObject(sql,parameterSource,Integer.class);
+        return totalCount;
+    }
+
+    @Override
+    public List<ScenicInfo> queryScenicBySearchText(List<Integer> monthList, List<String> addrList, List<Integer> tagList,int start,int rows) throws Exception {
+        String sql;
+        if(monthList==null&&addrList==null&&tagList==null){
+            sql = "select * from scenic where scenicId in (select sce.scenicId from(select * from sceniccollect GROUP BY scenicId ORDER BY COUNT(userId) DESC LIMIT ?,?) as sce);";
+            List<ScenicInfo> scenicInfoNull = jdbcTemplate.query(sql,new BeanPropertyRowMapper<ScenicInfo>(ScenicInfo.class),start,rows);
+            return scenicInfoNull;
+        }
+
+        sql = "select * from scenic WHERE (\n" +
+                "(scenicSuitbaleMonth in (:monthList)) OR\n" +
+                "(downtown in (:addrList)) OR\n" +
+                "(scenicId in (select linkId FROM taglink where tagId in (:tagList)))) LIMIT :start,:rows;";
+        MapSqlParameterSource parameterSource = new MapSqlParameterSource();
+        parameterSource.addValue("monthList",monthList);
+        parameterSource.addValue("addrList",addrList);
+        parameterSource.addValue("tagList",tagList);
+        parameterSource.addValue("start",start);
+        parameterSource.addValue("rows",rows);
+        List<ScenicInfo> scenicInfoList;
+        scenicInfoList = namedParameterJdbcTemplate.query(sql,parameterSource,new BeanPropertyRowMapper<ScenicInfo>(ScenicInfo.class));
         return scenicInfoList;
     }
 

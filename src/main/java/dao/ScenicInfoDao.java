@@ -44,4 +44,8 @@ public interface ScenicInfoDao {
 
     List<ScenicInfo> selectSimilarScenicByTag(List<Integer> similarUserId, int similarTagId) throws Exception;
 
+    int queryScenicCountBySearchText(List<Integer> monthList,List<String> addrList,List<Integer> tagList) throws Exception;
+    List<ScenicInfo> queryScenicBySearchText(List<Integer> monthList,List<String> addrList,List<Integer> tagList,int start,int rows) throws Exception;
+
+
 }

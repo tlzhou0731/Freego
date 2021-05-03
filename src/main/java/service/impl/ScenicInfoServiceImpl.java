@@ -401,6 +401,35 @@ public class ScenicInfoServiceImpl implements ScenicInfoService {
         return tagScenicRecommend;
     }
 
+    @Override
+    public PageBean<ScenicInfo> queryScenicBySearch(List<Integer> monthList, List<String> addrList, List<Integer> tagList, String currentPageStr, String rowsStr) {
+        try {
+            int currentPage = Integer.parseInt(currentPageStr);
+            int rows = Integer.parseInt(rowsStr);
+            //1创建新的pageBean对象
+            PageBean<ScenicInfo> pageBean=new PageBean<ScenicInfo>();
+            //2.设置当前页面属性和row（row)是页面大小
+            pageBean.setCurrentPage(currentPage);
+            pageBean.setPageSize(rows);
+            //3.调用dao查询totalCount总记录数
+            int totalCount=scenicInfoDao.queryScenicCountBySearchText(monthList,addrList,tagList);
+            //4start = (currentPage-1)*row;
+            pageBean.setTotalCount(totalCount);
+            //5.调用dao查询list集合
+            int start = (currentPage-1)*rows;
+            List<ScenicInfo> scenicInfoList=scenicInfoDao.queryScenicBySearchText(monthList,addrList,tagList,start,rows);
+            pageBean.setList(scenicInfoList);
+            //6.计算总页码
+            int totalPage = totalCount%rows==0?(totalCount/rows):(totalCount/rows+1);
+            pageBean.setTotalPage(totalPage);
+            //7.返回pageBean
+            return pageBean;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
     public static void main(String[] args) {
         ScenicInfoService scenicInfoService = new ScenicInfoServiceImpl(new ScenicInfoDaoImpl());
         List<Integer> likeUser = scenicInfoService.querySimilarUser("1010");

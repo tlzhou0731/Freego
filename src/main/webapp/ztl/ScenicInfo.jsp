@@ -51,6 +51,15 @@
     <script src="../ztl/js/bootstrap.min.js"></script>
     <link rel="stylesheet" type="text/css" href="../ztl/css/index.css">
 <%--    <link rel="stylesheet" type="text/css" href="../ztl/css/scenicInfo.css">--%>
+    <style>
+        #container {
+            overflow: hidden;
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            font-family: "微软雅黑";
+        }
+    </style>
 
 
 </head>
@@ -202,7 +211,7 @@
             <div class="scenic-map-mhd" style="overflow: hidden;">
                 景点位置
                 <p class="sub">
-                    四川省成都市青羊区金河路口宽窄巷子
+                    <%=scenicInfo.getScenicAddress()%>
                 </p>
             </div>
             <div class="scenic-map-mbd clearfix">
@@ -216,14 +225,18 @@
                     <div class="m-poi" data-cs-p="位置-附近景点">
                         <div class="mtitle">附近景点</div>
                         <ul class="mlist">
-                            <li data-id="5416" data-name="成都人民公园" data-type="3" data-lat="30.657045" data-lng="104.057567">
-                                    <span class="dist">
-                                        800米
-                                    </span>
-                                <a href="/poi/5416.html" target="_blank">
-                                    成都人民公园
-                                </a>
-                            </li>
+                            <%for(int nearTemp = 0;nearTemp<nearScenicList.size();nearTemp++){%>
+                                <li data-id="<%=nearScenicList.get(nearTemp).getScenicId()%>"
+                                    data-name="<%=nearScenicList.get(nearTemp).getScenicName()%>"
+                                    data-type="3"
+                                    data-lat="<%=nearScenicList.get(nearTemp).getLat()%>"
+                                    data-lng="<%=nearScenicList.get(nearTemp).getLng()%>">
+                                    <a href="${pageContext.request.contextPath}/ScenicServlet?methodName=findScenicInfoByScenicId&scenicId=<%=nearScenicList.get(nearTemp).getScenicId()%>&currentPage=1&rows=2" target="_blank">
+                                        <%=nearScenicList.get(nearTemp).getScenicName()%>
+                                    </a>
+                                </li>
+                            <%}%>
+
                             <li data-id="5002" data-name="文化公园-青羊宫" data-type="3" data-lat="30.660034" data-lng="104.041137">
                                     <span class="dist">
                                         1.3公里
@@ -327,7 +340,7 @@
                                                                 <%=String.valueOf(scenicCommentChild.get(commentChildNum.get(j)).getUserId())%>
                                                             </a>
                                                             <%if(scenicCommentChild.get(commentChildNum.get(j)).getParentId()!=scenicCommentChild.get(commentChildNum.get(j)).getParentCommentId()){%>
-                                                            ：回复<%=String.valueOf(scenicCommentChild.get(commentChildNum.get(j)).getUserId())%>：
+                                                            ：回复<%=String.valueOf(scenicCommentChild.get(commentChildNum.get(j)).getParentId())%>：
                                                             <%}%>
                                                             <%=scenicCommentChild.get(commentChildNum.get(j)).getCommentText()%>
                                                             <a class="_j_reply re_reply" data-id="<%=scenicCommentChild.get(commentChildNum.get(j)).getScenicCommentId()%>>" data-uid="scenicCommentChild.get(commentChildNum.get(j)).getUserId()" data-username="'林家辉" title="添加回复">回复</a>
@@ -343,175 +356,35 @@
                                         </div>
                                     </li>
                             <%}}%>
-                            <li class="scenic-comment-item scenic-review-list-item clearfix">
-                                <div class="user">
-                                    <a class="avatar" href="" target="_blank">
-                                        <img src="/images/ztl/scenic/scenic_show_1.jpg" width="48" height="48">
-                                    </a>
-<%--                                    <span class="level">--%>
-<%--                                        LV.32--%>
-<%--                                    </span>--%>
-                                </div>
-                                <a class="name" href="" target="_blank">
-                                    aaaaaaa
-                                </a>
 
-                                <span class="s-star s-star4"></span>
-                                <p class="rev-txt">滇池，位于昆明坝子中央，东起呈贡区旁，西至西山之麓，北临大观公园，南入晋宁县内。全部在云南省省会昆明市境内，北大半部属于昆明市辖区。其中，西北部属西山区，面积约占三分之一。滇池为西南第一大湖，也是中国第六大的淡水湖。</p>
-
-
-
-                                <div class="scenic-comment-img">
-                                    <a href="/photo/poi/19779_410349092.html" target="_blank"><img src="https://p1-q.mafengwo.net/s13/M00/7A/88/wKgEaVyEuU2AX9_dADr8JNaJOyY84.jpeg?imageMogr2%2Fthumbnail%2F%21200x120r%2Fgravity%2FCenter%2Fcrop%2F%21200x120%2Fquality%2F100" width="200" height="120"></a>
-                                    <a href="/photo/poi/19779_410349096.html" target="_blank"><img src="https://n1-q.mafengwo.net/s13/M00/7A/7D/wKgEaVyEuUmAPgxVADlrZsroxcg92.jpeg?imageMogr2%2Fthumbnail%2F%21200x120r%2Fgravity%2FCenter%2Fcrop%2F%21200x120%2Fquality%2F100" width="200" height="120"></a>
-                                    <a href="/photo/poi/19779_410349100.html" target="_blank"><img src="https://b1-q.mafengwo.net/s13/M00/7A/82/wKgEaVyEuUuAJhvbADFdGE1MEsU29.jpeg?imageMogr2%2Fthumbnail%2F%21200x120r%2Fgravity%2FCenter%2Fcrop%2F%21200x120%2Fquality%2F100" width="200" height="120"></a>
-                                    <a href="/photo/poi/19779_410349104.html" target="_blank"><img src="https://b1-q.mafengwo.net/s13/M00/7A/8D/wKgEaVyEuVCAbOa9ADKkw7UaE_I93.jpeg?imageMogr2%2Fthumbnail%2F%21200x120r%2Fgravity%2FCenter%2Fcrop%2F%21200x120%2Fquality%2F100" width="200" height="120"></a>
-                                </div>
-
-                                <div class="info clearfix">
-                                    <a class="btn-comment _j_comment" title="添加评论">评论</a>
-                                    <span class="time">2019-03-10 15:14:26</span>
-                                    <span class="from">
-                                    此条点评来自<a href="/app/intro/gonglve.php" target="_blank">马蜂窝旅游APP</a>
-                                </span>
-                                </div>
-
-                                <div class="scenic-comment-review add-reply hide">
-                                    <ul class="more_reply_box comment_list">
-                                    </ul>
-
-                                    <div class="add-comment hide reply-form">
-                                        <textarea class="comment_reply" data-comment_id="190154279" data-comment_username="无言" data-poi_id="19779" data-poi_name="滇池" data-parent_id="" data-parent_uid="" data-parent_username="" style="overflow: hidden; color: rgb(204, 204, 204);"></textarea>
-                                        <a class="btn btn_submit_reply">回复</a>
-                                    </div>
-                                </div>
-                            </li>
-                            <li class="scenic-comment-item scenic-review-list-item clearfix">
-                                <div class="user"><a class="avatar" href="/u/78339278.html" target="_blank"><img src="https://b1-q.mafengwo.net/s13/M00/7C/CA/wKgEaVxmfzqAFz0AAACeb-zb4Lo40.jpeg?imageMogr2%2Fthumbnail%2F%2148x48r%2Fgravity%2FCenter%2Fcrop%2F%2148x48%2Fquality%2F90" width="48" height="48"></a><span class="level">LV.16</span></div>
-                                <a class="name" href="/u/78339278.html" target="_blank">纤云肆卷</a>
-
-                                <span class="s-star s-star5"></span>
-                                <p class="scenic-comment-txt">一月份的时候去的，昆明自带好天气，温度适宜，阳光灿烂，成千上万的海鸥从西伯利亚飞来这里度过寒冬，他们每年的12月初飞来，次年3月初便离开，每年的如期而至，就像是一场美好的约定。滇池边有很多人来拍婚纱照，还有各种喂海鸥的饼干面包出售，如果你喜欢这群飞来飞去的小精灵，也可以买一点来喂哦</p>
-
-
-
-                                <div class="scenic-comment-img">
-                                    <a href="/photo/poi/19779_408964428.html" target="_blank"><img src="https://n1-q.mafengwo.net/s13/M00/E4/5E/wKgEaVx95faAfn0CAC0gZWhAtxk40.jpeg?imageMogr2%2Fthumbnail%2F%21200x120r%2Fgravity%2FCenter%2Fcrop%2F%21200x120%2Fquality%2F100" width="200" height="120"></a>
-                                    <a href="/photo/poi/19779_408964432.html" target="_blank"><img src="https://n1-q.mafengwo.net/s13/M00/E4/5F/wKgEaVx95faAC4ikAB_MhIwjMIw45.jpeg?imageMogr2%2Fthumbnail%2F%21200x120r%2Fgravity%2FCenter%2Fcrop%2F%21200x120%2Fquality%2F100" width="200" height="120"></a>
-                                    <a href="/photo/poi/19779_408964436.html" target="_blank"><img src="https://p1-q.mafengwo.net/s13/M00/E4/5F/wKgEaVx95feAMCLzACKd5j5g5Ik21.jpeg?imageMogr2%2Fthumbnail%2F%21200x120r%2Fgravity%2FCenter%2Fcrop%2F%21200x120%2Fquality%2F100" width="200" height="120"></a>
-                                    <a href="/photo/poi/19779_408964440.html" target="_blank"><img src="https://p1-q.mafengwo.net/s13/M00/E4/60/wKgEaVx95fiAd9CsADWlhSJa-B812.jpeg?imageMogr2%2Fthumbnail%2F%21200x120r%2Fgravity%2FCenter%2Fcrop%2F%21200x120%2Fquality%2F100" width="200" height="120"></a>
-                                </div>
-
-                                <div class="info clearfix">
-                                    <a class="btn-comment _j_comment" title="添加评论">评论</a>
-                                    <span class="time">2019-03-05 10:59:10</span>
-                                </div>
-
-                                <div class="scenic-comment-review add-reply ">
-                                    <ul class="more_reply_box comment_list">
-                                        <li>
-                                            <a href="/u/66502518.html" target="_blank">
-                                                <img src="https://n1-q.mafengwo.net/s9/M00/05/17/wKgBs1bBzguAa3jrAACEXkZu-eQ06.jpeg?imageMogr2%2Fthumbnail%2F%2116x16r%2Fgravity%2FCenter%2Fcrop%2F%2116x16%2Fquality%2F90" width="16" height="16">'林家辉
-                                            </a>
-                                            ：3月11号还能看到吗？
-                                            <a class="_j_reply re_reply" data-id="482512" data-uid="66502518" data-username="'林家辉" title="添加回复">回复</a>
-                                            <br><span class="time">2019-03-06 10:14:32</span>
-                                        </li>
-                                        <li class="_j_morereply">
-                                            <a title="展开全部回复">还有<span class="more_cnt">6</span>条回复</a>
-                                        </li>
-                                        <li class="reply_more hide">
-                                            <a href="/u/850516.html" target="_blank">
-                                                <img src="https://n1-q.mafengwo.net/s9/M00/92/FD/wKgBs1g3hICAJkDZAACRsdbIDc442.jpeg?imageMogr2%2Fthumbnail%2F%2116x16r%2Fgravity%2FCenter%2Fcrop%2F%2116x16%2Fquality%2F90" width="16" height="16">KiwanChan
-                                            </a>
-                                            回复'林家辉：同问哈！我3.10到
-                                            <a class="_j_reply re_reply" data-id="483584" data-uid="850516" data-username="KiwanChan" title="添加回复">回复</a>
-                                            <br><span class="time">2019-03-06 22:58:21</span>
-                                        </li>
-                                        <li class="reply_more hide">
-                                            <a href="/u/77766139.html" target="_blank">
-                                                <img src="https://n1-q.mafengwo.net/s12/M00/35/2C/wKgED1uqImOAAxCCAAAeJTVWYJU680.png?imageMogr2%2Fthumbnail%2F%2116x16r%2Fgravity%2FCenter%2Fcrop%2F%2116x16%2Fquality%2F90" width="16" height="16">Z  t  🍄
-                                            </a>
-                                            ：3月20号还能看到吗
-                                            <a class="_j_reply re_reply" data-id="484032" data-uid="77766139" data-username="Z  t  🍄" title="添加回复">回复</a>
-                                            <br><span class="time">2019-03-07 13:45:40</span>
-                                        </li>
-                                        <li class="reply_more hide">
-                                            <a href="/u/66528253.html" target="_blank">
-                                                <img src="https://b1-q.mafengwo.net/s12/M00/35/B7/wKgED1uqIs-AMYTwAAAX-VIKIo0071.png?imageMogr2%2Fthumbnail%2F%2116x16r%2Fgravity%2FCenter%2Fcrop%2F%2116x16%2Fquality%2F90" width="16" height="16">Ms. Xie
-                                            </a>
-                                            ：11月中旬有吗
-                                            <a class="_j_reply re_reply" data-id="589684" data-uid="66528253" data-username="Ms. Xie" title="添加回复">回复</a>
-                                            <br><span class="time">2019-05-20 10:35:39</span>
-                                        </li>
-                                        <li class="reply_more hide">
-                                            <a href="/u/60773209.html" target="_blank">
-                                                <img src="https://p1-q.mafengwo.net/s17/M00/A9/55/CoUBXl9dikOAOOfoAADKiasZ0ew93.jpeg?imageMogr2%2Fthumbnail%2F%2116x16r%2Fgravity%2FCenter%2Fcrop%2F%2116x16%2Fquality%2F90" width="16" height="16">二半烟雨
-                                            </a>
-                                            回复Ms. Xie：有了11月初到3月尾都有，中间时间比较多
-                                            <a class="_j_reply re_reply" data-id="596668" data-uid="60773209" data-username="二半烟雨" title="添加回复">回复</a>
-                                            <br><span class="time">2019-05-25 19:14:31</span>
-                                        </li>
-                                        <li class="reply_more hide">
-                                            <a href="/u/30876914.html" target="_blank">
-                                                <img src="https://n1-q.mafengwo.net/s18/M00/D4/1B/CoUBYGAvai-AFfKdAACHjp4-EG870.jpeg?imageMogr2%2Fthumbnail%2F%2116x16r%2Fgravity%2FCenter%2Fcrop%2F%2116x16%2Fquality%2F90" width="16" height="16">得意的 🐷
-                                            </a>
-                                            ：国庆有吗，百度里说10月回来呀，国庆去昆明
-                                            <a class="_j_reply re_reply" data-id="722523" data-uid="30876914" data-username="得意的 🐷" title="添加回复">回复</a>
-                                            <br><span class="time">2019-09-16 21:24:29</span>
-                                        </li>
-                                        <li class="reply_more hide">
-                                            <a href="/u/78339278.html" target="_blank">
-                                                <img src="https://b1-q.mafengwo.net/s13/M00/7C/CA/wKgEaVxmfzqAFz0AAACeb-zb4Lo40.jpeg?imageMogr2%2Fthumbnail%2F%2116x16r%2Fgravity%2FCenter%2Fcrop%2F%2116x16%2Fquality%2F90" width="16" height="16">纤云肆卷
-                                            </a>
-                                            回复得意的 🐷：我不太清楚呢，数量可能会少点
-                                            <a class="_j_reply re_reply" data-id="728927" data-uid="78339278" data-username="纤云肆卷" title="添加回复">回复</a>
-                                            <br><span class="time">2019-09-28 11:18:57</span>
-                                        </li>
-                                        <li>
-                                            <a href="/u/30876914.html" target="_blank">
-                                                <img src="https://n1-q.mafengwo.net/s18/M00/D4/1B/CoUBYGAvai-AFfKdAACHjp4-EG870.jpeg?imageMogr2%2Fthumbnail%2F%2116x16r%2Fgravity%2FCenter%2Fcrop%2F%2116x16%2Fquality%2F90" width="16" height="16">得意的 🐷
-                                            </a>
-                                            回复纤云肆卷：刚来了，今天，没有，还是12月份左右才有
-                                            <a class="_j_reply re_reply" data-id="731115" data-uid="30876914" data-username="得意的 🐷" title="添加回复">回复</a>
-                                            <br><span class="time">2019-10-01 23:36:12</span>
-                                        </li>
-                                    </ul>
-
-                                    <div class="add-comment hide reply-form">
-                                        <textarea class="comment_reply" data-comment_id="190092468" data-comment_username="纤云肆卷" data-poi_id="19779" data-poi_name="滇池" data-parent_id="" data-parent_uid="" data-parent_username="" style="overflow: hidden; color: rgb(204, 204, 204);"></textarea>
-                                        <a class="btn btn_submit_reply">回复</a>
-                                    </div>
-                                </div>
-                            </li>
                         </ul>
                     </div>
 
                     <div align="right" class="scenic-comment-pagination">
                         <span class="count">共<span><%=scenicCommentPageBean.getTotalPage()%></span>页 / <span><%=scenicCommentPageBean.getTotalCount()%></span>条</span>
-                        <a class="pi pg-prev" href="" title="前一页"><<</a>
+                        <a class="pi pg-prev" href="/ScenicServlet?methodName=findScenicInfoByScenicId&scenicId=<%=scenicInfo.getScenicId()%>&currentPage=<%=scenicCommentPageBean.getCurrentPage()-1%>&rows=2" title="前一页"><<</a>
 
                         <%if(scenicCommentInfoList != null){
                             for (int i = 1;i <= scenicCommentPageBean.getTotalPage();i++){%>
                                 <%if (i==scenicCommentPageBean.getCurrentPage()){%>
-                                    <span class="pg-current"><%=i%></span>
+                                    <span class="pg-current" href="/ScenicServlet?methodName=findScenicInfoByScenicId&scenicId=<%=scenicInfo.getScenicId()%>&currentPage=<%=i%>&rows=2"><%=i%></span>
                                 <%}else if(i==1){%>
-                                    <a class="pi" href="#">1</a>
+                                    <a class="pi" href="/ScenicServlet?methodName=findScenicInfoByScenicId&scenicId=<%=scenicInfo.getScenicId()%>&currentPage=1&rows=2">1</a>
                                 <%}else if(i==2&&i<scenicCommentPageBean.getCurrentPage()-3){%>
                                     <a class="pi" href="#">...</a>
                                 <%}else if(((i>=scenicCommentPageBean.getCurrentPage()-3)&&(i<scenicCommentPageBean.getCurrentPage()))
                                         ||((i<=scenicCommentPageBean.getCurrentPage()+3)&&(i>scenicCommentPageBean.getCurrentPage()))){%>
-                                    <a class="pi" href="/ScenicServlet?&methodName=queryScenicIndex&currentPage=<%=i%>&rows=10"><%=i%></a>
+                                    <a class="pi" href="/ScenicServlet?methodName=findScenicInfoByScenicId&scenicId=<%=scenicInfo.getScenicId()%>&currentPage=<%=i%>&rows=2"><%=i%></a>
                                 <%}else if(i==scenicCommentPageBean.getTotalPage()-1){%>
                                     <a  class="pi" href="#">...</a>
                                 <%}else if(i==scenicCommentPageBean.getTotalPage()){%>
-                                    <a class="pi" href="/ScenicServlet?&methodName=queryScenicIndex&currentPage=<%=i%>&rows=10"><%=i%></a>
+                                    <a class="pi" href="/ScenicServlet?methodName=findScenicInfoByScenicId&scenicId=<%=scenicInfo.getScenicId()%>&currentPage=<%=i%>&rows=2"><%=i%></a>
                                 <%}%>
                             <%}
                         }else{%>
                             <span class="pg-current">0</span>
                         <%}%>
-                        <a class="pi pg-next" href="" title="后一页">>></a>
+                        <a class="pi pg-next" href="/ScenicServlet?methodName=findScenicInfoByScenicId&scenicId=<%=scenicInfo.getScenicId()%>&currentPage=<%=scenicCommentPageBean.getCurrentPage()+1%>&rows=2" title="后一页">>></a>
 
 <%--                        <span class="pg-current">1</span>--%>
 <%--                        <a class="pi" href="">2</a>--%>
@@ -756,6 +629,13 @@
 <%--</script>--%>
 <script type="text/javascript">
     var map = new BMapGL.Map('allmap');
+    //附近点
+    var nearScenicCount = <%=nearScenicList.size()%>;
+    var points = new Array(nearScenicCount);
+    var markers = new Array(nearScenicCount);
+    var opts = new Array(nearScenicCount);
+    var infoWindows = new Array(nearScenicCount);
+    //中心点
     var point = new BMapGL.Point(<%=scenicInfo.getLng()%>, <%=scenicInfo.getLat()%>);
     map.centerAndZoom(point, 15);
     // 创建点标记
@@ -765,15 +645,64 @@
     opt = {
         width: 200,
         height: 100,
-        title: 'asdkjfadkaldjkflsdkfjlksj'
+        title: '<%=scenicInfo.getScenicName()%>'
     };
-    infoWindow = new BMapGL.InfoWindow('bjbjbjbjbjbjjbbjbjbjbjbjbjbjbjbj', opt);
+    infoWindow = new BMapGL.InfoWindow('<%=scenicInfo.getScenicAddress()%>', opt);
     // 点标记添加点击事件
     marker.addEventListener('click', function () {
         map.openInfoWindow(infoWindow, point); // 开启信息窗口
     });
 
+    <%for(int nearI = 0 ; nearI < nearScenicList.size();nearI++){%>
+        points[<%=nearI%>] = new BMapGL.Point(<%=nearScenicList.get(nearI).getLng()%>, <%=nearScenicList.get(nearI).getLat()%>);
+        markers[<%=nearI%>] = new BMapGL.Marker(points[<%=nearI%>]);
+        map.addOverlay(markers[<%=nearI%>]);
+        // 创建信息窗口
+        opts[<%=nearI%>] = {
+            width: 200,
+            height: 100,
+            title: '<%=nearScenicList.get(nearI).getScenicName()%>'
+        };
+        infoWindows[<%=nearI%>] = new BMapGL.InfoWindow('<%=nearScenicList.get(nearI).getScenicAddress()%>', opts[<%=nearI%>]);
+        // 点标记添加点击事件
+        markers[<%=nearI%>].addEventListener('click', function () {
+            map.openInfoWindow(infoWindows[<%=nearI%>], points[<%=nearI%>]); // 开启信息窗口
+        });
+
+    <%}%>
+    map.enableScrollWheelZoom(true);     //开启鼠标滚轮缩放
+
+
 </script>
+
+<%--    <script type="text/javascript">--%>
+<%--        var map = new BMapGL.Map('allmap');--%>
+<%--        var nearScenicCount = <%=nearScenicList.size()%>;--%>
+<%--        var point[nearScenicCount]--%>
+<%--        for(var nearKey=0;nearKey<nearScenicCount;nearKey++){--%>
+
+<%--        }--%>
+
+<%--        var point = new BMapGL.Point(<%=scenicInfo.getLng()%>, <%=scenicInfo.getLat()%>);--%>
+<%--        map.centerAndZoom(point, 15);--%>
+<%--        // 创建点标记--%>
+<%--        marker = new BMapGL.Marker(point);--%>
+<%--        map.addOverlay(marker);--%>
+<%--        // 创建信息窗口--%>
+<%--        opt = {--%>
+<%--            width: 200,--%>
+<%--            height: 100,--%>
+<%--            title: 'asdkjfadkaldjkflsdkfjlksj'--%>
+<%--        };--%>
+<%--        infoWindow = new BMapGL.InfoWindow('bjbjbjbjbjbjjbbjbjbjbjbjbjbjbjbj', opt);--%>
+<%--        // 点标记添加点击事件--%>
+<%--        marker.addEventListener('click', function () {--%>
+<%--            map.openInfoWindow(infoWindow, point); // 开启信息窗口--%>
+<%--        });--%>
+
+<%--    </script>--%>
+
+
 
 <%--导入尾部--%>
 <%--<footer>--%>
