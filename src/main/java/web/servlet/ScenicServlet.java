@@ -22,9 +22,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @Author: Macro
@@ -38,12 +36,14 @@ public class ScenicServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setCharacterEncoding("utf-8");
         System.out.println("DOPOST");
+        System.out.println("DDDDDOOOOOOOPPPPPPPPPPOOOOOOOOOOSSSSSSSSTTTTTTTTT");
         String methodName = request.getParameter("methodName");
+        System.out.println(methodName);
 
         if("queryScenicIndex".equals(methodName)){
             queryScenicIndex(request,response);
             queryRecommendScenicAndTag(request,response);
-            request.getRequestDispatcher("/ztl/SearchScenic.jsp").forward(request,response);
+            request.getRequestDispatcher("/ztl/ScenicMain.jsp").forward(request,response);
         }
         if("findScenicInfoByScenicId".equals(methodName)){
             findScenicInfoByScenicId(request,response);
@@ -51,7 +51,10 @@ public class ScenicServlet extends HttpServlet {
             queryScenicNearByScenicId(request,response);
             request.getRequestDispatcher("/ztl/ScenicInfo.jsp").forward(request,response);
         }
-//        if("findScenicInfo")
+        if("queryScenicBySearch".equals(methodName)){
+            queryScenicBySearch(request,response);
+            request.getRequestDispatcher("/ztl/SearchScenic.jsp").forward(request,response);
+        }
 
     }
 
@@ -159,6 +162,30 @@ public class ScenicServlet extends HttpServlet {
         request.setAttribute("totalTag",totalTag);
         request.setAttribute("recommendTagScenic",recommendTagScenic);
     }
+
+    private void queryScenicBySearch(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String[] travelMonth,travelAddr,travelTag;
+        travelMonth = request.getParameterValues("dateChoose");
+        travelAddr = request.getParameterValues("addrChoose");
+        travelTag = request.getParameterValues("tagChoose");
+        List<Integer> travelMonthList = new ArrayList<Integer>();
+        List<String> travelAddrList = new ArrayList<String>();
+        List<Integer> travelTagList = new ArrayList<Integer>();
+        for(int i = 0;i<travelMonth.length;i++){
+            travelMonthList.add(Integer.parseInt(travelMonth[i]));
+        }
+        for(int i = 0;i<travelAddr.length;i++){
+            travelAddrList.add(travelAddr[i]);
+        }
+        for(int i = 0;i<travelTag.length;i++){
+            travelTagList.add(Integer.parseInt(travelTag[i]));
+        }
+        System.out.println(travelMonthList);
+        System.out.println(travelAddrList);
+        System.out.println(travelTagList);
+
+    }
+
 
     private void pageTest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
 
