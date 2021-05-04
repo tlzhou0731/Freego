@@ -104,152 +104,125 @@
 <body>
 <%--接受的数据--%>
 <%
-    List<String> scenicThemeList = null;
-    scenicThemeList = (List<String>)request.getAttribute("scenicThemeList");
-    PageBean<ScenicInfo> scenicInfoPageBean = (PageBean<ScenicInfo>)request.getAttribute("scenicPageBean");
-    List<ScenicInfo> scenicInfoList = scenicInfoPageBean.getList();
+    PageBean<ScenicInfo> searchScenicPage = (PageBean<ScenicInfo>)request.getAttribute("searchScenicPageBean");
+    List<ScenicInfo> searchScenicList = searchScenicPage.getList();
+    List<Integer> travelMonthList = (List<Integer>)request.getAttribute("travelMonthList");
+    List<String> travelAddrList = (List<String>)request.getAttribute("travelAddrList");
+    List<Integer> travelTagList = (List<Integer>)request.getAttribute("travelTagList");
+    Map<Integer,String> totalTag = (Map<Integer, String>)request.getAttribute("totalTag");
     List<String> downtownInlandList = (List<String>)request.getAttribute("downtownInlandList");
     List<String> downtownAbroadList = (List<String>)request.getAttribute("downtownAbroadList");
 
-    Map<Integer,String> totalTag = (Map<Integer,String>)request.getAttribute("totalTag");
-    Map<Integer,List<ScenicInfo>> recommendTagScenic = (Map<Integer,List<ScenicInfo>>)request.getAttribute("recommendTagScenic");
+    if(travelMonthList==null){
+        System.out.println("travelMonthList IS NULL");
+    }else{
+        System.out.println(travelMonthList);
+    }
+    if(travelAddrList==null){
+        System.out.println("travelAddrList IS NULL");
+    }else{
+        System.out.println(travelAddrList);
+    }
+    if(travelTagList==null){
+        System.out.println("travelTagList IS NULL");
+    }else{
+        System.out.println(travelTagList);
+    }
 
 %>
-<%--轮播图--%>
-<section id="scenic_banner">
-
-    <div id="carousel-example-generic" class="carousel slide" data-ride="carousel" data-interval="2000">
-        <!-- Indicators -->
-        <ol class="carousel-indicators">
-            <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
-            <li data-target="#carousel-example-generic" data-slide-to="1"></li>
-            <li data-target="#carousel-example-generic" data-slide-to="2"></li>
-            <li data-target="#carousel-example-generic" data-slide-to="3"></li>
-        </ol>
-        <!-- Wrapper for slides -->
-        <div id="banner_warp" class="carousel-inner" role="listbox">
-
-            <div id="banner_1" class="item active">
-                <a href="" class="show-title">
-                    <div class="scenic-date">2021.4.19</div>
-                    <div class="scenic-title">【自驾甘孜】仓央嘉措，无尽雪山和风</div>
-                </a>
-                <a href="" class="show-pic">
-                    <img src="../images/li/signup&login/1.jpeg" alt="" class="banner-picture">
-                </a>
-            </div>
-
-            <div id="banner_2" class="item">
-                <a href="" class="show-title">
-                    <div class="show-date">2021.4.19</div>
-                    <div class="scenic-title">常州金坛亲子游｜撷一肩春色，跟着小念一起花样春游吧</div>
-                </a>
-                <a href="" class="show-pic">
-                    <img src="../images/li/signup&login/2.jpeg" alt="" class="banner-picture">
-                </a>
-            </div>
-
-            <div id="banner_3" class="item">
-                <a href="" class="show-title">
-                    <div class="show-date">2021.4.19</div>
-                    <div class="scenic-title">别样东莞｜广东第四城的美食和古迹</div>
-                </a>
-                <a href="" class="show-pic">
-                    <img src="../images/li/signup&login/3.jpeg" alt="" class="banner-picture">
-                </a>
-            </div>
-
-            <div id="banner_4" class="item">
-                <a href="" class="show-title">
-                    <div class="show-date">2021.4.19</div>
-                    <div class="scenic-title">走吧、让我们一路川西吧！</div>
-                </a>
-                <a href="" class="show-pic">
-                    <img src="..//images/li/signup&login/4.jpeg" alt="" class="banner-picture">
-                </a>
-            </div>
-
-        </div>
-        <!-- Controls -->
-        <a class="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev">
-            <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
-            <span class="sr-only">Previous</span>
-        </a>
-        <a class="right carousel-control" href="#carousel-example-generic" role="button" data-slide="next">
-            <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-            <span class="sr-only">Next</span>
-        </a>
-    </div>
-
-    <%--搜索框--%>
-    <div class="index-search-container" id="index_search">
-        <div class="index-search-group">
-            <div class="index-search-bar" id="index_search_bar2">
-                <form action="/ScenicServlet?&methodName=queryScenicBySearch&currentPage=1&rows" method="post">
-                    <div class="index-search-wrapper">
-                        <div class="index-search-input">
-                            <input name="q" type="text" placeholder="输入搜索内容" id="scenic_search_text" autocomplete="off">
-                        </div>
-                    </div>
-                    <div class="index-search-button" id="scenic_search_btn">
-                        <button id="btn_scenic_search" type="submit" class="btn btn-default">搜索</button>
-                    </div>
-                </form>
-            </div>
-
-        </div>
-    </div>
-
-</section>
-
 <%--游记部分--%>
 <div class="freego-scenic">
     <%--选项表单--%>
     <div class="scenic-form" style="width: 100%">
-        <form class="navbar-form navbar-left" action="/ScenicServlet?&methodName=findScenicInfo" method="post">
+        <form class="navbar-form navbar-left" action="/ScenicServlet?methodName=queryScenicBySearch&currentPage=1&rows=5" method="post">
             <div class="scenic_form_date">
                 <select id="dateChoose" name="dateChoose" class="form-control selectpicker"
                         data-width="95%" data-live-search="true"
-                        multiple data-max-options="5" onchange="getDates(this)" title="选择出行日期">
-                    <option value="1">1月</option>
-                    <option value="2">2月</option>
-                    <option value="3">3月</option>
-                    <option value="4">4月</option>
-                    <option value="5">5月</option>
-                    <option value="6">6月</option>
-                    <option value="7">7月</option>
-                    <option value="8">8月</option>
-                    <option value="9">9月</option>
-                    <option value="10">10月</option>
-                    <option value="11">11月</option>
-                    <option value="12">12月</option>
+                        multiple data-max-options="5" onchange="getTravelMonth(this)"
+                        title="选择出行日期">
+                    <%for(int tmi = 0;tmi<12;tmi++){%>
+                    <%if(travelMonthList==null){%>
+                    <option value="<%=tmi+1%>"><%=tmi+1%>月</option>
+                    <%}else{%>
+                    <%int jd=0;%>
+                    <%for(int tmb = 0;tmb<travelMonthList.size();tmb++){
+                        if((tmi+1)==travelMonthList.get(tmb)){
+                            jd=1;
+                        }
+                    }%>
+                    <%if(jd==1){%>
+                    <option value="<%=tmi+1%>" selected><%=tmi+1%>月</option>
+                    <%}else{%>
+                    <option value="<%=tmi+1%>"><%=tmi+1%>月</option>
+                    <%}%>
+                    <%}
+                    }%>
+                    <%--                        }%>--%>
                 </select>
             </div>
             <div class="scenic_form_addr">
-                <select id="'addChoose" name="addChoose" class="form-control selectpicker"
+                <select id="'addrChoose" name="addrChoose" class="form-control selectpicker"
                         data-width="95%" data-live-search="true"
-                        multiple data-max-options="5" onchange="getAdds(this)" title="选择地点">
+                        multiple data-max-options="5" onchange="getAddr(this)" title="选择地点">
                     <optgroup label="国内">
                         <%for(int i=0;i<downtownInlandList.size();i++){%>
+                        <%if(travelAddrList==null){%>
+                        <option value="<%=downtownInlandList.get(i)%>"><%=downtownInlandList.get(i)%></option>
+                        <%}else{%>
+                        <%int jd=0;%>
+                        <%for(int tadb = 0;tadb<travelAddrList.size();tadb++){
+                            if((downtownInlandList.get(i)).equals(travelAddrList.get(tadb))){
+                                jd=1;
+                            }
+                        }%>
+                        <%if(jd==1){%>
+                        <option value="<%=downtownInlandList.get(i)%>" selected><%=downtownInlandList.get(i)%></option>
+                        <%}else{%>
                         <option value="<%=downtownInlandList.get(i)%>"><%=downtownInlandList.get(i)%></option>
                         <%}%>
+                        <%}}%>
                     </optgroup>
                     <optgroup label="国外">
                         <%for(int i=0;i<downtownAbroadList.size();i++){%>
+                        <%if(travelAddrList==null){%>
+                        <option value="<%=downtownAbroadList.get(i)%>"><%=downtownAbroadList.get(i)%></option>
+                        <%}else{%>
+                        <%int jd=0;%>
+                        <%for(int tadb = 0;tadb<travelAddrList.size();tadb++){
+                            if((downtownAbroadList.get(i)).equals(travelAddrList.get(tadb))){
+                                jd=1;
+                            }
+                        }%>
+                        <%if(jd==1){%>
+                        <option value="<%=downtownAbroadList.get(i)%>" selected><%=downtownAbroadList.get(i)%></option>
+                        <%}else{%>
                         <option value="<%=downtownAbroadList.get(i)%>"><%=downtownAbroadList.get(i)%></option>
                         <%}%>
+                        <%}}%>
                     </optgroup>
                 </select>
             </div>
-            <div class="scenic_form_theme">
-                <select id="'themeChoose" name="themeChoose" class="form-control selectpicker"
+            <div class="scenic_form_tag">
+                <select id="'tagChoose" name="tagChoose" class="form-control selectpicker"
                         data-width="95%" data-live-search="true"
-                        multiple data-max-options="5"  onchange="getThemes(this)" title="选择主题">
-
+                        multiple data-max-options="5"  onchange="getTag(this)" title="选择主题">
                     <%if(totalTag != null){%>
                     <%for(Integer key:totalTag.keySet()){%>
-                    <option value=<%=totalTag.get(key)%>><%=totalTag.get(key)%></option>
+                    <%if(travelTagList==null){%>
+                    <option value="<%=key%>"><%=totalTag.get(key)%></option>
+                    <%}else{%>
+                    <%int jd=0;%>
+                    <%for(int ttb = 0;ttb<travelTagList.size();ttb++){
+                        if((key)==travelTagList.get(ttb)){
+                            jd=1;
+                        }
+                    }%>
+                    <%if(jd==1){%>
+                    <option value="<%=key%>" selected><%=totalTag.get(key)%></option>
+                    <%}else{%>
+                    <option value="<%=key%>"><%=totalTag.get(key)%></option>
                     <%}%>
+                    <%}}%>
                     <%}else{%>
                     <option value="空">空</option>
                     <%}%>
@@ -257,8 +230,7 @@
             </div>
 
             <div class="scenic_form_search">
-                <input id="searchText" name="searchText" style="width: 80%" type="text" class="form-control" placeholder="${pageContext.request.contextPath}">
-                <%--                <button id="btn-show" type="button" class="btn btn-default" onclick="showChoose()">显示</button>--%>
+                <%--                    <input id="searchText" name="searchText" style="width: 80%" type="text" class="form-control" placeholder="${pageContext.request.contextPath}">--%>
                 <button id="btn-search" type="submit" class="btn btn-default">搜索</button>
             </div>
 
@@ -309,112 +281,29 @@
 
     </style>
 
-    <%-- 推荐主题 S --%>
-    <div class="h-theme" id="_j_features">
-        <div class="h-title" style="margin-top: 50px;">猜你喜欢</div>
-        <div class="tab-theme">
-            <div class="themeList clearfix _j_tab_trigger">
-                <%int tagCount = 0;%>
-                <%for(Integer key:recommendTagScenic.keySet()){%>
-                <%if(tagCount == 0){%>
-                <a href="javascript:;" data-id="<%=tagCount%>" class="on"><%=totalTag.get(key)%></a>
-                <%}else{%>
-                <a href="javascript:;" data-id="<%=tagCount%>" class=""><%=totalTag.get(key)%></a>
-                <%}%>
-                <%tagCount++;%>
-                <%}%>
-            </div>
-            <div class="_j_tab_content">
-                <%tagCount = 0;%>
-                <%for(Integer key:recommendTagScenic.keySet()){%>
-                <%if(tagCount == 0){%>
-                <ul class="clearfix" style="" data-id="<%=tagCount%>">
-                    <%for(int j = 0;j<recommendTagScenic.get(key).size();j++){%>
-                    <li>
-                        <div class="fc-item" style="transform: matrix3d(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1);">
-                            <a href="/hotel/10099/#feature=19896" target="_blank" data-type="feature" data-name="<%=recommendTagScenic.get(key).get(j).getScenicName()%>">
-                                <div class="pic">
-                                    <img width="318" height="240" style="width:318px;height:240px;" src="https://p1-q.mafengwo.net/s10/M00/5E/7B/wKgBZ1mC9HaAK_QIAAh1pr4J_V417.jpeg?imageMogr2%2Fthumbnail%2F%21636x480r%2Fgravity%2FCenter%2Fcrop%2F%21636x480%2Fquality%2F90" class="img-show">
-                                </div>
-                                <div class="bag-opa"></div>
-                                <span class="shadow" style="background-image: linear-gradient(45deg, rgba(0, 0, 0, 0.4), transparent 40%);"></span>
-                                <div class="info">
-                                    <h2><%=recommendTagScenic.get(key).get(j).getScenicName()%></h2>
-                                    <p class="caption"><%=recommendTagScenic.get(key).get(j).getDowntown()%></p>
-                                </div>
-                            </a>
-                        </div>
-                    </li>
-                    <%}%>
-                </ul>
-                <%}else{%>
-                <ul class="clearfix" style="display: none;" data-id="<%=tagCount%>">
-                    <%for(int j = 0;j<recommendTagScenic.get(key).size();j++){%>
-                    <li>
-                        <div class="fc-item" style="transform: matrix3d(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1);">
-                            <a href="/hotel/10099/#feature=19896" target="_blank" data-type="feature" data-name="<%=recommendTagScenic.get(key).get(j).getScenicName()%>">
-                                <div class="pic">
-                                    <img width="318" height="240" style="width:318px;height:240px;" src="https://p1-q.mafengwo.net/s10/M00/5E/7B/wKgBZ1mC9HaAK_QIAAh1pr4J_V417.jpeg?imageMogr2%2Fthumbnail%2F%21636x480r%2Fgravity%2FCenter%2Fcrop%2F%21636x480%2Fquality%2F90" class="img-show">
-                                </div>
-                                <div class="bag-opa"></div>
-                                <span class="shadow" style="background-image: linear-gradient(45deg, rgba(0, 0, 0, 0.4), transparent 40%);"></span>
-                                <div class="info">
-                                    <h2><%=recommendTagScenic.get(key).get(j).getScenicName()%></h2>
-                                    <p class="caption"><%=recommendTagScenic.get(key).get(j).getDowntown()%></p>
-                                </div>
-                            </a>
-                        </div>
-                    </li>
-                    <%}%>
-                </ul>
-                <%}%>
-                <%tagCount++;%>
-                <%}%>
-
-            </div>
-        </div>
-    </div>
-
-
-    <div class="index-scenic">
-        <%--游记tab--%>
-        <div class="scenic-tab">
-            <div class="scenic-hot" id="scenic_hot">
-                <a href="javascript:void(0);" rel="nofollow">热门景点</a>
-            </div>
-            <div class="scenic-theme" id="scenic_theme">
-                <a href="javascript:void(0);" rel="nofollow">热门主题</a>
-            </div>
-            <div class="scenic-addr" id="scenic_addr">
-                <a href="javascript:void(0);" rel="nofollow">热门地点</a>
-            </div>
-            <div class="scenic-near" id="scenic_near">
-                <a href="javascript:void(0);" rel="nofollow">附近景点</a>
-            </div>
-        </div>
-
+    <div class="index-scenic" style="margin-top: 50px">
         <%--景点列表--%>
         <div class="page-block-scenic" id="pgae_block_scenic">
             <div class="scenic-list">
-                <%if(scenicInfoList != null){
-                    for (int i = 0;i < scenicInfoList.size();i++){%>
+                <%if(searchScenicList.size()!=0){
+                    for (int i = 0;i < searchScenicList.size();i++){%>
                 <div class="scenic-item clearfix">
                     <div class="scenic-left">
                         <a href="" target="_blank">
-                            <%if (scenicInfoList.get(i).getScenicCoverPicture()==null){%>
+                            <%if (searchScenicList.get(i).getScenicCoverPicture()==null){%>
                             <img src="/FreegoImg/scenic_default.jpg" alt="" class="scenic-picture">
                             <%}else{%>
-                            <img src=<%=scenicInfoList.get(i).getScenicCoverPicture()%> alt="" class="scenic-picture">
+                            <img src=<%=searchScenicList.get(i).getScenicCoverPicture()%> alt="" class="scenic-picture">
                             <%}%>
                         </a>
                     </div>
                     <div class="scenic-right">
                         <dl>
                             <dt>
-                                <a href="/ScenicServlet?methodName=findScenicInfoByScenicId&scenicId=<%=scenicInfoList.get(i).getScenicId()%>&currentPage=1&rows=10" target="_blank"><%=scenicInfoList.get(i).getScenicName()%></a>
+                                <a href="/ScenicServlet?methodName=findScenicInfoByScenicId&scenicId=<%=searchScenicList.get(i).getScenicId()%>&currentPage=1&rows=2" target="_blank"><%=searchScenicList.get(i).getScenicName()%></a>
                             </dt>
                             <dd>
-                                <a href="/ScenicServlet?methodName=findScenicInfoByScenicId&scenicId=<%=scenicInfoList.get(i).getScenicId()%>&currentPage=1&rows=10" target="_blank"><%=scenicInfoList.get(i).getScenicIntro()%></a>
+                                <a href="/ScenicServlet?methodName=findScenicInfoByScenicId&scenicId=<%=searchScenicList.get(i).getScenicId()%>&currentPage=1&rows=2" target="_blank"><%=searchScenicList.get(i).getScenicIntro()%></a>
                             </dd>
                         </dl>
 
@@ -422,16 +311,9 @@
                             <%--定位--%>
                             <div class="scenic-location">
                                 <img class="scenic-location-pic" src="../images/li/index/icon_search.jpeg">
-                                <div class="scenic-location-text"><%=scenicInfoList.get(i).getScenicAddress()%></div>
+                                <div class="scenic-location-text"><%=searchScenicList.get(i).getScenicAddress()%></div>
                             </div>
-                            <%--                            &lt;%&ndash;用户&ndash;%&gt;--%>
-                            <%--                            <div class="scenic-user">--%>
-                            <%--                                <div class="scenic-user-head">--%>
-                            <%--                                    <img class="scenic-user-head-pic" src="../images/li/index/icon_search.jpeg">--%>
-                            <%--                                </div>--%>
-                            <%--                                <a class="scenic-user-nickname" href="" target="_blank" rel="nofollow">DiDi_酱</a>--%>
-                            <%--                            </div>--%>
-                            <%--浏览量/收藏量--%>
+
                             <div class="scenic-view-collection">
                                 <img src="./images/li/travelnote/eye.jpeg">
                                 <div class="scenic-view">1207/</div>
@@ -456,24 +338,29 @@
     <%--  分页--%>
     <nav aria-label="Page navigation">
         <ul class="pagination">
+            <span style="font-size: 25px;margin-left: 5px;">
+                第<%=searchScenicPage.getCurrentPage()%>页
+            </span>
+            <%if(searchScenicPage.getCurrentPage()!=1){%>
             <li>
-                <a href="#" aria-label="Previous">
+                <a href="/ScenicServlet?methodName=queryScenicBySearch&currentPage=<%=searchScenicPage.getCurrentPage()-1%>&rows=5" onclick="sendSearchIndex()"  aria-label="Previous">
                     <span aria-hidden="true">&laquo;</span>
                 </a>
             </li>
-            <%if(scenicInfoList != null){
-                for (int i = 1;i <= scenicInfoPageBean.getTotalPage();i++){%>
+            <%}%>
+            <%if(searchScenicList != null){
+                for (int i = 1;i <= searchScenicPage.getTotalPage();i++){%>
             <%if (i==1){%>
-            <li><a href="/ScenicServlet?&methodName=queryScenicIndex&currentPage=<%=i%>&rows=10"><%=i%></a></li>
-            <%}else if(i==2&&i<scenicInfoPageBean.getCurrentPage()-3){%>
+            <li><a href="/ScenicServlet?methodName=queryScenicBySearch&currentPage=<%=i%>&rows=5" onclick="sendSearchIndex()" ><%=i%></a></li>
+            <%}else if(i==2&&i<searchScenicPage.getCurrentPage()-3){%>
             <li><a href="#">...</a></li>
-            <%} else if(((i>=scenicInfoPageBean.getCurrentPage()-3)&&(i<scenicInfoPageBean.getCurrentPage()))
-                    ||((i<=scenicInfoPageBean.getCurrentPage()+3)&&(i>scenicInfoPageBean.getCurrentPage()))){%>
-            <li><a href="/ScenicServlet?&methodName=queryScenicIndex&currentPage=<%=i%>&rows=10"><%=i%></a></li>
-            <%}else if(i==scenicInfoPageBean.getTotalPage()-1){%>
+            <%} else if(((i>=searchScenicPage.getCurrentPage()-3)&&(i<searchScenicPage.getCurrentPage()))
+                    ||((i<=searchScenicPage.getCurrentPage()+3)&&(i>searchScenicPage.getCurrentPage()))){%>
+            <li><a href="/ScenicServlet?methodName=queryScenicBySearch&currentPage=<%=i%>&rows=5" onclick="sendSearchIndex()" ><%=i%></a></li>
+            <%}else if(i==searchScenicPage.getTotalPage()-1){%>
             <li><a href="#">...</a></li>
-            <%}else if(i==scenicInfoPageBean.getTotalPage()){%>
-            <li><a href="/ScenicServlet?&methodName=queryScenicIndex&currentPage=<%=i%>&rows=10"><%=i%></a></li>
+            <%}else if(i==searchScenicPage.getTotalPage()){%>
+            <li><a href="/ScenicServlet?methodName=queryScenicBySearch&currentPage=<%=i%>&rows=5" onclick="sendSearchIndex()" ><%=i%></a></li>
             <%}%>
             <%}}else{%>
             <li>
@@ -482,14 +369,15 @@
                 </a>
             </li>
             <%}%>
-
+            <%if(searchScenicPage.getTotalPage()!=searchScenicPage.getCurrentPage()){%>
             <li>
-                <a href="#" aria-label="Next">
+                <a href="/ScenicServlet?methodName=queryScenicBySearch&currentPage=<%=searchScenicPage.getCurrentPage()+1%>&rows=5" onclick="sendSearchIndex()" aria-label="Next">
                     <span aria-hidden="true">&raquo;</span>
                 </a>
             </li>
+            <%}%>
             <span style="font-size: 25px;margin-left: 5px;">
-                共<%=scenicInfoPageBean.getTotalCount()%>条，共<%=scenicInfoPageBean.getTotalPage()%>页
+                共<%=searchScenicPage.getTotalCount()%>条，共<%=searchScenicPage.getTotalPage()%>页
             </span>
 
         </ul>
@@ -551,14 +439,14 @@
     </div>
 </footer>
 
-
 <script>
-    //轮播图搜索复选框
-    // document.getElementById("tab_all").style.background="url(../../images/li/index/check_box_check.jpeg)";
-    //头部
-    document.getElementById("head_nav_index_li").style.background="#ff9d00";
-    document.getElementById("head_nav_index_a").style.color="#FFFFFF";
+    function sendSearchIndex() {
+        <%request.getSession().setAttribute("dateChoose",travelMonthList);%>
+        <%request.getSession().setAttribute("addrChoose",travelAddrList);%>
+        <%request.getSession().setAttribute("tagChoose",travelTagList);%>
+    }
 </script>
+
 <script type="text/javascript">
     var choosesum = [];
     var ss = "jsSS";
@@ -636,4 +524,5 @@
 
 </html>
 
-/*还要购票，评论*/
+<%--
+景点搜索界面竣工--%>

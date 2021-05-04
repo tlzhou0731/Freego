@@ -179,26 +179,33 @@ public class ScenicServlet extends HttpServlet {
         List<Integer> travelMonthList = new ArrayList<Integer>();
         List<String> travelAddrList = new ArrayList<String>();
         List<Integer> travelTagList = new ArrayList<Integer>();
-        if(travelMonth!=null){
+        if(travelMonth==null){
+            travelMonthList = null;
+            travelMonthList = (List<Integer>)request.getSession().getAttribute("dateChoose");
+        }else{
             for(int i = 0;i<travelMonth.length;i++){
                 travelMonthList.add(Integer.parseInt(travelMonth[i]));
             }
-        }else{
-            travelMonthList = null;
+            System.out.println(travelMonthList);
         }
-        if(travelAddr!=null){
+
+        if(travelAddr==null){
+            travelAddrList=null;
+            travelAddrList = (List<String>)request.getSession().getAttribute("addrChoose");
+        }else{
             for(int i = 0;i<travelAddr.length;i++){
                 travelAddrList.add(travelAddr[i]);
             }
-        }else{
-            travelAddrList=null;
+            System.out.println(travelAddrList);
         }
-        if(travelTag!=null){
+        if(travelTag==null){
+            travelTagList = null;
+            travelTagList = (List<Integer>)request.getSession().getAttribute("tagChoose");
+        }else{
             for(int i = 0;i<travelTag.length;i++){
                 travelTagList.add(Integer.parseInt(travelTag[i]));
             }
-        }else{
-            travelTagList = null;
+            System.out.println(travelTagList);
         }
 
         PageBean<ScenicInfo> searchScenicPageBean = scenicInfoService.queryScenicBySearch(travelMonthList,travelAddrList,travelTagList,currentPageStr,rows);

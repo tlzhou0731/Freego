@@ -65,36 +65,36 @@
 </head>
 
 <%--导入头部--%>
-<%--<header id="header">--%>
+<%--<header id="header">
 
-<%--    <div class="freego_header clearfix" id="head_nav_warper">--%>
+    <div class="freego_header clearfix" id="head_nav_warper">
 
-<%--        <div class="head_logo"><a class="freego_logo" title="FreeGo" href="http://localhost:8080/index.jsp"></a></div>--%>
+        <div class="head_logo"><a class="freego_logo" title="FreeGo" href="http://localhost:8080/index.jsp"></a></div>
 
-<%--        <ul class="head_nav" id="_j_head_nav" role="tablist">--%>
-<%--            <li id="head_nav_index_li" role="presentation"><a href="" id="head_nav_index_a">首页</a></li>--%>
-<%--            <li id="head_nav_scenic_li" role="presentation"><a href="/ScenicServlet?&methodName=queryScenicIndex&currentPage=1&rows=10"  id="head_nav_scenic_a" title="景点">景点</a></li>--%>
-<%--            <li id="head_nav_gonglve_li" role="presentation"><a href="" id="head_nav_gonglve_a" title="旅游攻略">旅游攻略</a></li>--%>
-<%--            <li id="head_nav_hotel_li" role="presentation"><a href="" id="head_nav_hotel_a" title="酒店">订酒店</a></li>--%>
-<%--        </ul>--%>
+        <ul class="head_nav" id="_j_head_nav" role="tablist">
+            <li id="head_nav_index_li" role="presentation"><a href="" id="head_nav_index_a">首页</a></li>
+            <li id="head_nav_scenic_li" role="presentation"><a href="/ScenicServlet?&methodName=queryScenicIndex&currentPage=1&rows=10"  id="head_nav_scenic_a" title="景点">景点</a></li>
+            <li id="head_nav_gonglve_li" role="presentation"><a href="" id="head_nav_gonglve_a" title="旅游攻略">旅游攻略</a></li>
+            <li id="head_nav_hotel_li" role="presentation"><a href="" id="head_nav_hotel_a" title="酒店">订酒店</a></li>
+        </ul>
 
-<%--        <div class="login_status">--%>
-<%--            <!-- 未登录状态  -->--%>
-<%--            <div id="login_out" class="login_out">--%>
-<%--                <a href="login.jsp">登录</a>--%>
-<%--                <a href="register.jsp">注册</a>--%>
-<%--            </div>--%>
-<%--            <!-- 登录状态  -->--%>
-<%--            <div id="login_in" class="login_in">--%>
-<%--                <span id="span_username"></span>--%>
-<%--                <a href="javascript:location.href='user/exit';">退出</a>--%>
-<%--                <a id="cancelAccount">注销账号</a>--%>
-<%--            </div>--%>
-<%--        </div>--%>
+        <div class="login_status">
+            <!-- 未登录状态  -->
+            <div id="login_out" class="login_out">
+                <a href="login.jsp">登录</a>
+                <a href="register.jsp">注册</a>
+            </div>
+            <!-- 登录状态  -->
+            <div id="login_in" class="login_in">
+                <span id="span_username"></span>
+                <a href="javascript:location.href='user/exit';">退出</a>
+                <a id="cancelAccount">注销账号</a>
+            </div>
+        </div>
 
-<%--    </div>--%>
+    </div>
 
-<%--</header>--%>
+</header>--%>
 
 
 <body>
@@ -113,11 +113,13 @@
     <div class="scenic-info-wrapper">
         <div class="extra">
             <!-- 收藏去过 S-->
-            <div class="action _scenic_collect">
-                <a class="btn-collect " href="" target="_blank" title="添加收藏" data-cs-p="收藏">
-                    <i class="icon"></i>
-                    <span class="txt">收藏</span>
-                </a>
+            <div class="action _scenic_collect" style="float:right;">
+                <li class="nav-right" style="list-style: none">
+                    <button id="collected-button" class="btn-comment" style="border: none" title="收藏" data-source="" onclick="changeCollectedState(1)">收藏</button>
+                </li>
+                <li class="nav-right" style="list-style: none">
+                    <button id="un-collected-button" class="btn-comment" style="display: none;border: none" title="已收藏" data-source="" onclick="changeCollectedState(0)">已收藏</button>
+                </li>
             </div>
             <!-- 收藏去过 E-->
         </div>
@@ -134,10 +136,10 @@
                     <li data-scroll="overview" class="on">
                         <a title="概况">概况</a>
                     </li>
-                    <li data-scroll="commentlist">
+                    <li data-scroll="commentlist" style="list-style: none">
                         <a title="Free点评" href="javascript:void(0)" onclick="document.getElementById('commentlist').scrollIntoView();"><span>Free点评&nbsp;<%=scenicCommentPageBean.getList().size()+scenicCommentChild.size()%>&nbsp;条</span></a>
                     </li>
-                    <li class="nav-right">
+                    <li class="nav-right" style="list-style: none">
                         <a class="btn-comment" href="" title="我要点评" data-source="">我要点评</a>
                     </li>
                 </ul>
@@ -236,13 +238,6 @@
                                     </a>
                                 </li>
                             <%}%>
-
-                            <li data-id="5002" data-name="文化公园-青羊宫" data-type="3" data-lat="30.660034" data-lng="104.041137">
-                                    <span class="dist">
-                                        1.3公里
-                                    </span>
-                                <a href="/poi/5002.html" target="_blank">文化公园-青羊宫</a>
-                            </li>
                         </ul>
                     </div>
                 </div>
@@ -395,7 +390,6 @@
 <%--                        <a class="pi pg-next" href="" title="后一页">后一页</a>--%>
                     </div>
 
-
                 </div>
 
             <div class="more">
@@ -417,216 +411,61 @@
     <!-- 评论 E -->
 
     <!-- 门票 S -->
-<%--    <div id="pagelet-block-3616610faf86ff9c6f99c912c4efe270" class="pagelet-block" data-api=":poi:pagelet:poiTicketsApi" data-params="{&quot;poi_id&quot;:&quot;19779&quot;}" data-async="1" data-controller="">    <div class="mod mod-promo" data-cs-p="热门优惠">--%>
-<%--        <div class="wrapper">--%>
-<%--            <div class="mhd">热门优惠</div>--%>
-<%--            <div class="mbd">--%>
-<%--                <table>--%>
-<%--                    <thead>--%>
-<%--                    <tr>--%>
-<%--                        <th class="type">类型</th>--%>
-<%--                        <th class="pro">&nbsp;</th>--%>
-<%--                        <th class="price">价格</th>--%>
-<%--                        <th class="action">&nbsp;</th>--%>
-<%--                    </tr>--%>
-<%--                    </thead>--%>
-<%--                    <tbody>--%>
-<%--                    <tr>--%>
-<%--                        <td class="type">多日游</td>--%>
-<%--                        <td class="pro"><a href="" target="_blank" title="【五一早订优惠】昆明+大理+丽江6日游（赠版纳4日游+温泉酒店+大理丽江两大古城+洱海游艇+乘索道观玉龙雪山+敞篷吉普车旅拍+打卡蓝月谷）">【五一早订优惠】昆明+大理+丽江6日游（赠版纳4日游+温泉酒店...</a></td>--%>
-<%--                        <td class="price">￥980起</td>--%>
-<%--                        <td class="action"><a class="btn" href="http://www.mafengwo.cn/sales/6640686.html?cid=1030" target="_blank" title="预订">预订</a></td>--%>
-<%--                    </tr>--%>
-<%--                    <tr>--%>
-<%--                        <td class="type">景区/场馆</td>--%>
-<%--                        <td class="pro"><a href="http://www.mafengwo.cn/sales/2670726.html?cid=1030" target="_blank" title="快速入园  云南民族村门票电子票（从滇池到民族村 当地民俗特色风情体验/多套餐选择）">快速入园  云南民族村门票电子票（从滇池到民族村 当地民俗特...</a></td>--%>
-<%--                        <td class="price">￥76起</td>--%>
-<%--                        <td class="action"><a class="btn" href="http://www.mafengwo.cn/sales/2670726.html?cid=1030" target="_blank" title="预订">预订</a></td>--%>
-<%--                    </tr>--%>
-<%--                    <tr>--%>
-<%--                        <td class="type">一日游</td>--%>
-<%--                        <td class="pro"><a href="http://www.mafengwo.cn/sales/2869684.html?cid=1030" target="_blank" title="昆明石林+抚仙湖一日游 （ 8人高端纯玩团+穿彝裳听三弦+环仙湖赏樱花+趣享游船下午茶+半山栈道瞰湖 可选东风韵拍大片）">昆明石林+抚仙湖一日游 （ 8人高端纯玩团+穿彝裳听三弦+环仙...</a></td>--%>
-<%--                        <td class="price">￥479起</td>--%>
-<%--                        <td class="action"><a class="btn" href="http://www.mafengwo.cn/sales/2869684.html?cid=1030" target="_blank" title="预订">预订</a></td>--%>
-<%--                    </tr>--%>
-<%--                    </tbody>--%>
-<%--                </table>--%>
-<%--            </div>--%>
-<%--        </div>--%>
-<%--    </div>--%>
-<%--    </div>--%>
+<%--    <div id="pagelet-block-3616610faf86ff9c6f99c912c4efe270" class="pagelet-block" data-api=":poi:pagelet:poiTicketsApi" data-params="{&quot;poi_id&quot;:&quot;19779&quot;}" data-async="1" data-controller="">    <div class="mod mod-promo" data-cs-p="热门优惠">
+        <div class="wrapper">
+            <div class="mhd">热门优惠</div>
+            <div class="mbd">
+                <table>
+                    <thead>
+                    <tr>
+                        <th class="type">类型</th>
+                        <th class="pro">&nbsp;</th>
+                        <th class="price">价格</th>
+                        <th class="action">&nbsp;</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td class="type">多日游</td>
+                        <td class="pro"><a href="" target="_blank" title="【五一早订优惠】昆明+大理+丽江6日游（赠版纳4日游+温泉酒店+大理丽江两大古城+洱海游艇+乘索道观玉龙雪山+敞篷吉普车旅拍+打卡蓝月谷）">【五一早订优惠】昆明+大理+丽江6日游（赠版纳4日游+温泉酒店...</a></td>
+                        <td class="price">￥980起</td>
+                        <td class="action"><a class="btn" href="http://www.mafengwo.cn/sales/6640686.html?cid=1030" target="_blank" title="预订">预订</a></td>
+                    </tr>
+                    <tr>
+                        <td class="type">景区/场馆</td>
+                        <td class="pro"><a href="http://www.mafengwo.cn/sales/2670726.html?cid=1030" target="_blank" title="快速入园  云南民族村门票电子票（从滇池到民族村 当地民俗特色风情体验/多套餐选择）">快速入园  云南民族村门票电子票（从滇池到民族村 当地民俗特...</a></td>
+                        <td class="price">￥76起</td>
+                        <td class="action"><a class="btn" href="http://www.mafengwo.cn/sales/2670726.html?cid=1030" target="_blank" title="预订">预订</a></td>
+                    </tr>
+                    <tr>
+                        <td class="type">一日游</td>
+                        <td class="pro"><a href="http://www.mafengwo.cn/sales/2869684.html?cid=1030" target="_blank" title="昆明石林+抚仙湖一日游 （ 8人高端纯玩团+穿彝裳听三弦+环仙湖赏樱花+趣享游船下午茶+半山栈道瞰湖 可选东风韵拍大片）">昆明石林+抚仙湖一日游 （ 8人高端纯玩团+穿彝裳听三弦+环仙...</a></td>
+                        <td class="price">￥479起</td>
+                        <td class="action"><a class="btn" href="http://www.mafengwo.cn/sales/2869684.html?cid=1030" target="_blank" title="预订">预订</a></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    </div>--%>
     <!-- 门票 E -->
+
     <!-- 评论界面 S -->
 
-<%--    <div id="_j_layer_0" class="layer _scenci_layer" style="position: fixed; width: 100%; height: 100%; top: 0px; left: 0px; z-index: 1000; display: block;">--%>
-<%--        <div class="layer_scenic_mask _scenic_mask" style="position: fixed; width: 100%; height: 100%; top: 0px; left: 0px; background: rgb(0, 0, 0); opacity: 0.7; z-index: -1;">--%>
-<%--        </div>--%>
-<%--        <div class="layer_scenic_content _scenic_content" style="position: fixed; width: 100%; height: 100%; top: 0px; left: 0px; z-index: 0; overflow: hidden;">--%>
-<%--            <div class="popup-scenic-box layer_dialog _scenic_dialog pop_no_margin pop-scenic-comment" style="position: absolute; opacity: 1; background: rgb(255, 255, 255); z-index: 1; left: 326.5px; top: 106.222px;">--%>
-<%--                <div class="scenicComment_dialog_title" style="display:none">--%>
-<%--                    <div class="_scenic_title title">--%>
-<%--                    </div>--%>
-<%--                </div>--%>
-<%--                <div class="scenic_comment_dialog_body _scenic_content">--%>
-<%--                    <div class="_scenic_weng_form_cnt">--%>
-<%--                        <style type="text/css">--%>
-<%--                            .pop-upload-weng {--%>
-<%--                                width: 300px;--%>
-<%--                            }--%>
 
-<%--                            .pop-upload-weng ._scenic_piccomment {--%>
-<%--                                display: none;--%>
-<%--                            }--%>
-<%--                        </style>--%>
-<%--                        <div class="frego-scenic-comments">--%>
-<%--                            <div id="_scenic_freego_cnt_">--%>
-<%--                                <h2>--%>
-<%--                                    <strong>洪崖洞民俗风貌区</strong>--%>
-<%--                                    <em>*</em>为必填选项--%>
-<%--                                </h2>--%>
-<%--                                <form action="" method="post" class="_scenic_comment_form">--%>
-<%--                                    <input type="hidden" name="wengid" value="">--%>
-<%--                                    <input type="hidden" name="poiid" value="6653">--%>
-<%--                                    <input type="hidden" name="poitype" value="3">--%>
-<%--                                    <input type="hidden" name="publish_source" value="publish.weng.pc_poi_detail.comment">--%>
-<%--                                    <div class="scenic-comment-intact-item item-star">--%>
-<%--                                        <div class="label">--%>
-<%--                                            <em>*</em>总体评价--%>
-<%--                                        </div>--%>
-<%--                                        <div class="scenic-comment-star _scenic_rankblock" data-star="" data-name="rank_star">--%>
-<%--                                            <input type="hidden" name="rank_star" value="" essential="1" data-inputname="总体评价">--%>
-<%--                                            <span class="_scenic_starcount star"></span>--%>
-<%--                                            <div class="click-star _scenic_starlist">--%>
-<%--                                                <a role="button" title="不建议" rel="nofollow"></a>--%>
-<%--                                                <a role="button" title="有待改善" rel="nofollow"></a>--%>
-<%--                                                <a role="button" title="还可以" rel="nofollow"></a>--%>
-<%--                                                <a role="button" title="值得一去" rel="nofollow"></a>--%>
-<%--                                                <a role="button" title="强烈推荐" rel="nofollow"></a>--%>
-<%--                                            </div>--%>
-<%--                                        </div>--%>
-<%--                                        <span class="txt-tips _scenic_startip">点击星星打分</span>--%>
-<%--                                    </div>--%>
-<%--                                    <div class="secnic-comment-group">--%>
-<%--                                    </div>--%>
-<%--                                    <div class="scenic-comment-intact-item item-comment">--%>
-<%--                                        <div class="label"><em>*</em>内容</div>--%>
-<%--                                        <div class="content">--%>
-<%--                                            <textarea class="_scenic_commentarea" name="content" essential="1" data-inputname="内容" placeholder="100字+3图，有机会评为优质点评！" data-minlen="1" data-maxlen="10000">--%>
 
-<%--                                            </textarea>--%>
-<%--                                            <p class="_scenic_commentcounttip">内容不超过10000字</p>--%>
-<%--                                        </div>--%>
-<%--                                    </div>--%>
-<%--                                    <div class="scenic-comment-intact-item item-photo">--%>
-<%--                                        <div class="label">--%>
-<%--                                            上传照片--%>
-<%--                                        </div>--%>
-<%--                                        <div class="content">--%>
-<%--                                            <dl class="upload-box _scenic_piclist">--%>
-<%--                                                <dd data-wengid="" class="_scenic_picitem_btn" id="_scenic_pluplader_btn_container_1" style="position: relative;">--%>
-<%--                                                    <a class="add-place"><i></i></a>--%>
-<%--                                                    <div id="aaaa" class="moxie-shim moxie-shim-html5" style="position: absolute; top: 0px; left: 0px; width: 120px; height: 120px; overflow: hidden; z-index: -1;">--%>
-<%--                                                        <input id="aaa" type="file" style="font-size: 999px; opacity: 0; position: absolute; top: 0px; left: 0px; width: 100%; height: 100%;" multiple="" accept="image/jpeg,image/gif,image/png,.JPEG">--%>
-<%--                                                    </div>--%>
-<%--                                                </dd>--%>
-<%--                                                <dd class="_scenic_picitem" data-imglink="mfwStorage18/M00/5C/6E/CoUBYGCKSuyAHyJsAAAUbFWdv_k214.png" data-picid="0">--%>
-<%--                                                    <div class="place">--%>
-<%--                                                        <div class="img"><img class="_scenic_edit_src" src="https://b1-q.mafengwo.net/s18/M00/5C/6E/CoUBYGCKSuyAHyJsAAAUbFWdv_k214.png?imageMogr2%2Fthumbnail%2F%21290x195r%2Fgravity%2FCenter%2Fcrop%2F%21290x195%2Fquality%2F90" style="width:120px;height:120px">--%>
-<%--                                                        </div>--%>
-<%--                                                        <div class="title"><h4 class="_scenic_edit_title"></h4></div>--%>
-<%--                                                        <div class="scenic-mask-operate"><a class="btn-remove _scenic_remove_dd"></a></div>--%>
-<%--                                                    </div>--%>
-<%--                                                </dd>--%>
-<%--                                                <dd class="_scenic_picitem" data-imglink="mfwStorage18/M00/5C/6E/CoUBYGCKSuyAHyJsAAAUbFWdv_k214.png" data-picid="0">--%>
-<%--                                                    <div class="place">--%>
-<%--                                                        <div class="img"><img class="_scenic_edit_src" src="https://b1-q.mafengwo.net/s18/M00/5C/6E/CoUBYGCKSuyAHyJsAAAUbFWdv_k214.png?imageMogr2%2Fthumbnail%2F%21290x195r%2Fgravity%2FCenter%2Fcrop%2F%21290x195%2Fquality%2F90" style="width:120px;height:120px">--%>
-<%--                                                        </div>--%>
-<%--                                                        <div class="title"><h4 class="_scenic_edit_title"></h4></div>--%>
-<%--                                                        <div class="scenic-mask-operate"><a class="btn-remove _scenic_remove_dd"></a></div>--%>
-<%--                                                    </div>--%>
-<%--                                                </dd>--%>
-<%--                                            </dl>--%>
-<%--                                            <p style="clear:both;">图片不超过20张</p>--%>
-<%--                                        </div>--%>
-<%--                                    </div>--%>
-<%--                                    <div class="review-item item-action">--%>
-<%--                                        <a class="btn-large _scenic_submit" role="button" title="提交">提交</a>--%>
-<%--                                    </div>--%>
-<%--                                </form>--%>
-<%--                            </div>--%>
-<%--                        </div>--%>
-<%--                    </div>--%>
-<%--                </div>--%>
-<%--                <a id="popup_close" class="close-btn _scenic_close"><i></i></a>--%>
-<%--            </div>--%>
-<%--        </div>--%>
-<%--    </div>--%>
 
-<%--    <div id="_j_layer_1" class="layer _scenci_layer" style="position: fixed; width: 100%; height: 100%; top: 0px; left: 0px; z-index: 2000; display: none;">--%>
-<%--        <div class="layer_scenic_mask _scenic_mask" style="position: fixed; width: 100%; height: 100%; top: 0px; left: 0px; background: rgb(0, 0, 0); opacity: 0; z-index: -1;">--%>
+    <!-- 评论界面 E -->
 
-<%--        </div>--%>
-<%--        <div class="layer_scenic_content _scenic_content" style="position: fixed; width: 100%; height: 100%; top: 0px; left: 0px; z-index: 0; overflow: hidden;">--%>
 
-<%--        </div>--%>
-<%--    </div>--%>
 
-<%--    <div id="_j_layer_2" class="layer _scenci_layer" style="position: fixed; width: 100%; height: 100%; top: 0px; left: 0px; z-index: 10001; display: none;">--%>
-<%--        <div class="layer_scenic_mask _scenic_mask" style="position: fixed; width: 100%; height: 100%; top: 0px; left: 0px; background: rgb(0, 0, 0); opacity: 0.7; z-index: -1;">--%>
 
-<%--        </div>--%>
-<%--        <div class="layer_scenic_content _scenic_content" style="position: fixed; width: 100%; height: 100%; top: 0px; left: 0px; z-index: 0; overflow: hidden;">--%>
-<%--            <div id="popup_container" class="popup-box new-popbox pop_no_margin" style="position: absolute; opacity: 0; background: rgb(255, 255, 255); z-index: 0; width: 420px; left: 581.5px; top: 224px; display: none;">--%>
-<%--                <a class="close-btn _scenic_close">--%>
-<%--                    <i></i>--%>
-<%--                </a>--%>
-<%--                <div class="pop-ico" id="_scenic_alertpopicon">--%>
-<%--                    <i class="i1"></i>--%>
-<%--                </div><div class="pop-ctn">--%>
-<%--                <p class="hd _scenic_content">图片正在上传中，请稍后...</p>--%>
-<%--                <p class="bd _scenic_detail"></p>--%>
-<%--            </div>--%>
-<%--                <div class="pop-btns"><a role="button" tabindex="0" class="popbtn popbtn-submit _scenic_close">确定</a>--%>
-<%--                </div>--%>
-<%--            </div>--%>
-<%--        </div>--%>
-<%--    </div>--%>
-<%--    <!-- 评论界面 E -->--%>
-<%--    百度地图单地图--%>
-<%--<script type="text/javascript">--%>
-<%--    // 百度地图API功能--%>
-<%--    var map = new BMap.Map("allmap");    // 创建Map实例--%>
-<%--    var lng = <%=scenicInfo.getLng()%>;--%>
-<%--    var lat = <%=scenicInfo.getLat()%>--%>
-<%--    map.centerAndZoom(new BMap.Point(lng, lat), 11);  // 初始化地图,设置中心点坐标和地图级别--%>
-<%--    //添加地图类型控件--%>
-<%--    map.addControl(new BMap.MapTypeControl({--%>
-<%--        mapTypes:[--%>
-<%--            BMAP_NORMAL_MAP,--%>
-<%--            BMAP_HYBRID_MAP--%>
-<%--        ]}));--%>
-<%--    map.setCurrentCity("北京");          // 设置地图显示的城市 此项是必须设置的--%>
-<%--    map.enableScrollWheelZoom(true);     //开启鼠标滚轮缩放--%>
-<%--</script>--%>
+
+
 
 <script src="//api.map.baidu.com/api?type=webgl&v=1.0&ak=MKmjSL6aurGZbHsmH7QZbHmU60ahLKsW"></script>
-<%--<script type="text/javascript">--%>
-<%--    // 百度地图API功能--%>
-<%--    var map = new BMapGL.Map('allmap');--%>
-<%--    map.centerAndZoom(new BMapGL.Point(116.404, 39.928), 15);--%>
-<%--    map.enableScrollWheelZoom(true);--%>
-<%--    // 创建点标记--%>
-<%--    var marker1 = new BMapGL.Marker(new BMapGL.Point(116.404, 39.925));--%>
-<%--    var marker2 = new BMapGL.Marker(new BMapGL.Point(116.404, 39.915));--%>
-<%--    var marker3 = new BMapGL.Marker(new BMapGL.Point(116.395, 39.935));--%>
-<%--    var marker4 = new BMapGL.Marker(new BMapGL.Point(116.415, 39.931));--%>
-<%--    // 在地图上添加点标记--%>
-<%--    map.addOverlay(marker1);--%>
-<%--    map.addOverlay(marker2);--%>
-<%--    map.addOverlay(marker3);--%>
-<%--    map.addOverlay(marker4);--%>
 
-<%--</script>--%>
 <script type="text/javascript">
     var map = new BMapGL.Map('allmap');
     //附近点
@@ -675,169 +514,73 @@
 
 </script>
 
-<%--    <script type="text/javascript">--%>
-<%--        var map = new BMapGL.Map('allmap');--%>
-<%--        var nearScenicCount = <%=nearScenicList.size()%>;--%>
-<%--        var point[nearScenicCount]--%>
-<%--        for(var nearKey=0;nearKey<nearScenicCount;nearKey++){--%>
 
-<%--        }--%>
+<%--导入尾部
+<footer>
+    <div id="footer">
 
-<%--        var point = new BMapGL.Point(<%=scenicInfo.getLng()%>, <%=scenicInfo.getLat()%>);--%>
-<%--        map.centerAndZoom(point, 15);--%>
-<%--        // 创建点标记--%>
-<%--        marker = new BMapGL.Marker(point);--%>
-<%--        map.addOverlay(marker);--%>
-<%--        // 创建信息窗口--%>
-<%--        opt = {--%>
-<%--            width: 200,--%>
-<%--            height: 100,--%>
-<%--            title: 'asdkjfadkaldjkflsdkfjlksj'--%>
-<%--        };--%>
-<%--        infoWindow = new BMapGL.InfoWindow('bjbjbjbjbjbjjbbjbjbjbjbjbjbjbjbj', opt);--%>
-<%--        // 点标记添加点击事件--%>
-<%--        marker.addEventListener('click', function () {--%>
-<%--            map.openInfoWindow(infoWindow, point); // 开启信息窗口--%>
-<%--        });--%>
+        <div class="why_select">
 
-<%--    </script>--%>
+            <dl style="margin-left: 133px">
+                <dt class="foot-pic">
+                    <img src="../images/li/index/foot_1.jpeg" alt="">
+                </dt>
+                <dd>
+                    <h1>产品齐全</h1>
+                    <h2>产品自主选，随心买</h2>
+                </dd>
+            </dl>
 
+            <dl>
+                <dt class="foot-pic">
+                    <img src="../images/li/index/foot_2.jpeg" alt="">
+                </dt>
+                <dd>
+                    <h1>便利快捷</h1>
+                    <h2>24小时不打烊，随时买</h2>
+                </dd>
+            </dl>
 
+            <dl>
+                <dt class="foot-pic">
+                    <img src="../images/li/index/foot_3.jpeg" alt="">
+                </dt>
+                <dd>
+                    <h1>安全支付</h1>
+                    <h2>知名支付工具，放心买</h2>
+                </dd>
+            </dl>
 
-<%--导入尾部--%>
-<%--<footer>--%>
-<%--    <div id="footer">--%>
+            <dl>
+                <dt class="foot-pic">
+                    <img src="../images/li/index/foot_4.jpeg" alt="">
+                </dt>
+                <dd style="margin-right: 0px">
+                    <h1>贴心服务</h1>
+                    <h2>客服全年无休，安心买</h2>
+                </dd>
+            </dl>
 
-<%--        <div class="why_select">--%>
+        </div>
+        <div class="company">
+            <p>山东工商学院 计算机科学与技术学院 软件工程专业 2017级 毕业设计</p>
+        </div>
+    </div>
+</footer>--%>
 
-<%--            <dl style="margin-left: 133px">--%>
-<%--                <dt class="foot-pic">--%>
-<%--                    <img src="../images/li/index/foot_1.jpeg" alt="">--%>
-<%--                </dt>--%>
-<%--                <dd>--%>
-<%--                    <h1>产品齐全</h1>--%>
-<%--                    <h2>产品自主选，随心买</h2>--%>
-<%--                </dd>--%>
-<%--            </dl>--%>
-
-<%--            <dl>--%>
-<%--                <dt class="foot-pic">--%>
-<%--                    <img src="../images/li/index/foot_2.jpeg" alt="">--%>
-<%--                </dt>--%>
-<%--                <dd>--%>
-<%--                    <h1>便利快捷</h1>--%>
-<%--                    <h2>24小时不打烊，随时买</h2>--%>
-<%--                </dd>--%>
-<%--            </dl>--%>
-
-<%--            <dl>--%>
-<%--                <dt class="foot-pic">--%>
-<%--                    <img src="../images/li/index/foot_3.jpeg" alt="">--%>
-<%--                </dt>--%>
-<%--                <dd>--%>
-<%--                    <h1>安全支付</h1>--%>
-<%--                    <h2>知名支付工具，放心买</h2>--%>
-<%--                </dd>--%>
-<%--            </dl>--%>
-
-<%--            <dl>--%>
-<%--                <dt class="foot-pic">--%>
-<%--                    <img src="../images/li/index/foot_4.jpeg" alt="">--%>
-<%--                </dt>--%>
-<%--                <dd style="margin-right: 0px">--%>
-<%--                    <h1>贴心服务</h1>--%>
-<%--                    <h2>客服全年无休，安心买</h2>--%>
-<%--                </dd>--%>
-<%--            </dl>--%>
-
-<%--        </div>--%>
-<%--        <div class="company">--%>
-<%--            <p>山东工商学院 计算机科学与技术学院 软件工程专业 2017级 毕业设计</p>--%>
-<%--        </div>--%>
-<%--    </div>--%>
-<%--</footer>--%>
-
-<%--<script>--%>
-<%--    //轮播图搜索复选框--%>
-<%--    // document.getElementById("tab_all").style.background="url(../../images/li/index/check_box_check.jpeg)";--%>
-<%--    //头部--%>
-<%--    document.getElementById("head_nav_index_li").style.background="#ff9d00";--%>
-<%--    document.getElementById("head_nav_index_a").style.color="#FFFFFF";--%>
-<%--</script>--%>
-<%--<script type="text/javascript">--%>
-<%--    var choosesum = [];--%>
-<%--    var ss = "jsSS";--%>
-
-<%--    $(window).on('load', function () {--%>
-<%--        $('#dateChoose').selectpicker({--%>
-<%--            'selectedText': '1月'--%>
-<%--        });--%>
-<%--    });--%>
-<%--    $(window).on('load', function () {--%>
-<%--        $('#dateChoose1').selectpicker({--%>
-<%--            'selectedText': '1月'--%>
-<%--        });--%>
-<%--    });--%>
-<%--    $(window).on('load', function () {--%>
-<%--        $('#dateChoose2').selectpicker({--%>
-<%--            'selectedText': '1月'--%>
-<%--        });--%>
-<%--    });--%>
-<%--    $(window).on('load', function () {--%>
-<%--        $('#addChoose').selectpicker({--%>
-<%--            'selectedText': '深圳'--%>
-<%--        });--%>
-<%--    });--%>
-<%--    $(window).on('load', function () {--%>
-<%--        $('#themeChoose').selectpicker({--%>
-<%--            'selectedText': '选择主题'--%>
-<%--        });--%>
-<%--    });--%>
-
-<%--    function getDates() {--%>
-<%--        var val = "", staffs = [],dates = [];--%>
-<%--        //循环的取出插件选择的元素(通过是否添加了selected类名判断)--%>
-<%--        for (var i = 0; i < $("li.selected").length; i++) {--%>
-<%--            val = $("li.selected").eq(i).find(".text").text();--%>
-<%--            if (val != '') {--%>
-<%--                staffs.push(val);--%>
-<%--                dates.push(val);--%>
-<%--            }--%>
-<%--        }--%>
-<%--        choosesum = staffs;--%>
-<%--    }--%>
-
-<%--    function getAdds() {--%>
-<%--        var val = "", staffs = [], adds = [];--%>
-<%--        //循环的取出插件选择的元素(通过是否添加了selected类名判断)--%>
-<%--        for (var i = 0; i < $("li.selected").length; i++) {--%>
-<%--            val = $("li.selected").eq(i).find(".text").text();--%>
-<%--            if (val != '') {--%>
-<%--                staffs.push(val);--%>
-<%--                adds.push(val)--%>
-<%--            }--%>
-<%--        }--%>
-<%--        choosesum = staffs;--%>
-<%--    }--%>
-
-<%--    function getThemes() {--%>
-<%--        var val = "", staffs = [], themes = [];--%>
-<%--        //循环的取出插件选择的元素(通过是否添加了selected类名判断)--%>
-<%--        for (var i = 0; i < $("li.selected").length; i++) {--%>
-<%--            val = $("li.selected").eq(i).find(".text").text();--%>
-<%--            if (val != '') {--%>
-<%--                staffs.push(val);--%>
-<%--                themes.push(val);--%>
-<%--            }--%>
-<%--        }--%>
-<%--        choosesum = staffs;--%>
-<%--    }--%>
-
-<%--    function showChoose(){--%>
-<%--        console.log(choosesum);--%>
-<%--    }--%>
-
-<%--</script>--%>
 </body>
+
+<script>
+    function changeCollectedState(state) {
+        if(state==1){
+            document.getElementById("collected-button").style.display = 'none';
+            document.getElementById("un-collected-button").style.display = 'block';
+        }else{
+            document.getElementById("collected-button").style.display = 'block';
+            document.getElementById("un-collected-button").style.display = 'none';
+        }
+    }
+</script>
+
 
 </html>

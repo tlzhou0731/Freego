@@ -183,8 +183,8 @@ a:hover{
 }
 .scenic-tab > .scenic-hot{
     float: left;
-    width: 500px;
-    padding-bottom: 6px;
+    width: 1000px;
+    padding-bottom: 4px;
     border-bottom: 3px solid #ff9d00;
     z-index: 11;
     text-align: center;
@@ -613,6 +613,23 @@ a:hover{
     color: #ff9d00;
     border-bottom: 2px solid #ff9d00;
 }
+
+/*收藏按钮
+*/
+._scenic_collect .nav-right {
+    float: right;
+}
+._scenic_collect .btn-comment {
+    display: inline-block;
+    line-height: 35px;
+    background-color: #ff9d00;
+    padding: 0 30px;
+    border-radius: 3px;
+    color: #fff;
+    font-size: 14px;
+    *vertical-align: middle;
+}
+
 .scenic-info-r-nav .nav-right {
     float: right;
 }

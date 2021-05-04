@@ -125,49 +125,77 @@
             <li data-target="#carousel-example-generic" data-slide-to="1"></li>
             <li data-target="#carousel-example-generic" data-slide-to="2"></li>
             <li data-target="#carousel-example-generic" data-slide-to="3"></li>
+            <li data-target="#carousel-example-generic" data-slide-to="4"></li>
+            <li data-target="#carousel-example-generic" data-slide-to="5"></li>
         </ol>
         <!-- Wrapper for slides -->
         <div id="banner_warp" class="carousel-inner" role="listbox">
+            <%  int countBanner = 1;
+                for(Integer key:recommendTagScenic.keySet()){%>
+                <%if(countBanner==1){%>
+                    <div id="banner_<%=countBanner%>" class="item active">
+                        <a href="" class="show-title">
+                            <div class="scenic-date"><%=recommendTagScenic.get(key).get(0).getScenicName()%></div>
+                            <div class="scenic-title"><%=recommendTagScenic.get(key).get(0).getScenicAddress()%></div>
+                        </a>
+                        <a href="" class="show-pic">
+                            <img src="../images/li/signup&login/<%=countBanner%>.jpeg" alt="" class="banner-picture">
+                        </a>
+                    </div>
+                <%}else{%>
+                    <div id="banner_<%=countBanner%>" class="item">
+                        <a href="" class="show-title">
+                            <div class="scenic-date"><%=recommendTagScenic.get(key).get(0).getScenicName()%></div>
+                            <div class="scenic-title"><%=recommendTagScenic.get(key).get(0).getScenicAddress()%></div>
+                        </a>
+                        <a href="" class="show-pic">
+                            <img src="../images/li/signup&login/<%=countBanner%>.jpeg" alt="" class="banner-picture">
+                        </a>
+                    </div>
+                <%}%>
+                <%countBanner++;%>
+            <%}%>
 
-            <div id="banner_1" class="item active">
-                <a href="" class="show-title">
-                    <div class="scenic-date">2021.4.19</div>
-                    <div class="scenic-title">【自驾甘孜】仓央嘉措，无尽雪山和风</div>
-                </a>
-                <a href="" class="show-pic">
-                    <img src="../images/li/signup&login/1.jpeg" alt="" class="banner-picture">
-                </a>
-            </div>
 
-            <div id="banner_2" class="item">
-                <a href="" class="show-title">
-                    <div class="show-date">2021.4.19</div>
-                    <div class="scenic-title">常州金坛亲子游｜撷一肩春色，跟着小念一起花样春游吧</div>
-                </a>
-                <a href="" class="show-pic">
-                    <img src="../images/li/signup&login/2.jpeg" alt="" class="banner-picture">
-                </a>
-            </div>
+<%--            <div id="banner_1" class="item active">--%>
+<%--                <a href="" class="show-title">--%>
+<%--                    <div class="scenic-date"><%=recommendTagScenic%></div>--%>
+<%--                    <div class="scenic-title">【自驾甘孜】仓央嘉措，无尽雪山和风</div>--%>
+<%--                </a>--%>
+<%--                <a href="" class="show-pic">--%>
+<%--                    <img src="../images/li/signup&login/1.jpeg" alt="" class="banner-picture">--%>
+<%--                </a>--%>
+<%--            </div>--%>
 
-            <div id="banner_3" class="item">
-                <a href="" class="show-title">
-                    <div class="show-date">2021.4.19</div>
-                    <div class="scenic-title">别样东莞｜广东第四城的美食和古迹</div>
-                </a>
-                <a href="" class="show-pic">
-                    <img src="../images/li/signup&login/3.jpeg" alt="" class="banner-picture">
-                </a>
-            </div>
+<%--            <div id="banner_2" class="item">--%>
+<%--                <a href="" class="show-title">--%>
+<%--                    <div class="show-date">2021.4.19</div>--%>
+<%--                    <div class="scenic-title">常州金坛亲子游｜撷一肩春色，跟着小念一起花样春游吧</div>--%>
+<%--                </a>--%>
+<%--                <a href="" class="show-pic">--%>
+<%--                    <img src="../images/li/signup&login/2.jpeg" alt="" class="banner-picture">--%>
+<%--                </a>--%>
+<%--            </div>--%>
 
-            <div id="banner_4" class="item">
-                <a href="" class="show-title">
-                    <div class="show-date">2021.4.19</div>
-                    <div class="scenic-title">走吧、让我们一路川西吧！</div>
-                </a>
-                <a href="" class="show-pic">
-                    <img src="..//images/li/signup&login/4.jpeg" alt="" class="banner-picture">
-                </a>
-            </div>
+<%--            <div id="banner_3" class="item">--%>
+<%--                <a href="" class="show-title">--%>
+<%--                    <div class="show-date">2021.4.19</div>--%>
+<%--                    <div class="scenic-title">别样东莞｜广东第四城的美食和古迹</div>--%>
+<%--                </a>--%>
+<%--                <a href="" class="show-pic">--%>
+<%--                    <img src="../images/li/signup&login/3.jpeg" alt="" class="banner-picture">--%>
+<%--                </a>--%>
+<%--            </div>--%>
+
+<%--            <div id="banner_4" class="item">--%>
+<%--                <a href="" class="show-title">--%>
+<%--                    <div class="show-date">2021.4.19</div>--%>
+<%--                    <div class="scenic-title">走吧、让我们一路川西吧！</div>--%>
+<%--                </a>--%>
+<%--                <a href="" class="show-pic">--%>
+<%--                    <img src="..//images/li/signup&login/4.jpeg" alt="" class="banner-picture">--%>
+<%--                </a>--%>
+<%--            </div>--%>
 
         </div>
         <!-- Controls -->
@@ -179,25 +207,6 @@
             <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
             <span class="sr-only">Next</span>
         </a>
-    </div>
-
-    <%--搜索框--%>
-    <div class="index-search-container" id="index_search">
-        <div class="index-search-group">
-            <div class="index-search-bar" id="index_search_bar2">
-                <form action="/ScenicServlet?&methodName=queryScenicBySearch&currentPage=1&rows" method="post">
-                    <div class="index-search-wrapper">
-                        <div class="index-search-input">
-                            <input name="q" type="text" placeholder="输入搜索内容" id="scenic_search_text" autocomplete="off">
-                        </div>
-                    </div>
-                    <div class="index-search-button" id="scenic_search_btn">
-                        <button id="btn_scenic_search" type="submit" class="btn btn-default">搜索</button>
-                    </div>
-                </form>
-            </div>
-
-        </div>
     </div>
 
 </section>
@@ -332,7 +341,7 @@
                     <%for(int j = 0;j<recommendTagScenic.get(key).size();j++){%>
                     <li>
                         <div class="fc-item" style="transform: matrix3d(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1);">
-                            <a href="/hotel/10099/#feature=19896" target="_blank" data-type="feature" data-name="<%=recommendTagScenic.get(key).get(j).getScenicName()%>">
+                            <a href="/ScenicServlet?methodName=findScenicInfoByScenicId&scenicId=<%=recommendTagScenic.get(key).get(j).getScenicId()%>&currentPage=1&rows=2" target="_blank" data-type="feature" data-name="<%=recommendTagScenic.get(key).get(j).getScenicName()%>">
                                 <div class="pic">
                                     <img width="318" height="240" style="width:318px;height:240px;" src="https://p1-q.mafengwo.net/s10/M00/5E/7B/wKgBZ1mC9HaAK_QIAAh1pr4J_V417.jpeg?imageMogr2%2Fthumbnail%2F%21636x480r%2Fgravity%2FCenter%2Fcrop%2F%21636x480%2Fquality%2F90" class="img-show">
                                 </div>
@@ -380,10 +389,7 @@
         <%--游记tab--%>
         <div class="scenic-tab">
             <div class="scenic-hot" id="scenic_hot">
-                <a href="javascript:void(0);" rel="nofollow">热门景点</a>
-            </div>
-            <div class="scenic-near" id="scenic_near">
-                <a href="javascript:void(0);" rel="nofollow">附近景点</a>
+                <span href="javascript:void(0);" rel="nofollow">热门景点</span>
             </div>
         </div>
 
@@ -396,9 +402,9 @@
                     <div class="scenic-left">
                         <a href="" target="_blank">
                             <%if (scenicInfoList.get(i).getScenicCoverPicture()==null){%>
-                            <img src="/FreegoImg/scenic_default.jpg" alt="" class="scenic-picture">
+                                <img src="/FreegoImg/scenic_default.jpg" alt="" class="scenic-picture">
                             <%}else{%>
-                            <img src=<%=scenicInfoList.get(i).getScenicCoverPicture()%> alt="" class="scenic-picture">
+                                <img src=<%=scenicInfoList.get(i).getScenicCoverPicture()%> alt="" class="scenic-picture">
                             <%}%>
                         </a>
                     </div>
@@ -450,24 +456,29 @@
     <%--  分页--%>
     <nav aria-label="Page navigation">
         <ul class="pagination">
-            <li>
-                <a href="#" aria-label="Previous">
-                    <span aria-hidden="true">&laquo;</span>
-                </a>
-            </li>
+            <span style="font-size: 25px;margin-left: 5px;">
+                第<%=scenicInfoPageBean.getCurrentPage()%>页
+            </span>
+            <%if(scenicInfoPageBean.getCurrentPage()!=1){%>
+                <li>
+                    <a href="/ScenicServlet?&userId=1014&methodName=queryScenicIndex&currentPage=<%=scenicInfoPageBean.getCurrentPage()-1%>&rows=10" aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+                    </a>
+                </li>
+            <%}%>
             <%if(scenicInfoList != null){
                 for (int i = 1;i <= scenicInfoPageBean.getTotalPage();i++){%>
             <%if (i==1){%>
-            <li><a href="/ScenicServlet?&methodName=queryScenicIndex&currentPage=<%=i%>&rows=10"><%=i%></a></li>
+            <li><a href="/ScenicServlet?&userId=1014&methodName=queryScenicIndex&currentPage=<%=i%>&rows=10"><%=i%></a></li>
             <%}else if(i==2&&i<scenicInfoPageBean.getCurrentPage()-3){%>
             <li><a href="#">...</a></li>
             <%} else if(((i>=scenicInfoPageBean.getCurrentPage()-3)&&(i<scenicInfoPageBean.getCurrentPage()))
                     ||((i<=scenicInfoPageBean.getCurrentPage()+3)&&(i>scenicInfoPageBean.getCurrentPage()))){%>
-            <li><a href="/ScenicServlet?&methodName=queryScenicIndex&currentPage=<%=i%>&rows=10"><%=i%></a></li>
+            <li><a href="/ScenicServlet?&userId=1014&methodName=queryScenicIndex&currentPage=<%=i%>&rows=10"><%=i%></a></li>
             <%}else if(i==scenicInfoPageBean.getTotalPage()-1){%>
             <li><a href="#">...</a></li>
             <%}else if(i==scenicInfoPageBean.getTotalPage()){%>
-            <li><a href="/ScenicServlet?&methodName=queryScenicIndex&currentPage=<%=i%>&rows=10"><%=i%></a></li>
+            <li><a href="/ScenicServlet?&userId=1014&methodName=queryScenicIndex&currentPage=<%=i%>&rows=10"><%=i%></a></li>
             <%}%>
             <%}}else{%>
             <li>
@@ -476,12 +487,13 @@
                 </a>
             </li>
             <%}%>
-
-            <li>
-                <a href="#" aria-label="Next">
-                    <span aria-hidden="true">&raquo;</span>
-                </a>
-            </li>
+            <%if(scenicInfoPageBean.getTotalPage()!=scenicInfoPageBean.getCurrentPage()){%>
+                <li>
+                    <a href="/ScenicServlet?&userId=1014&methodName=queryScenicIndex&currentPage=<%=scenicInfoPageBean.getCurrentPage()+1%>&rows=10" aria-label="Next">
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            <%}%>
             <span style="font-size: 25px;margin-left: 5px;">
                 共<%=scenicInfoPageBean.getTotalCount()%>条，共<%=scenicInfoPageBean.getTotalPage()%>页
             </span>

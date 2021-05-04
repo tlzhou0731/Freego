@@ -113,7 +113,21 @@
     List<String> downtownInlandList = (List<String>)request.getAttribute("downtownInlandList");
     List<String> downtownAbroadList = (List<String>)request.getAttribute("downtownAbroadList");
 
-
+    if(travelMonthList==null){
+        System.out.println("travelMonthList IS NULL");
+    }else{
+        System.out.println(travelMonthList);
+    }
+    if(travelAddrList==null){
+        System.out.println("travelAddrList IS NULL");
+    }else{
+        System.out.println(travelAddrList);
+    }
+    if(travelTagList==null){
+        System.out.println("travelTagList IS NULL");
+    }else{
+        System.out.println(travelTagList);
+    }
 
 %>
 <%--游记部分--%>
@@ -126,18 +140,24 @@
                             data-width="95%" data-live-search="true"
                             multiple data-max-options="5" onchange="getTravelMonth(this)"
                             title="选择出行日期">
-                        <option value="1">1月</option>
-                        <option value="2">2月</option>
-                        <option value="3">3月</option>
-                        <option value="4">4月</option>
-                        <option value="5">5月</option>
-                        <option value="6">6月</option>
-                        <option value="7">7月</option>
-                        <option value="8">8月</option>
-                        <option value="9">9月</option>
-                        <option value="10">10月</option>
-                        <option value="11">11月</option>
-                        <option value="12">12月</option>
+                            <%for(int tmi = 0;tmi<12;tmi++){%>
+                                <%if(travelMonthList==null){%>
+                                    <option value="<%=tmi+1%>"><%=tmi+1%>月</option>
+                                <%}else{%>
+                                    <%int jd=0;%>
+                                    <%for(int tmb = 0;tmb<travelMonthList.size();tmb++){
+                                        if((tmi+1)==travelMonthList.get(tmb)){
+                                            jd=1;
+                                        }
+                                    }%>
+                                    <%if(jd==1){%>
+                                        <option value="<%=tmi+1%>" selected><%=tmi+1%>月</option>
+                                    <%}else{%>
+                                        <option value="<%=tmi+1%>"><%=tmi+1%>月</option>
+                                    <%}%>
+                                <%}
+                            }%>
+<%--                        }%>--%>
                     </select>
                 </div>
                 <div class="scenic_form_addr">
@@ -146,13 +166,39 @@
                             multiple data-max-options="5" onchange="getAddr(this)" title="选择地点">
                         <optgroup label="国内">
                             <%for(int i=0;i<downtownInlandList.size();i++){%>
-                            <option value="<%=downtownInlandList.get(i)%>"><%=downtownInlandList.get(i)%></option>
-                            <%}%>
+                                <%if(travelAddrList==null){%>
+                                    <option value="<%=downtownInlandList.get(i)%>"><%=downtownInlandList.get(i)%></option>
+                                <%}else{%>
+                                    <%int jd=0;%>
+                                    <%for(int tadb = 0;tadb<travelAddrList.size();tadb++){
+                                        if((downtownInlandList.get(i)).equals(travelAddrList.get(tadb))){
+                                            jd=1;
+                                        }
+                                    }%>
+                                    <%if(jd==1){%>
+                                        <option value="<%=downtownInlandList.get(i)%>" selected><%=downtownInlandList.get(i)%></option>
+                                    <%}else{%>
+                                        <option value="<%=downtownInlandList.get(i)%>"><%=downtownInlandList.get(i)%></option>
+                                    <%}%>
+                            <%}}%>
                         </optgroup>
                         <optgroup label="国外">
                             <%for(int i=0;i<downtownAbroadList.size();i++){%>
-                            <option value="<%=downtownAbroadList.get(i)%>"><%=downtownAbroadList.get(i)%></option>
-                            <%}%>
+                                <%if(travelAddrList==null){%>
+                                    <option value="<%=downtownAbroadList.get(i)%>"><%=downtownAbroadList.get(i)%></option>
+                                <%}else{%>
+                                <%int jd=0;%>
+                                <%for(int tadb = 0;tadb<travelAddrList.size();tadb++){
+                                    if((downtownAbroadList.get(i)).equals(travelAddrList.get(tadb))){
+                                        jd=1;
+                                    }
+                                }%>
+                                <%if(jd==1){%>
+                                    <option value="<%=downtownAbroadList.get(i)%>" selected><%=downtownAbroadList.get(i)%></option>
+                                <%}else{%>
+                                    <option value="<%=downtownAbroadList.get(i)%>"><%=downtownAbroadList.get(i)%></option>
+                                <%}%>
+                            <%}}%>
                         </optgroup>
                     </select>
                 </div>
@@ -160,13 +206,25 @@
                     <select id="'tagChoose" name="tagChoose" class="form-control selectpicker"
                             data-width="95%" data-live-search="true"
                             multiple data-max-options="5"  onchange="getTag(this)" title="选择主题">
-
                         <%if(totalTag != null){%>
-                        <%for(Integer key:totalTag.keySet()){%>
-                        <option value=<%=key%>><%=totalTag.get(key)%></option>
-                        <%}%>
+                            <%for(Integer key:totalTag.keySet()){%>
+                                <%if(travelTagList==null){%>
+                                    <option value="<%=key%>"><%=totalTag.get(key)%></option>
+                                <%}else{%>
+                                <%int jd=0;%>
+                                <%for(int ttb = 0;ttb<travelTagList.size();ttb++){
+                                    if((key)==travelTagList.get(ttb)){
+                                        jd=1;
+                                    }
+                                }%>
+                                <%if(jd==1){%>
+                                    <option value="<%=key%>" selected><%=totalTag.get(key)%></option>
+                                <%}else{%>
+                                    <option value="<%=key%>"><%=totalTag.get(key)%></option>
+                                <%}%>
+                            <%}}%>
                         <%}else{%>
-                        <option value="空">空</option>
+                            <option value="空">空</option>
                         <%}%>
                     </select>
                 </div>
@@ -223,7 +281,7 @@
 
     </style>
 
-    <div class="index-scenic">
+    <div class="index-scenic" style="margin-top: 50px">
         <%--景点列表--%>
         <div class="page-block-scenic" id="pgae_block_scenic">
             <div class="scenic-list">
@@ -287,24 +345,29 @@
     <%--  分页--%>
     <nav aria-label="Page navigation">
         <ul class="pagination">
+            <span style="font-size: 25px;margin-left: 5px;">
+                第<%=searchScenicPage.getCurrentPage()%>页
+            </span>
+            <%if(searchScenicPage.getCurrentPage()!=1){%>
             <li>
-                <a href="#" aria-label="Previous">
+                <a href="/ScenicServlet?methodName=queryScenicBySearch&currentPage=<%=searchScenicPage.getCurrentPage()-1%>&rows=5" onclick="sendSearchIndex()"  aria-label="Previous">
                     <span aria-hidden="true">&laquo;</span>
                 </a>
             </li>
+            <%}%>
             <%if(searchScenicList != null){
                 for (int i = 1;i <= searchScenicPage.getTotalPage();i++){%>
             <%if (i==1){%>
-            <li><a href="/ScenicServlet?&methodName=queryScenicIndex&currentPage=<%=i%>&rows=10"><%=i%></a></li>
+            <li><a href="/ScenicServlet?methodName=queryScenicBySearch&currentPage=<%=i%>&rows=5" onclick="sendSearchIndex()" ><%=i%></a></li>
             <%}else if(i==2&&i<searchScenicPage.getCurrentPage()-3){%>
             <li><a href="#">...</a></li>
             <%} else if(((i>=searchScenicPage.getCurrentPage()-3)&&(i<searchScenicPage.getCurrentPage()))
                     ||((i<=searchScenicPage.getCurrentPage()+3)&&(i>searchScenicPage.getCurrentPage()))){%>
-            <li><a href="/ScenicServlet?&methodName=queryScenicIndex&currentPage=<%=i%>&rows=10"><%=i%></a></li>
+            <li><a href="/ScenicServlet?methodName=queryScenicBySearch&currentPage=<%=i%>&rows=5" onclick="sendSearchIndex()" ><%=i%></a></li>
             <%}else if(i==searchScenicPage.getTotalPage()-1){%>
             <li><a href="#">...</a></li>
             <%}else if(i==searchScenicPage.getTotalPage()){%>
-            <li><a href="/ScenicServlet?&methodName=queryScenicIndex&currentPage=<%=i%>&rows=10"><%=i%></a></li>
+            <li><a href="/ScenicServlet?methodName=queryScenicBySearch&currentPage=<%=i%>&rows=5" onclick="sendSearchIndex()" ><%=i%></a></li>
             <%}%>
             <%}}else{%>
             <li>
@@ -313,12 +376,13 @@
                 </a>
             </li>
             <%}%>
-
+            <%if(searchScenicPage.getTotalPage()!=searchScenicPage.getCurrentPage()){%>
             <li>
-                <a href="#" aria-label="Next">
+                <a href="/ScenicServlet?methodName=queryScenicBySearch&currentPage=<%=searchScenicPage.getCurrentPage()+1%>&rows=5" onclick="sendSearchIndex()" aria-label="Next">
                     <span aria-hidden="true">&raquo;</span>
                 </a>
             </li>
+            <%}%>
             <span style="font-size: 25px;margin-left: 5px;">
                 共<%=searchScenicPage.getTotalCount()%>条，共<%=searchScenicPage.getTotalPage()%>页
             </span>
@@ -381,6 +445,14 @@
         </div>
     </div>
 </footer>
+
+<script>
+    function sendSearchIndex() {
+        <%request.getSession().setAttribute("dateChoose",travelMonthList);%>
+        <%request.getSession().setAttribute("addrChoose",travelAddrList);%>
+        <%request.getSession().setAttribute("tagChoose",travelTagList);%>
+    }
+</script>
 
 <script type="text/javascript">
     var choosesum = [];
