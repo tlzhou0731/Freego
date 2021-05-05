@@ -140,7 +140,7 @@
                         <a title="Free点评" href="javascript:void(0)" onclick="document.getElementById('commentlist').scrollIntoView();"><span>Free点评&nbsp;<%=scenicCommentPageBean.getList().size()+scenicCommentChild.size()%>&nbsp;条</span></a>
                     </li>
                     <li class="nav-right" style="list-style: none">
-                        <a class="btn-comment" href="" title="我要点评" data-source="">我要点评</a>
+                        <a class="btn-comment" href="/ScenicServlet?methodName=commentScenic&scenicId=<%=scenicInfo.getScenicId()%>&userId=1014&parentId=-1&parentCommentId=-1&scenicName=<%=scenicInfo.getScenicName()%>" title="我要点评" data-source="">我要点评</a>
                     </li>
                 </ul>
             </div>

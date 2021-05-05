@@ -169,9 +169,11 @@ public class ScenicInfoDaoImpl implements ScenicInfoDao {
     public int addScenicCommentPicture(int userId, int scenicCommentId, List<String> picturePathList) {
         String sql;
         int addResult = 0;
-        for(int i = 0;i<picturePathList.size();i++){
-            sql = "INSERT INTO sceniccommentpicture VALUES(?,?,?);";
-            addResult = jdbcTemplate.update(sql,scenicCommentId,picturePathList.get(i),i);
+        if(picturePathList!=null){
+            for(int i = 0;i<picturePathList.size();i++){
+                sql = "INSERT INTO sceniccommentpicture VALUES(?,?,?);";
+                addResult = jdbcTemplate.update(sql,scenicCommentId,picturePathList.get(i),i);
+            }
         }
         return addResult;
     }

@@ -58,6 +58,20 @@ public class ScenicServlet extends HttpServlet {
             queryScenicNearByScenicId(request,response);
             request.getRequestDispatcher("/ztl/ScenicInfo.jsp").forward(request,response);
         }
+        //进入评价景点界面
+        if("commentScenic".equals(methodName)){
+            commentScenic(request,response);
+
+            request.getRequestDispatcher("/ztl/CommentScenic.jsp").forward(request,response);
+        }
+        //从评价景点界面返回景点信息界面
+        if("addScenicComment".equals(methodName)){
+            addScenicComment(request,response);
+            findScenicInfoByScenicId(request,response);
+            queryScenicCommentPage(request,response);
+            queryScenicNearByScenicId(request,response);
+            request.getRequestDispatcher("/ztl/ScenicInfo.jsp").forward(request,response);
+        }
 
 
     }
@@ -66,35 +80,7 @@ public class ScenicServlet extends HttpServlet {
         this.doPost(request, response);
     }
 
-    private void test(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
 
-        System.out.println("出来了");
-
-        JdbcTemplate template = new JdbcTemplate(JDBCUtils.getDataSource());
-
-        String sql = null;
-        //1.定义sql语句
-        sql = "select * from scenic where province = ? LIMIT 100;";
-        //2.执行
-        List<ScenicInfo> scenicInfoList = null;
-        scenicInfoList = template.query(sql, new BeanPropertyRowMapper<ScenicInfo>(ScenicInfo.class), "北京");
-        System.out.println("BIAOGUOWOCHULAILEWO");
-        if(scenicInfoList.size()==0){
-            System.out.println("ScenicInfo is NULL");
-        }else{
-            System.out.println("ScenicInfo is not NULL");
-            System.out.println(scenicInfoList);
-            for(int i=0;i<scenicInfoList.size();i++){
-                System.out.println(scenicInfoList.get(i).toString());
-            }
-        }
-        request.removeAttribute("scenicInfoList");
-        request.setAttribute("scenicInfoList",scenicInfoList);
-
-
-        request.getRequestDispatcher("/ztl/ScenicMain.jsp").forward(request,response);
-
-    }
 
     private void queryScenicIndex(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
 
@@ -222,9 +208,49 @@ public class ScenicServlet extends HttpServlet {
 
     }
 
+    private void commentScenic(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String scenicIdStr = request.getParameter("scenicId");
+        String userIdStr = request.getParameter("userId");
+        String parentIdStr = request.getParameter("parentId");
+        String parentCommentIdStr = request.getParameter("parentCommentId");
+        String scenicName = request.getParameter("scenicName");
+        int scenicId = Integer.parseInt(scenicIdStr);
+        int userId = Integer.parseInt(userIdStr);
+        int parentId = Integer.parseInt(parentIdStr);
+        int parentCommentId = Integer.parseInt(parentCommentIdStr);
+        request.setAttribute("scenicId",scenicId);
+        request.setAttribute("userId",userId);
+        request.setAttribute("parentId",parentId);
+        request.setAttribute("parentCommentId",parentCommentId);
+        request.setAttribute("scenicName",scenicName);
+    }
 
+    private void addScenicComment(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+        String scenicIdStr = request.getParameter("scenicId");
+        String userIdStr = request.getParameter("userId");
+        String parentIdStr = request.getParameter("parentId");
+        String parentCommentIdStr = request.getParameter("parentCommentId");
 
+        String scenicStarStr = request.getParameter("scenicStar");
+        System.out.println("IN SERVLET SCENIC COMMENT ！！！！！！！！！！！！！");
+        System.out.println(scenicStarStr);
+        System.out.println("IN SERVLET SCENIC COMMENT ！！！！！！！！！！！！！");
 
+        String commentText = request.getParameter("commentText");
+        String[] commentPictures = request.getParameterValues("commentPictures");
+        List<String> commentPictureList = new ArrayList<String>();
+        if(commentPictures==null){
+            commentPictureList = null;
+        }else{
+            for(int i = 0;i<commentPictures.length;i++){
+                commentPictureList.add(commentPictures[i]);
+            }
+            System.out.println(commentPictureList);
+        }
+        commentPictureList=null;
+        scenicInfoService.commentScenic(parentIdStr,parentCommentIdStr,userIdStr,scenicIdStr,scenicStarStr,commentText,"0",commentPictureList);
+
+    }
 
 
     public static void main(String[] args) {

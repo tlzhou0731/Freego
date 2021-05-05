@@ -263,7 +263,7 @@ public class ScenicInfoServiceImpl implements ScenicInfoService {
             e.printStackTrace();
         }
 
-        return 0;
+        return dealPreferResult;
     }
 
     @Override

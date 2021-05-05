@@ -1,0 +1,169 @@
+.popup-box {
+    position: fixed;
+    _position: absolute;
+    z-index: 1001;
+    width: 380px;
+    height: auto;
+    top: 40%;
+    left: 50%;
+    margin: -140px 0 0 -190px;
+    border-radius: 3px;
+    box-shadow: 0 0 3px rgb(30% 30% 30%);
+    border: 1px solid #ccc\9;
+    overflow: hidden;
+}
+.pop_no_margin {
+    margin: 0!important;
+    width: auto;
+}
+.pop-reviews {
+    width: 850px;
+    top: 5%;
+    margin: 0 0 0 -465px;
+    padding: 35px 40px 40px;
+    background-color: #fff;
+}
+.mfw-reviews h2 {
+    margin-bottom: 24px;
+    font-size: 14px;
+    font-weight: 400;
+}
+.mfw-reviews h2 strong {
+    padding-right: 10px;
+    font-size: 22px;
+    font-weight: 400;
+    color: #444;
+}
+.mfw-reviews h2 em, .review-item .label em {
+    font-style: normal;
+    color: #ea3c1a;
+}
+button, input, optgroup, select, textarea {
+    color: inherit;
+    font: inherit;
+    margin: 0;
+}
+
+.review-item .label {
+    float: left;
+    width: 95px;
+    padding-right: 14px;
+    font-size: 14px;
+    line-height: 20px;
+    text-align: right;
+}
+
+.review-score .click-star, .review-star .click-star {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 132px;
+    height: 23px;
+}
+.review-score .click-star a, .review-star .click-star a {
+    float: left;
+    width: 23px;
+    height: 23px;
+    padding-right: 3px;
+}
+.review-item .txt-tips {
+    color: #999;
+    padding-left: 10px;
+}
+.review-item .content {
+    overflow: hidden;
+}
+.pop-upload textarea, .review-item.item-comment textarea {
+    margin-bottom: 3px;
+    border: 1px solid #efefef;
+    background-color: #efefef;
+    padding: 12px 14px;
+    width: 90%;
+    height: 60px;
+    font-size: 12px;
+    line-height: 20px;
+    overflow: auto;
+    resize: none;
+}
+.review-item.item-comment p {
+    color: #999;
+}
+.review-item.item-photo {
+    margin-bottom: 25px;
+}
+.review-item.item-photo .label {
+    line-height: 120px;
+}
+.review-item .upload-box dd {
+    float: left;
+    width: 120px;
+    height: 120px;
+    display: inline;
+    margin: 0 10px 10px 0;
+    color: #fff;
+}
+.review-item.item-photo p {
+    color: #999;
+}
+.review-item.item-action {
+    margin: 30px 0 20px 109px;
+}
+.btn-large {
+    display: block;
+    height: 40px;
+    line-height: 40px;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    -o-border-radius: 3px;
+    -ms-border-radius: 3px;
+    border-radius: 3px;
+    background-color: #ffa800;
+    font-size: 16px;
+    text-align: center;
+    color: #fff;
+}
+.review-item.item-action .btn-large {
+    float: left;
+    margin-right: 20px;
+    width: 130px;
+    height: 36px;
+    line-height: 36px;
+    -webkit-border-radius: 2px;
+    -moz-border-radius: 2px;
+    -o-border-radius: 2px;
+    -ms-border-radius: 2px;
+    border-radius: 2px;
+}
+.popup-box a.close-btn {
+    width: 28px;
+    height: 19px;
+    padding: 8px 0 0 8px;
+    background: url(/images/ztl/scenic/scenic_show_1.jpg) 0 -165px no-repeat;
+    outline: 0;
+    position: absolute;
+    right: 0;
+    top: 11px;
+    display: block;
+}
+.popup-box a.close-btn {
+    width: 36px;
+    height: 26px;
+    background: url(/images/ztl/scenic/scenic_show_1.jpg) no-repeat 0 -280px;
+    padding: 0;
+}
+#popup_close {
+    outline: none;
+    position: absolute;
+    z-index: 50;
+    top: 7px;
+    right: 6px;
+    width: 12px;
+    height: 12px;
+    background: url(https://gss0.baidu.com/6b1IcTe9R1gBo1vgoIiO_jowehsv/wolfman/static/common/images/popup_close_15d2283.gif) no-repeat;
+    border: 0;
+    cursor: pointer;
+}
+
+
+
+
