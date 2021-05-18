@@ -1,4 +1,4 @@
-<%--
+<%@ page import="domain.ScenicInfo" %><%--
   Created by IntelliJ IDEA.
   Author: Macro
   Date: 2021/5/5
@@ -37,15 +37,12 @@
 </head>
 <body>
 <%
-    int scenicId = (Integer)request.getAttribute("scenicId");
-    int userId = (Integer)request.getAttribute("userId");
+    int scenicId = Integer.parseInt((String)request.getSession().getAttribute("scenicId"));
+    int userId = Integer.parseInt((String)request.getSession().getAttribute("userId"));
     int parentId = (Integer)request.getAttribute("parentId");
     int parentCommentId = (Integer)request.getAttribute("parentCommentId");
-    String scenicName = (String)request.getAttribute("scenicName");
-//    scenicId=609;
-//    userId=1014;
-//    parentId=-1;
-//    parentCommentId=-1;
+    String scenicName = ((ScenicInfo)request.getSession().getAttribute("scenicInfo")).getScenicName();
+
 %>
 
 <div style="width: 1000px;margin: auto;margin-top: 60px" class="mfw-reviews">
@@ -66,11 +63,11 @@
             <div class="review-item item-comment">
                 <div class="label"><em>*</em>内容</div>
                 <div class="content">
-                    <textarea class="_j_commentarea" name="commentText" essential="1" data-inputname="内容" placeholder="100字+3图，有机会评为优质点评！" data-minlen="1" data-maxlen="10000"></textarea>
+                    <textarea class="_j_commentarea" name="commentText" essential="1" data-inputname="内容" placeholder="100字+3图，有机会评为优质点评！" data-minlen="1" data-maxlen="10000" style="height: 120px"></textarea>
                     <p class="_j_commentcounttip">内容不超过10000字</p>
                 </div>
             </div>
-            <div class="review-item item-photo">
+<%--            <div class="review-item item-photo">
                 <div class="label">上传照片</div>
                 <div class="content">
                     <div class="layui-upload">
@@ -82,7 +79,7 @@
                     </div>
                     <p style="clear:both;">图片不超过20张</p>
                 </div>
-            </div>
+            </div>--%>
             <div class="review-item item-action">
                 <button style="border: none" id="submitComment" class="btn-large _j_submit" role="button" title="提交">提交</button>
             </div>

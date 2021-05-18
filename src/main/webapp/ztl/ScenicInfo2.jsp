@@ -65,47 +65,47 @@
 </head>
 
 <%--导入头部--%>
-<%--<header id="header">--%>
+<%--<header id="header">
 
-<%--    <div class="freego_header clearfix" id="head_nav_warper">--%>
+    <div class="freego_header clearfix" id="head_nav_warper">
 
-<%--        <div class="head_logo"><a class="freego_logo" title="FreeGo" href="http://localhost:8080/index.jsp"></a></div>--%>
+        <div class="head_logo"><a class="freego_logo" title="FreeGo" href="http://localhost:8080/index.jsp"></a></div>
 
-<%--        <ul class="head_nav" id="_j_head_nav" role="tablist">--%>
-<%--            <li id="head_nav_index_li" role="presentation"><a href="" id="head_nav_index_a">首页</a></li>--%>
-<%--            <li id="head_nav_scenic_li" role="presentation"><a href="/ScenicServlet?&methodName=queryScenicIndex&currentPage=1&rows=10"  id="head_nav_scenic_a" title="景点">景点</a></li>--%>
-<%--            <li id="head_nav_gonglve_li" role="presentation"><a href="" id="head_nav_gonglve_a" title="旅游攻略">旅游攻略</a></li>--%>
-<%--            <li id="head_nav_hotel_li" role="presentation"><a href="" id="head_nav_hotel_a" title="酒店">订酒店</a></li>--%>
-<%--        </ul>--%>
+        <ul class="head_nav" id="_j_head_nav" role="tablist">
+            <li id="head_nav_index_li" role="presentation"><a href="" id="head_nav_index_a">首页</a></li>
+            <li id="head_nav_scenic_li" role="presentation"><a href="/ScenicServlet?&methodName=queryScenicIndex&currentPage=1&rows=10"  id="head_nav_scenic_a" title="景点">景点</a></li>
+            <li id="head_nav_gonglve_li" role="presentation"><a href="" id="head_nav_gonglve_a" title="旅游攻略">旅游攻略</a></li>
+            <li id="head_nav_hotel_li" role="presentation"><a href="" id="head_nav_hotel_a" title="酒店">订酒店</a></li>
+        </ul>
 
-<%--        <div class="login_status">--%>
-<%--            <!-- 未登录状态  -->--%>
-<%--            <div id="login_out" class="login_out">--%>
-<%--                <a href="login.jsp">登录</a>--%>
-<%--                <a href="register.jsp">注册</a>--%>
-<%--            </div>--%>
-<%--            <!-- 登录状态  -->--%>
-<%--            <div id="login_in" class="login_in">--%>
-<%--                <span id="span_username"></span>--%>
-<%--                <a href="javascript:location.href='user/exit';">退出</a>--%>
-<%--                <a id="cancelAccount">注销账号</a>--%>
-<%--            </div>--%>
-<%--        </div>--%>
+        <div class="login_status">
+            <!-- 未登录状态  -->
+            <div id="login_out" class="login_out">
+                <a href="login.jsp">登录</a>
+                <a href="register.jsp">注册</a>
+            </div>
+            <!-- 登录状态  -->
+            <div id="login_in" class="login_in">
+                <span id="span_username"></span>
+                <a href="javascript:location.href='user/exit';">退出</a>
+                <a id="cancelAccount">注销账号</a>
+            </div>
+        </div>
 
-<%--    </div>--%>
+    </div>
 
-<%--</header>--%>
+</header>--%>
 
 
 <body>
 <%--接受的数据--%>
 <%
     ScenicInfo scenicInfo = null;
-    scenicInfo = (ScenicInfo)request.getAttribute("scenicInfo");
-    List<ScenicCommentInfo> scenicCommentChild = (List<ScenicCommentInfo>)request.getAttribute("scenicCommentChild");
-    PageBean<ScenicCommentInfo> scenicCommentPageBean = (PageBean<ScenicCommentInfo>)request.getAttribute("scenicCommentPageBean");
+    scenicInfo = (ScenicInfo)request.getSession().getAttribute("scenicInfo");
+    List<ScenicCommentInfo> scenicCommentChild = (List<ScenicCommentInfo>)request.getSession().getAttribute("scenicCommentChild");
+    PageBean<ScenicCommentInfo> scenicCommentPageBean = (PageBean<ScenicCommentInfo>)request.getSession().getAttribute("scenicCommentPageBean");
     List<ScenicCommentInfo> scenicCommentInfoList = scenicCommentPageBean.getList();
-    List<ScenicInfo> nearScenicList = (List<ScenicInfo>)request.getAttribute("nearScenicList");
+    List<ScenicInfo> nearScenicList = (List<ScenicInfo>)request.getSession().getAttribute("nearScenicList");
 %>
 
 <%--景点头部信息--%>
@@ -140,7 +140,7 @@
                         <a title="Free点评" href="javascript:void(0)" onclick="document.getElementById('commentlist').scrollIntoView();"><span>Free点评&nbsp;<%=scenicCommentPageBean.getList().size()+scenicCommentChild.size()%>&nbsp;条</span></a>
                     </li>
                     <li class="nav-right" style="list-style: none">
-                        <a class="btn-comment" href="" title="我要点评" data-source="">我要点评</a>
+                        <a class="btn-comment" href="/ScenicServlet?methodName=commentScenic&parentId=-1&parentCommentId=-1" title="我要点评" data-source="">我要点评</a>
                     </li>
                 </ul>
             </div>
@@ -157,7 +157,7 @@
             <a class="photo" data-cs-p="相册" href="" target="_blank">
                 <div class="bd">
                     <div class="pic-big">
-                        <img src="../images/ztl/scenic/scenic_show_1.jpg" width="690" height="370">
+                        <img src="/FreegoImg/ztl/<%=scenicInfo.getScenicCoverPicture()%>" width="690" height="370">
                     </div>
                     <div class="pic-small">
                         <img src="../images/ztl/scenic/scenic_show_2.jpg" width="305" height="183">
@@ -209,6 +209,8 @@
                 <br>
             </dd>
         </dl>
+
+        <!-- 地图 S -->
         <div class="scenic-map-mod scenic-map-mod-location">
             <div class="scenic-map-mhd" style="overflow: hidden;">
                 景点位置
@@ -243,6 +245,52 @@
                 </div>
             </div>
         </div>
+        <!-- 地图 E -->
+
+        <!-- 门票 S -->
+        <div id="" class="pagelet-block" data-api=":poi:pagelet:poiTicketsApi" data-params="{&quot;poi_id&quot;:&quot;19779&quot;}" data-async="1" data-controller="">
+            <div class="mod mod-promo" data-cs-p="热门优惠">
+                <div class="wrapper">
+                    <div class="mhd">热门优惠</div>
+                    <div class="mbd">
+                        <table>
+                            <thead>
+                            <tr>
+                                <th class="type">类型</th>
+                                <th class="pro">&nbsp;</th>
+                                <th class="price">价格</th>
+                                <th class="action">&nbsp;</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td class="type">多日游</td>
+                                <td class="pro"><a href="" target="_blank" title="【五一早订优惠】昆明+大理+丽江6日游（赠版纳4日游+温泉酒店+大理丽江两大古城+洱海游艇+乘索道观玉龙雪山+敞篷吉普车旅拍+打卡蓝月谷）">【五一早订优惠】昆明+大理+丽江6日游（赠版纳4日游+温泉酒店...</a></td>
+                                <td class="price">￥980起</td>
+                                <td class="action"><a class="btn" href="http://www.mafengwo.cn/sales/6640686.html?cid=1030" target="_blank" title="预订">预订</a></td>
+                            </tr>
+                            <tr>
+                                <td class="type">景区/场馆</td>
+                                <td class="pro"><a href="http://www.mafengwo.cn/sales/2670726.html?cid=1030" target="_blank" title="快速入园  云南民族村门票电子票（从滇池到民族村 当地民俗特色风情体验/多套餐选择）">快速入园  云南民族村门票电子票（从滇池到民族村 当地民俗特...</a></td>
+                                <td class="price">￥76起</td>
+                                <td class="action"><a class="btn" href="http://www.mafengwo.cn/sales/2670726.html?cid=1030" target="_blank" title="预订">预订</a></td>
+                            </tr>
+                            <tr>
+                                <td class="type">一日游</td>
+                                <td class="pro"><a href="http://www.mafengwo.cn/sales/2869684.html?cid=1030" target="_blank" title="昆明石林+抚仙湖一日游 （ 8人高端纯玩团+穿彝裳听三弦+环仙湖赏樱花+趣享游船下午茶+半山栈道瞰湖 可选东风韵拍大片）">昆明石林+抚仙湖一日游 （ 8人高端纯玩团+穿彝裳听三弦+环仙...</a></td>
+                                <td class="price">￥479起</td>
+                                <td class="action"><a class="btn" href="http://www.mafengwo.cn/sales/2869684.html?cid=1030" target="_blank" title="预订">预订</a></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- 门票 E -->
+
+
+
 
     </div>
     <!-- 简介 E -->
@@ -410,55 +458,17 @@
     </div>
     <!-- 评论 E -->
 
-    <!-- 门票 S -->
-    <%--    <div id="pagelet-block-3616610faf86ff9c6f99c912c4efe270" class="pagelet-block" data-api=":poi:pagelet:poiTicketsApi" data-params="{&quot;poi_id&quot;:&quot;19779&quot;}" data-async="1" data-controller="">    <div class="mod mod-promo" data-cs-p="热门优惠">
-            <div class="wrapper">
-                <div class="mhd">热门优惠</div>
-                <div class="mbd">
-                    <table>
-                        <thead>
-                        <tr>
-                            <th class="type">类型</th>
-                            <th class="pro">&nbsp;</th>
-                            <th class="price">价格</th>
-                            <th class="action">&nbsp;</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr>
-                            <td class="type">多日游</td>
-                            <td class="pro"><a href="" target="_blank" title="【五一早订优惠】昆明+大理+丽江6日游（赠版纳4日游+温泉酒店+大理丽江两大古城+洱海游艇+乘索道观玉龙雪山+敞篷吉普车旅拍+打卡蓝月谷）">【五一早订优惠】昆明+大理+丽江6日游（赠版纳4日游+温泉酒店...</a></td>
-                            <td class="price">￥980起</td>
-                            <td class="action"><a class="btn" href="http://www.mafengwo.cn/sales/6640686.html?cid=1030" target="_blank" title="预订">预订</a></td>
-                        </tr>
-                        <tr>
-                            <td class="type">景区/场馆</td>
-                            <td class="pro"><a href="http://www.mafengwo.cn/sales/2670726.html?cid=1030" target="_blank" title="快速入园  云南民族村门票电子票（从滇池到民族村 当地民俗特色风情体验/多套餐选择）">快速入园  云南民族村门票电子票（从滇池到民族村 当地民俗特...</a></td>
-                            <td class="price">￥76起</td>
-                            <td class="action"><a class="btn" href="http://www.mafengwo.cn/sales/2670726.html?cid=1030" target="_blank" title="预订">预订</a></td>
-                        </tr>
-                        <tr>
-                            <td class="type">一日游</td>
-                            <td class="pro"><a href="http://www.mafengwo.cn/sales/2869684.html?cid=1030" target="_blank" title="昆明石林+抚仙湖一日游 （ 8人高端纯玩团+穿彝裳听三弦+环仙湖赏樱花+趣享游船下午茶+半山栈道瞰湖 可选东风韵拍大片）">昆明石林+抚仙湖一日游 （ 8人高端纯玩团+穿彝裳听三弦+环仙...</a></td>
-                            <td class="price">￥479起</td>
-                            <td class="action"><a class="btn" href="http://www.mafengwo.cn/sales/2869684.html?cid=1030" target="_blank" title="预订">预订</a></td>
-                        </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-        </div>--%>
-    <!-- 门票 E -->
-
-
-
     <!-- 评论界面 S -->
 
 
 
 
     <!-- 评论界面 E -->
+
+
+
+
+
 
 
     <script src="//api.map.baidu.com/api?type=webgl&v=1.0&ak=MKmjSL6aurGZbHsmH7QZbHmU60ahLKsW"></script>
@@ -512,8 +522,8 @@
     </script>
 
 
-<%--    导入尾部--%>
-<%--    <footer>
+    <%--导入尾部
+    <footer>
         <div id="footer">
 
             <div class="why_select">
@@ -581,5 +591,3 @@
 
 
 </html>
-
-<%--还差评论--%>

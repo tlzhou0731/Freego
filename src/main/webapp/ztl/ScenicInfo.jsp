@@ -1,8 +1,6 @@
 <%@ page import="java.util.List" %>
-<%@ page import="domain.PageBean" %>
-<%@ page import="domain.ScenicInfo" %>
-<%@ page import="domain.ScenicCommentInfo" %>
 <%@ page import="java.util.ArrayList" %>
+<%@ page import="domain.*" %>
 <%@page isELIgnored="false"%>
 <%--
   Created by IntelliJ IDEA.
@@ -101,11 +99,16 @@
 <%--接受的数据--%>
 <%
     ScenicInfo scenicInfo = null;
-    scenicInfo = (ScenicInfo)request.getAttribute("scenicInfo");
-    List<ScenicCommentInfo> scenicCommentChild = (List<ScenicCommentInfo>)request.getAttribute("scenicCommentChild");
-    PageBean<ScenicCommentInfo> scenicCommentPageBean = (PageBean<ScenicCommentInfo>)request.getAttribute("scenicCommentPageBean");
+    scenicInfo = (ScenicInfo)request.getSession().getAttribute("scenicInfo");
+    List<ScenicCommentInfo> scenicCommentChild = (List<ScenicCommentInfo>)request.getSession().getAttribute("scenicCommentChild");
+    PageBean<ScenicCommentInfo> scenicCommentPageBean = (PageBean<ScenicCommentInfo>)request.getSession().getAttribute("scenicCommentPageBean");
     List<ScenicCommentInfo> scenicCommentInfoList = scenicCommentPageBean.getList();
-    List<ScenicInfo> nearScenicList = (List<ScenicInfo>)request.getAttribute("nearScenicList");
+    List<ScenicInfo> nearScenicList = (List<ScenicInfo>)request.getSession().getAttribute("nearScenicList");
+    List<TicketInfo> ticketInfoList = (List<TicketInfo>)request.getSession().getAttribute("ticketInfoList");
+    String orderFlag = (String)request.getSession().getAttribute("orderFlag");
+    if(orderFlag!=null){
+        System.out.println("lkjjjjjjjjjjjlkjlkjljlkjlkj");
+    }
 %>
 
 <%--景点头部信息--%>
@@ -140,7 +143,7 @@
                         <a title="Free点评" href="javascript:void(0)" onclick="document.getElementById('commentlist').scrollIntoView();"><span>Free点评&nbsp;<%=scenicCommentPageBean.getList().size()+scenicCommentChild.size()%>&nbsp;条</span></a>
                     </li>
                     <li class="nav-right" style="list-style: none">
-                        <a class="btn-comment" href="/ScenicServlet?methodName=commentScenic&scenicId=<%=scenicInfo.getScenicId()%>&userId=1014&parentId=-1&parentCommentId=-1&scenicName=<%=scenicInfo.getScenicName()%>" title="我要点评" data-source="">我要点评</a>
+                        <a class="btn-comment" href="/ScenicServlet?methodName=commentScenic&parentId=-1&parentCommentId=-1" title="我要点评" data-source="">我要点评</a>
                     </li>
                 </ul>
             </div>
@@ -157,7 +160,7 @@
             <a class="photo" data-cs-p="相册" href="" target="_blank">
                 <div class="bd">
                     <div class="pic-big">
-                        <img src="../images/ztl/scenic/scenic_show_1.jpg" width="690" height="370">
+                        <img src="/FreegoImg/ztl/<%=scenicInfo.getScenicCoverPicture()%>" width="690" height="370">
                     </div>
                     <div class="pic-small">
                         <img src="../images/ztl/scenic/scenic_show_2.jpg" width="305" height="183">
@@ -209,6 +212,8 @@
                 <br>
             </dd>
         </dl>
+
+        <!-- 地图 S -->
         <div class="scenic-map-mod scenic-map-mod-location">
             <div class="scenic-map-mhd" style="overflow: hidden;">
                 景点位置
@@ -228,21 +233,56 @@
                         <div class="mtitle">附近景点</div>
                         <ul class="mlist">
                             <%for(int nearTemp = 0;nearTemp<nearScenicList.size();nearTemp++){%>
-                                <li data-id="<%=nearScenicList.get(nearTemp).getScenicId()%>"
-                                    data-name="<%=nearScenicList.get(nearTemp).getScenicName()%>"
-                                    data-type="3"
-                                    data-lat="<%=nearScenicList.get(nearTemp).getLat()%>"
-                                    data-lng="<%=nearScenicList.get(nearTemp).getLng()%>">
-                                    <a href="${pageContext.request.contextPath}/ScenicServlet?methodName=findScenicInfoByScenicId&scenicId=<%=nearScenicList.get(nearTemp).getScenicId()%>&currentPage=1&rows=2" target="_blank">
-                                        <%=nearScenicList.get(nearTemp).getScenicName()%>
-                                    </a>
-                                </li>
+                            <li data-id="<%=nearScenicList.get(nearTemp).getScenicId()%>"
+                                data-name="<%=nearScenicList.get(nearTemp).getScenicName()%>"
+                                data-type="3"
+                                data-lat="<%=nearScenicList.get(nearTemp).getLat()%>"
+                                data-lng="<%=nearScenicList.get(nearTemp).getLng()%>">
+                                <a href="${pageContext.request.contextPath}/ScenicServlet?methodName=findScenicInfoByScenicId&scenicId=<%=nearScenicList.get(nearTemp).getScenicId()%>&currentPage=1&rows=2" target="_blank">
+                                    <%=nearScenicList.get(nearTemp).getScenicName()%>
+                                </a>
+                            </li>
                             <%}%>
                         </ul>
                     </div>
                 </div>
             </div>
         </div>
+        <!-- 地图 E -->
+
+        <!-- 门票 S -->
+        <div id="" class="pagelet-block" data-api=":poi:pagelet:poiTicketsApi" data-params="{&quot;poi_id&quot;:&quot;19779&quot;}" data-async="1" data-controller="">
+            <div class="mod mod-promo" data-cs-p="热门优惠">
+                <div class="wrapper">
+                    <div class="mhd">热门优惠</div>
+                    <div class="mbd">
+                        <table>
+                            <thead>
+                            <tr>
+                                <th class="pro">门票类型</th>
+                                <th class="price">&nbsp;</th>
+                                <th class="action">&nbsp;</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <%if(ticketInfoList!=null&&ticketInfoList.size()!=0){%>
+                                <%for(int i = 0;i<ticketInfoList.size();i++){%>
+                                    <tr>
+                                        <td class="pro"><a href="${pageContext.request.contextPath}/ScenicServlet?methodName=queryTicketInfo" target="_blank" title=<%=ticketInfoList.get(i).getTicketName()%>><%=ticketInfoList.get(i).getTicketName()%></a></td>
+                                        <td class="action"><a class="btn" href="${pageContext.request.contextPath}/ScenicServlet?methodName=queryTicketInfo" target="_blank" title="预订">预订</a></td>
+                                    </tr>
+                                <%}%>
+                            <%}%>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- 门票 E -->
+
+
+
 
     </div>
     <!-- 简介 E -->
@@ -269,14 +309,6 @@
                                 </span>
                             </a>
                         </li>
-                        <li data-type="0" data-category="2" class="">
-                            <span class="divide"></span>
-                            <a href="javascript:void(0);"><span>有图</span><span class="num"> (1216条)</span></a>
-                        </li>
-                        <li data-type="0" data-category="1" class="">
-                            <span class="divide"></span>
-                            <a href="javascript:void(0);"><span>金牌点评</span><span class="num"> (8条)</span></a>
-                        </li>
                     </ul>
                 </div>
                 <div class="loading-img" style="display: none;">
@@ -298,20 +330,13 @@
                                             <%=String.valueOf(scenicCommentInfoList.get(i).getUserId())%>
                                         </a>
 
-                                        <span class="s-star s-star5"></span>
+                                        <img src="/FreegoImg/ztl/commentstar-<%=scenicCommentInfoList.get(i).getScenicGrade()%>.jpeg" style="width: 80px;height: 20px">
                                         <p class="scenic-comment-txt">
                                             <%=scenicCommentInfoList.get(i).getCommentText()%>
                                         </p>
 
-                                        <div class="scenic-comment-img">
-                                            <a href="/photo/poi/19779_408964428.html" target="_blank"><img src="https://n1-q.mafengwo.net/s13/M00/E4/5E/wKgEaVx95faAfn0CAC0gZWhAtxk40.jpeg?imageMogr2%2Fthumbnail%2F%21200x120r%2Fgravity%2FCenter%2Fcrop%2F%21200x120%2Fquality%2F100" width="200" height="120"></a>
-                                            <a href="/photo/poi/19779_408964432.html" target="_blank"><img src="https://n1-q.mafengwo.net/s13/M00/E4/5F/wKgEaVx95faAC4ikAB_MhIwjMIw45.jpeg?imageMogr2%2Fthumbnail%2F%21200x120r%2Fgravity%2FCenter%2Fcrop%2F%21200x120%2Fquality%2F100" width="200" height="120"></a>
-                                            <a href="/photo/poi/19779_408964436.html" target="_blank"><img src="https://p1-q.mafengwo.net/s13/M00/E4/5F/wKgEaVx95feAMCLzACKd5j5g5Ik21.jpeg?imageMogr2%2Fthumbnail%2F%21200x120r%2Fgravity%2FCenter%2Fcrop%2F%21200x120%2Fquality%2F100" width="200" height="120"></a>
-                                            <a href="/photo/poi/19779_408964440.html" target="_blank"><img src="https://p1-q.mafengwo.net/s13/M00/E4/60/wKgEaVx95fiAd9CsADWlhSJa-B812.jpeg?imageMogr2%2Fthumbnail%2F%21200x120r%2Fgravity%2FCenter%2Fcrop%2F%21200x120%2Fquality%2F100" width="200" height="120"></a>
-                                        </div>
-
                                         <div class="info clearfix">
-                                            <a class="btn-comment _j_comment" title="添加评论">评论</a>
+                                            <a class="btn-comment _j_comment" title="添加评论" href="/ScenicServlet?methodName=commentScenic&parentId=<%=scenicCommentInfoList.get(i).getScenicCommentId()%>&parentCommentId=<%=scenicCommentInfoList.get(i).getScenicCommentId()%>">评论</a>
                                             <span class="time">2019-03-05 10:59:10</span>
                                         </div>
 
@@ -335,19 +360,18 @@
                                                                 <%=String.valueOf(scenicCommentChild.get(commentChildNum.get(j)).getUserId())%>
                                                             </a>
                                                             <%if(scenicCommentChild.get(commentChildNum.get(j)).getParentId()!=scenicCommentChild.get(commentChildNum.get(j)).getParentCommentId()){%>
-                                                            ：回复<%=String.valueOf(scenicCommentChild.get(commentChildNum.get(j)).getParentId())%>：
+                                                            <%for(int itemp = 0 ;itemp <commentChildNum.size();itemp++){%>
+                                                                <%if(scenicCommentChild.get(itemp).getScenicCommentId()==scenicCommentChild.get(commentChildNum.get(j)).getParentId()){%>
+                                                                    ：回复<%=String.valueOf(scenicCommentChild.get(itemp).getUserId())%>：
+                                                                <%}%>
+                                                            <%}%>
                                                             <%}%>
                                                             <%=scenicCommentChild.get(commentChildNum.get(j)).getCommentText()%>
-                                                            <a class="_j_reply re_reply" data-id="<%=scenicCommentChild.get(commentChildNum.get(j)).getScenicCommentId()%>>" data-uid="scenicCommentChild.get(commentChildNum.get(j)).getUserId()" data-username="'林家辉" title="添加回复">回复</a>
+                                                            <a class="_j_reply re_reply" data-id="<%=scenicCommentChild.get(commentChildNum.get(j)).getScenicCommentId()%>" data-uid="scenicCommentChild.get(commentChildNum.get(j)).getUserId()" data-username="'林家辉" title="添加回复" href="/ScenicServlet?methodName=commentScenic&parentId=<%=scenicCommentChild.get(commentChildNum.get(j)).getScenicCommentId()%>&parentCommentId=<%=scenicCommentInfoList.get(i).getScenicCommentId()%>">回复</a>
                                                             <br><span class="time">2019-03-06 10:14:32</span>
                                                         </li>
                                                 <%}}%>
                                             </ul>
-
-                                            <div class="add-comment hide reply-form">
-                                                <textarea class="comment_reply" data-comment_id="162437860" data-comment_username="太阳🌞之光" data-poi_id="19779" data-poi_name="滇池" data-parent_id="" data-parent_uid="" data-parent_username="" style="overflow: hidden; color: rgb(204, 204, 204);"></textarea>
-                                                <a class="btn btn_submit_reply">回复</a>
-                                            </div>
                                         </div>
                                     </li>
                             <%}}%>
@@ -409,47 +433,6 @@
         </div>
     </div>
     <!-- 评论 E -->
-
-    <!-- 门票 S -->
-<%--    <div id="pagelet-block-3616610faf86ff9c6f99c912c4efe270" class="pagelet-block" data-api=":poi:pagelet:poiTicketsApi" data-params="{&quot;poi_id&quot;:&quot;19779&quot;}" data-async="1" data-controller="">    <div class="mod mod-promo" data-cs-p="热门优惠">
-        <div class="wrapper">
-            <div class="mhd">热门优惠</div>
-            <div class="mbd">
-                <table>
-                    <thead>
-                    <tr>
-                        <th class="type">类型</th>
-                        <th class="pro">&nbsp;</th>
-                        <th class="price">价格</th>
-                        <th class="action">&nbsp;</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr>
-                        <td class="type">多日游</td>
-                        <td class="pro"><a href="" target="_blank" title="【五一早订优惠】昆明+大理+丽江6日游（赠版纳4日游+温泉酒店+大理丽江两大古城+洱海游艇+乘索道观玉龙雪山+敞篷吉普车旅拍+打卡蓝月谷）">【五一早订优惠】昆明+大理+丽江6日游（赠版纳4日游+温泉酒店...</a></td>
-                        <td class="price">￥980起</td>
-                        <td class="action"><a class="btn" href="http://www.mafengwo.cn/sales/6640686.html?cid=1030" target="_blank" title="预订">预订</a></td>
-                    </tr>
-                    <tr>
-                        <td class="type">景区/场馆</td>
-                        <td class="pro"><a href="http://www.mafengwo.cn/sales/2670726.html?cid=1030" target="_blank" title="快速入园  云南民族村门票电子票（从滇池到民族村 当地民俗特色风情体验/多套餐选择）">快速入园  云南民族村门票电子票（从滇池到民族村 当地民俗特...</a></td>
-                        <td class="price">￥76起</td>
-                        <td class="action"><a class="btn" href="http://www.mafengwo.cn/sales/2670726.html?cid=1030" target="_blank" title="预订">预订</a></td>
-                    </tr>
-                    <tr>
-                        <td class="type">一日游</td>
-                        <td class="pro"><a href="http://www.mafengwo.cn/sales/2869684.html?cid=1030" target="_blank" title="昆明石林+抚仙湖一日游 （ 8人高端纯玩团+穿彝裳听三弦+环仙湖赏樱花+趣享游船下午茶+半山栈道瞰湖 可选东风韵拍大片）">昆明石林+抚仙湖一日游 （ 8人高端纯玩团+穿彝裳听三弦+环仙...</a></td>
-                        <td class="price">￥479起</td>
-                        <td class="action"><a class="btn" href="http://www.mafengwo.cn/sales/2869684.html?cid=1030" target="_blank" title="预订">预订</a></td>
-                    </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </div>
-    </div>--%>
-    <!-- 门票 E -->
 
     <!-- 评论界面 S -->
 
@@ -581,6 +564,13 @@
         }
     }
 </script>
-
+<script>
+    $(function () {
+        if(<%=orderFlag!=null&&("yes".equals(orderFlag))%>){
+            alert("购票成功");
+            <%request.getSession().setAttribute("orderFlag","no");%>
+        }
+    });
+</script>
 
 </html>

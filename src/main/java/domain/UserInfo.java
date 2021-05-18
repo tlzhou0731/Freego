@@ -1,7 +1,7 @@
 package domain;
 
 /**
- * @Author: 李旺旺
+ * @Author: Macro
  * @Date: 2021/3/29 20:50
  * @Description: 用户信息实体类
  */

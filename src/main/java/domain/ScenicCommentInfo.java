@@ -1,7 +1,7 @@
 package domain;
 
 /**
- * @Author: 李旺旺
+ * @Author: 周天乐
  * @Date: 2021/3/30 21:24
  * @Description: 景点评论信息实体类
  */
@@ -18,7 +18,9 @@ public class ScenicCommentInfo {
     public ScenicCommentInfo() {
     }
 
-    public ScenicCommentInfo(int scenicCommentId, int parentId, int parentCommentId, int userId, int scenicId, int scenicGrade, String commentText, Boolean scenicCommentState) {
+    public ScenicCommentInfo(int scenicCommentId, int parentId, int parentCommentId,
+                             int userId, int scenicId, int scenicGrade,
+                             String commentText, Boolean scenicCommentState) {
         this.scenicCommentId = scenicCommentId;
         this.parentId = parentId;
         this.parentCommentId = parentCommentId;

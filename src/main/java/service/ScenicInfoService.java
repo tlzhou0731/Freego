@@ -1,9 +1,8 @@
 package service;
 
-import domain.PageBean;
-import domain.ScenicCommentInfo;
-import domain.ScenicInfo;
+import domain.*;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -49,6 +48,10 @@ public interface ScenicInfoService {
     public List<Integer> querySimilarTag(String userIdStr);
     public Map<Integer,List<ScenicInfo>> querySimilarScenic(String userIdStr);
 
+    public List<TicketInfo> queryTicketInfo(int scenicId);
+    public List<TicketDatePrice> queryTicketDatePrice(int ticketId);
+
     public PageBean<ScenicInfo> queryScenicBySearch(List<Integer> monthList,List<String> addrList,List<Integer> tagList, String currentPageStr, String rowsStr);
+    public int saveOrder(int userId, int ticketId, Date ticketDate, int ticketPrice, int ticketNum, int orderPrice, String orderRemark, String travelerName, String travelerTelephone, String travelerIdCard);
 
 }

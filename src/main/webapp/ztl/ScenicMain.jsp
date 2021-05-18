@@ -104,8 +104,7 @@
 <body>
 <%--接受的数据--%>
 <%
-    List<String> scenicThemeList = null;
-    scenicThemeList = (List<String>)request.getAttribute("scenicThemeList");
+
     PageBean<ScenicInfo> scenicInfoPageBean = (PageBean<ScenicInfo>)request.getAttribute("scenicPageBean");
     List<ScenicInfo> scenicInfoList = scenicInfoPageBean.getList();
     List<String> downtownInlandList = (List<String>)request.getAttribute("downtownInlandList");
@@ -134,68 +133,27 @@
                 for(Integer key:recommendTagScenic.keySet()){%>
                 <%if(countBanner==1){%>
                     <div id="banner_<%=countBanner%>" class="item active">
-                        <a href="" class="show-title">
+                        <a href="/ScenicServlet?methodName=findScenicInfoByScenicId&scenicId=<%=recommendTagScenic.get(key).get(0).getScenicId()%>&currentPage=1&rows=2" class="show-title">
                             <div class="scenic-date"><%=recommendTagScenic.get(key).get(0).getScenicName()%></div>
                             <div class="scenic-title"><%=recommendTagScenic.get(key).get(0).getScenicAddress()%></div>
                         </a>
-                        <a href="" class="show-pic">
-                            <img src="../images/li/signup&login/<%=countBanner%>.jpeg" alt="" class="banner-picture">
+                        <a href="/ScenicServlet?methodName=findScenicInfoByScenicId&scenicId=<%=recommendTagScenic.get(key).get(0).getScenicId()%>&currentPage=1&rows=2" class="show-pic">
+                            <img src="/FreegoImg/ztl/<%=recommendTagScenic.get(key).get(0).getScenicCoverPicture()%>" alt="" class="banner-picture">
                         </a>
                     </div>
                 <%}else{%>
                     <div id="banner_<%=countBanner%>" class="item">
-                        <a href="" class="show-title">
+                        <a href="/ScenicServlet?methodName=findScenicInfoByScenicId&scenicId=<%=recommendTagScenic.get(key).get(0).getScenicId()%>&currentPage=1&rows=2" class="show-title">
                             <div class="scenic-date"><%=recommendTagScenic.get(key).get(0).getScenicName()%></div>
                             <div class="scenic-title"><%=recommendTagScenic.get(key).get(0).getScenicAddress()%></div>
                         </a>
-                        <a href="" class="show-pic">
-                            <img src="../images/li/signup&login/<%=countBanner%>.jpeg" alt="" class="banner-picture">
+                        <a href="/ScenicServlet?methodName=findScenicInfoByScenicId&scenicId=<%=recommendTagScenic.get(key).get(0).getScenicId()%>&currentPage=1&rows=2" class="show-pic">
+                            <img src=/FreegoImg/ztl/<%=recommendTagScenic.get(key).get(0).getScenicCoverPicture()%> alt="" class="banner-picture">
                         </a>
                     </div>
                 <%}%>
                 <%countBanner++;%>
             <%}%>
-
-
-<%--            <div id="banner_1" class="item active">--%>
-<%--                <a href="" class="show-title">--%>
-<%--                    <div class="scenic-date"><%=recommendTagScenic%></div>--%>
-<%--                    <div class="scenic-title">【自驾甘孜】仓央嘉措，无尽雪山和风</div>--%>
-<%--                </a>--%>
-<%--                <a href="" class="show-pic">--%>
-<%--                    <img src="../images/li/signup&login/1.jpeg" alt="" class="banner-picture">--%>
-<%--                </a>--%>
-<%--            </div>--%>
-
-<%--            <div id="banner_2" class="item">--%>
-<%--                <a href="" class="show-title">--%>
-<%--                    <div class="show-date">2021.4.19</div>--%>
-<%--                    <div class="scenic-title">常州金坛亲子游｜撷一肩春色，跟着小念一起花样春游吧</div>--%>
-<%--                </a>--%>
-<%--                <a href="" class="show-pic">--%>
-<%--                    <img src="../images/li/signup&login/2.jpeg" alt="" class="banner-picture">--%>
-<%--                </a>--%>
-<%--            </div>--%>
-
-<%--            <div id="banner_3" class="item">--%>
-<%--                <a href="" class="show-title">--%>
-<%--                    <div class="show-date">2021.4.19</div>--%>
-<%--                    <div class="scenic-title">别样东莞｜广东第四城的美食和古迹</div>--%>
-<%--                </a>--%>
-<%--                <a href="" class="show-pic">--%>
-<%--                    <img src="../images/li/signup&login/3.jpeg" alt="" class="banner-picture">--%>
-<%--                </a>--%>
-<%--            </div>--%>
-
-<%--            <div id="banner_4" class="item">--%>
-<%--                <a href="" class="show-title">--%>
-<%--                    <div class="show-date">2021.4.19</div>--%>
-<%--                    <div class="scenic-title">走吧、让我们一路川西吧！</div>--%>
-<%--                </a>--%>
-<%--                <a href="" class="show-pic">--%>
-<%--                    <img src="..//images/li/signup&login/4.jpeg" alt="" class="banner-picture">--%>
-<%--                </a>--%>
-<%--            </div>--%>
 
         </div>
         <!-- Controls -->
@@ -343,7 +301,7 @@
                         <div class="fc-item" style="transform: matrix3d(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1);">
                             <a href="/ScenicServlet?methodName=findScenicInfoByScenicId&scenicId=<%=recommendTagScenic.get(key).get(j).getScenicId()%>&currentPage=1&rows=2" target="_blank" data-type="feature" data-name="<%=recommendTagScenic.get(key).get(j).getScenicName()%>">
                                 <div class="pic">
-                                    <img width="318" height="240" style="width:318px;height:240px;" src="https://p1-q.mafengwo.net/s10/M00/5E/7B/wKgBZ1mC9HaAK_QIAAh1pr4J_V417.jpeg?imageMogr2%2Fthumbnail%2F%21636x480r%2Fgravity%2FCenter%2Fcrop%2F%21636x480%2Fquality%2F90" class="img-show">
+                                    <img width="318" height="240" style="width:318px;height:240px;" src="/FreegoImg/ztl/<%=recommendTagScenic.get(key).get(j).getScenicCoverPicture()%>" class="img-show">
                                 </div>
                                 <div class="bag-opa"></div>
                                 <span class="shadow" style="background-image: linear-gradient(45deg, rgba(0, 0, 0, 0.4), transparent 40%);"></span>
@@ -363,7 +321,7 @@
                         <div class="fc-item" style="transform: matrix3d(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1);">
                             <a href="/hotel/10099/#feature=19896" target="_blank" data-type="feature" data-name="<%=recommendTagScenic.get(key).get(j).getScenicName()%>">
                                 <div class="pic">
-                                    <img width="318" height="240" style="width:318px;height:240px;" src="https://p1-q.mafengwo.net/s10/M00/5E/7B/wKgBZ1mC9HaAK_QIAAh1pr4J_V417.jpeg?imageMogr2%2Fthumbnail%2F%21636x480r%2Fgravity%2FCenter%2Fcrop%2F%21636x480%2Fquality%2F90" class="img-show">
+                                    <img width="318" height="240" style="width:318px;height:240px;" src="/FreegoImg/ztl/<%=recommendTagScenic.get(key).get(j).getScenicCoverPicture()%>" class="img-show">
                                 </div>
                                 <div class="bag-opa"></div>
                                 <span class="shadow" style="background-image: linear-gradient(45deg, rgba(0, 0, 0, 0.4), transparent 40%);"></span>
@@ -400,11 +358,11 @@
                     for (int i = 0;i < scenicInfoList.size();i++){%>
                 <div class="scenic-item clearfix">
                     <div class="scenic-left">
-                        <a href="" target="_blank">
+                        <a href="/ScenicServlet?methodName=findScenicInfoByScenicId&scenicId=<%=scenicInfoList.get(i).getScenicId()%>&currentPage=1&rows=2" target="_blank">
                             <%if (scenicInfoList.get(i).getScenicCoverPicture()==null){%>
                                 <img src="/FreegoImg/scenic_default.jpg" alt="" class="scenic-picture">
                             <%}else{%>
-                                <img src=<%=scenicInfoList.get(i).getScenicCoverPicture()%> alt="" class="scenic-picture">
+                                <img src="/FreegoImg/ztl/<%=scenicInfoList.get(i).getScenicCoverPicture()%>" alt="" class="scenic-picture">
                             <%}%>
                         </a>
                     </div>
@@ -423,24 +381,6 @@
                             <div class="scenic-location">
                                 <img class="scenic-location-pic" src="../images/li/index/icon_search.jpeg">
                                 <div class="scenic-location-text"><%=scenicInfoList.get(i).getScenicAddress()%></div>
-                            </div>
-                            <%--                            &lt;%&ndash;用户&ndash;%&gt;--%>
-                            <%--                            <div class="scenic-user">--%>
-                            <%--                                <div class="scenic-user-head">--%>
-                            <%--                                    <img class="scenic-user-head-pic" src="../images/li/index/icon_search.jpeg">--%>
-                            <%--                                </div>--%>
-                            <%--                                <a class="scenic-user-nickname" href="" target="_blank" rel="nofollow">DiDi_酱</a>--%>
-                            <%--                            </div>--%>
-                            <%--浏览量/收藏量--%>
-                            <div class="scenic-view-collection">
-                                <img src="./images/li/travelnote/eye.jpeg">
-                                <div class="scenic-view">1207/</div>
-                                <div class="travlenote-collection">6</div>
-                            </div>
-                            <%--点赞量--%>
-                            <div class="scenic-like">
-                                <div class="scenic-user-likes">34</div>
-                                <img class="scenic-user-likes-pic" src="../images/li/index/icon_search.jpeg">
                             </div>
                         </div>
 

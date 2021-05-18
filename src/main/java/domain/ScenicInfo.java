@@ -1,7 +1,7 @@
 package domain;
 
 /**
- * @Author: 李旺旺
+ * @Author: Macro
  * @Date: 2021/3/30 21:20
  * @Description: 景点信息实体类
  */
@@ -84,7 +84,6 @@ public class ScenicInfo {
     public void setScenicCoverPicture(String scenicCoverPicture) {
         this.scenicCoverPicture = scenicCoverPicture;
     }
-
 
     public String getCountry() {
         return country;

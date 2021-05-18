@@ -7,10 +7,7 @@ import domain.*;
 import service.ScenicInfoService;
 
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @Author: Macro
@@ -402,6 +399,31 @@ public class ScenicInfoServiceImpl implements ScenicInfoService {
     }
 
     @Override
+    public List<TicketInfo> queryTicketInfo(int scenicId) {
+        try{
+            List<TicketInfo> ticketInfoList = scenicInfoDao.queryTicketByScenicId(scenicId);
+            return ticketInfoList;
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    @Override
+    public List<TicketDatePrice> queryTicketDatePrice(int ticketId) {
+        try{
+            System.out.println(ticketId);
+            List<TicketDatePrice> ticketDatePriceList = scenicInfoDao.queryTicketDatePrice(ticketId);
+            System.out.println("*****************************");
+            System.out.println(ticketDatePriceList);
+            return ticketDatePriceList;
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    @Override
     public PageBean<ScenicInfo> queryScenicBySearch(List<Integer> monthList, List<String> addrList, List<Integer> tagList, String currentPageStr, String rowsStr) {
         try {
             int currentPage = Integer.parseInt(currentPageStr);
@@ -430,25 +452,16 @@ public class ScenicInfoServiceImpl implements ScenicInfoService {
         return null;
     }
 
-    public static void main(String[] args) {
-        ScenicInfoService scenicInfoService = new ScenicInfoServiceImpl(new ScenicInfoDaoImpl());
-        List<Integer> likeUser = scenicInfoService.querySimilarUser("1010");
-        for(int i = 0;i<likeUser.size();i++){
-            System.out.println(likeUser.get(i));
-        }
-        List<Integer> likeTag = scenicInfoService.querySimilarTag("1010");
-        for(int i = 0;i<likeTag.size();i++){
-            System.out.println(likeTag.get(i));
-        }
-        Map<Integer,List<ScenicInfo>> tagScenicMap = scenicInfoService.querySimilarScenic("1010");
-        for(Integer key:tagScenicMap.keySet()){
-            List<ScenicInfo> tagScenicList = tagScenicMap.get(key);
-            System.out.println("key = "+key);
-            for(int i = 0 ; i < tagScenicList.size() ; i++){
-                System.out.println(tagScenicList.get(i));
-            }
-        }
-    }
+    @Override
+    public int saveOrder(int userId, int ticketId, Date ticketDate, int ticketPrice, int ticketNum, int orderPrice, String orderRemark, String travelerName, String travelerTelephone, String travelerIdCard) {
+        int addResult=0;
+        try{
+            addResult = scenicInfoDao.saveTicketOrder(ticketId,userId,ticketDate,ticketPrice,ticketNum,orderPrice,orderRemark);
+            addResult = scenicInfoDao.saveTicketOrderTraveler(addResult,travelerName,travelerIdCard,travelerTelephone);
+        }catch (Exception e){
 
+        }
+        return addResult;
+    }
 
 }

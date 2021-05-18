@@ -2,8 +2,10 @@ package dao;
 
 import domain.*;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ExecutionException;
 
 /**
  * @Author: Macro
@@ -47,5 +49,14 @@ public interface ScenicInfoDao {
     int queryScenicCountBySearchText(List<Integer> monthList,List<String> addrList,List<Integer> tagList) throws Exception;
     List<ScenicInfo> queryScenicBySearchText(List<Integer> monthList,List<String> addrList,List<Integer> tagList,int start,int rows) throws Exception;
 
+    List<TicketInfo> queryTicketByScenicId(int scenicId) throws Exception;
+    List<TicketDatePrice> queryTicketDatePrice(int ticketId) throws Exception;
+
+    int saveTicketOrder(int ticketId,int userId,
+                        Date ticketDate, int ticketPrice,
+                        int ticketNum,int orderPrice,
+                        String orderRemark) throws Exception;
+    int saveTicketOrderTraveler(int ticketOrderId, String travelerName,
+                        String travelerIdCard,String travelerTelephone) throws Exception;
 
 }

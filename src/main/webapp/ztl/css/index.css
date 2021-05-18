@@ -1095,3 +1095,85 @@ a:hover{
 
 
 
+/*门票*/
+.wrapper, .mod {
+    width: 1000px;
+    margin: 0 auto;
+}
+.mod {
+    padding: 30px 0;
+}
+.mhd {
+    font-size: 20px;
+    color: #333;
+    margin: -30px -3000px 30px;
+    padding: 40px 3000px 0;
+    border-top: 1px solid #eee;
+    font-weight: normal;
+}
+.mod-promo .mbd {
+    background-color: #fff;
+}
+.mod-promo table {
+    width: 100%;
+    border: 1px solid #eee;
+    font-size: 14px;
+    color: #333;
+    text-align: left;
+    line-height: 20px;
+}
+.mod-promo th {
+    background-color: #fafafa;
+    padding: 10px;
+}
+.mod-promo .type {
+    width: 75px;
+    padding-left: 50px;
+}
+.mod-promo .pro {
+    width: 530px;
+}
+.mod-promo .price {
+    width: 150px;
+}
+.mod-promo td {
+    padding: 15px 10px;
+    border-bottom: 1px dashed #f1f1f1;
+    font-size: 14px;
+    color: #333;
+}
+.mod-promo .price {
+    width: 150px;
+}
+.mod-promo td.price {
+    color: #ff9d00;
+}
+.mod-promo .btn {
+    display: inline-block;
+    line-height: 25px;
+    background-color: #ff9d00;
+    padding: 0 20px;
+    border-radius: 4px;
+    color: #fff;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

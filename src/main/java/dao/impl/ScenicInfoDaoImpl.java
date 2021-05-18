@@ -12,10 +12,8 @@ import utils.JDBCUtils;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 /**
  * @Author: Macro
@@ -240,26 +238,6 @@ public class ScenicInfoDaoImpl implements ScenicInfoDao {
         return userTagWeight;
     }
 
-//    @Override
-//    public List<ScenicInfo> selectSimilarScenicByTag(List<Integer> similarUserId, int similarTagId) throws Exception {
-//        String sql;
-//        sql = "SELECT * FROM scenic WHERE\n" +
-//                "(scenicId IN (select scecoll.scenicId from(select * from sceniccollect where userId IN (?) GROUP BY scenicId ORDER BY COUNT(userId) DESC LIMIT 30) as scecoll)\n" +
-//                "AND scenicId IN (SELECT linkId from taglink where tagId = ?)) LIMIT 6;";
-//        int similarUserCount;
-//        similarUserCount = similarUserId.size();
-//
-//        String similarUserIdList = String.valueOf(similarUserId.get(0));
-//        for(int i = 1 ; i < similarUserCount ; i++){
-//            similarUserIdList = similarUserIdList + "," + similarUserId.get(i);
-//        }
-//        List<ScenicInfo> scenicInfoList;
-//        scenicInfoList = jdbcTemplate.query(sql,new BeanPropertyRowMapper<ScenicInfo>(ScenicInfo.class),similarUserIdList,similarTagId);
-//        return scenicInfoList;
-//    }
-
-
-
     @Override
     public List<ScenicInfo> selectSimilarScenicByTag(List<Integer> similarUserId, int similarTagId) throws Exception {
         String sql;
@@ -273,9 +251,6 @@ public class ScenicInfoDaoImpl implements ScenicInfoDao {
         scenicInfoList = namedParameterJdbcTemplate.query(sql,parameterSource,new BeanPropertyRowMapper<ScenicInfo>(ScenicInfo.class));
         return scenicInfoList;
     }
-
-
-
 
     @Override
     public int queryScenicCountBySearchText(List<Integer> monthList, List<String> addrList, List<Integer> tagList) throws Exception {
@@ -318,21 +293,52 @@ public class ScenicInfoDaoImpl implements ScenicInfoDao {
         return scenicInfoList;
     }
 
+    @Override
+    public List<TicketInfo> queryTicketByScenicId(int scenicId) throws Exception {
+        String sql;
+        sql = "select * from ticket where scenicId = ?";
+        List<TicketInfo> ticketInfoList = jdbcTemplate.query(sql,new BeanPropertyRowMapper<TicketInfo>(TicketInfo.class),scenicId);
+        return ticketInfoList;
+    }
+
+    @Override
+    public List<TicketDatePrice> queryTicketDatePrice(int ticketId) throws Exception {
+        String sql;
+        sql = "select * from ticketdateprice where ticketId = ?";
+        List<TicketDatePrice> ticketDatePriceList = jdbcTemplate.query(sql,new BeanPropertyRowMapper<TicketDatePrice>(TicketDatePrice.class),ticketId);
+        return ticketDatePriceList;
+    }
+
+    @Override
+    public int saveTicketOrder(int ticketId, int userId, Date ticketDate,
+                               int ticketPrice, int ticketNum, int orderPrice,
+                               String orderRemark) throws Exception {
+        String sql;
+        sql = "insert into ticketorder values(0,?,?,?,?,?,?,?,?,?,?,0)";
+        Date date = new Date();
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        SimpleDateFormat simpleDateFormat1 = new SimpleDateFormat("yyyy-MM-dd");
+        int saveResult;
+        jdbcTemplate.update(sql,ticketId,userId,simpleDateFormat1.format(ticketDate),ticketPrice,simpleDateFormat.format(date),ticketNum,orderPrice,orderRemark,1,simpleDateFormat.format(date));
+        sql = "SELECT LAST_INSERT_ID();";
+        int ticketOrderId = jdbcTemplate.queryForObject(sql,Integer.class);
+        return ticketOrderId;
+
+
+    }
+    @Override
+    public int saveTicketOrderTraveler(int ticketOrderId, String travelerName,
+                               String travelerIdCard,String travelerTelephone) throws Exception {
+        String sql;
+        sql = "insert into ticketordertraveler values (0,?,?,?,?,0);";
+        int saveResult = jdbcTemplate.update(sql,ticketOrderId,travelerName,travelerTelephone,travelerIdCard);
+        return saveResult;
+
+    }
 
     public static void main(String[] args) {
-        JdbcTemplate jdbcTemplate2 = new JdbcTemplate(JDBCUtils.getDataSource());
-//        String sql = "INSERT INTO sceniccomment VALUES(?,?,?,?,?,?,?,?);";
-//        jdbcTemplate2.update(sql,0,1005,1002,1025,608,4,"AAAAAAAAAAA",0);
-//        sql = "SELECT LAST_INSERT_ID();";
-//        int addResult = jdbcTemplate2.queryForObject(sql,Integer.class);
-//        System.out.println(addResult);
 
-        String sql;
-        sql = "SELECT preferWeight FROM userprefer WHERE userId = ? and tagId = ?;";
-        float userTagWeight;
-        userTagWeight = jdbcTemplate2.queryForObject(sql,Float.class,1011,7);
-        System.out.println(userTagWeight);
-//        return userTagWeight;
     }
+
 
 }

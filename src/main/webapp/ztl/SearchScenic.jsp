@@ -293,7 +293,7 @@
                             <%if (searchScenicList.get(i).getScenicCoverPicture()==null){%>
                             <img src="/FreegoImg/scenic_default.jpg" alt="" class="scenic-picture">
                             <%}else{%>
-                            <img src=<%=searchScenicList.get(i).getScenicCoverPicture()%> alt="" class="scenic-picture">
+                            <img src="/FreegoImg/ztl/<%=searchScenicList.get(i).getScenicCoverPicture()%>" alt="" class="scenic-picture">
                             <%}%>
                         </a>
                     </div>
@@ -313,24 +313,24 @@
                                 <img class="scenic-location-pic" src="../images/li/index/icon_search.jpeg">
                                 <div class="scenic-location-text"><%=searchScenicList.get(i).getScenicAddress()%></div>
                             </div>
-<%--                            &lt;%&ndash;用户&ndash;%&gt;--%>
-<%--                            <div class="scenic-user">--%>
-<%--                                <div class="scenic-user-head">--%>
-<%--                                    <img class="scenic-user-head-pic" src="../images/li/index/icon_search.jpeg">--%>
-<%--                                </div>--%>
-<%--                                <a class="scenic-user-nickname" href="" target="_blank" rel="nofollow">DiDi_酱</a>--%>
-<%--                            </div>--%>
-                            <%--浏览量/收藏量--%>
+<%--                            &lt;%&ndash;用户&ndash;%&gt;
+                            <div class="scenic-user">
+                                <div class="scenic-user-head">
+                                    <img class="scenic-user-head-pic" src="../images/li/index/icon_search.jpeg">
+                                </div>
+                                <a class="scenic-user-nickname" href="" target="_blank" rel="nofollow">DiDi_酱</a>
+                            </div>
+                            &lt;%&ndash;浏览量/收藏量&ndash;%&gt;
                             <div class="scenic-view-collection">
                                 <img src="./images/li/travelnote/eye.jpeg">
                                 <div class="scenic-view">1207/</div>
                                 <div class="travlenote-collection">6</div>
                             </div>
-                            <%--点赞量--%>
+                            &lt;%&ndash;点赞量&ndash;%&gt;
                             <div class="scenic-like">
                                 <div class="scenic-user-likes">34</div>
                                 <img class="scenic-user-likes-pic" src="../images/li/index/icon_search.jpeg">
-                            </div>
+                            </div>--%>
                         </div>
 
                     </div>
